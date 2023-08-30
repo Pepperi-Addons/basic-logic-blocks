@@ -1,0 +1,29 @@
+{
+  "AddonUUID": "a446f8ae-3787-497b-9a92-82e571bdf48e",
+  "AddonVersion": "0.0.0",
+  "DebugPort": 4500,
+  "WebappBaseUrl": "https://app.sandbox.pepperi.com",
+  "DefaultEditor": "main",
+  "Endpoints": [
+    "installation.ts",
+    "api.ts",
+    "tests.ts"
+  ],
+  "Editors": [
+    "main"
+  ],
+  "PublishConfig": {
+    "ClientStack": "ng14",
+    "Editors": [
+      {
+        "ParentPackageName": "CHANGE_TO_ADDON_CONTAINER_NAME",
+        "PackageName": "CHANGE_TO_ADDON_PATH",
+        "Description": "CHANGE_TO_ADDON_DESCRIPTION"
+      }
+    ],
+    "Dependencies": {},
+    "CPISide": [
+      "addon-cpi.ts"
+    ]
+  }
+}
