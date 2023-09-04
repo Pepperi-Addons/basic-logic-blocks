@@ -1,36 +1,18 @@
 import { Injectable } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { IPepOption, PepHttpService, PepSessionService } from "@pepperi-addons/ngx-lib";
-import { PapiClient } from "@pepperi-addons/papi-sdk";
-import jwt from 'jwt-decode';
-import { config } from "../../app.config";
+import { BaseLogicBlockService } from "src/app/shared/services/base-logic-blocks.service";
 
 @Injectable()
-export class NavigateToLogicBlockService {
-    private addonUUID: string;
-    private papiBaseURL: string;
-    private parsedToken: any;
-
+export class NavigateToLogicBlockService extends BaseLogicBlockService {
+    
     constructor(
-        private translate: TranslateService,
-        private sessionService: PepSessionService,
-        private httpService: PepHttpService
+        translate: TranslateService,
+        sessionService: PepSessionService,
+        httpService: PepHttpService
     ) {
-        this.addonUUID = config.AddonUUID;
-        const accessToken = this.sessionService.getIdpToken();
-        this.parsedToken = jwt(accessToken);
-        this.papiBaseURL = this.parsedToken["pepperi.baseurl"];
-
+        super(translate, sessionService, httpService);
     }    
-
-    get papiClient(): PapiClient {
-        return new PapiClient({
-            baseURL: this.papiBaseURL,
-            token: this.sessionService.getIdpToken(),
-            addonUUID: this.addonUUID,
-            suppressLogging:true
-        })
-    }
 
     async getSlugOptions(): Promise<IPepOption[]> {
         const slugsDataViews = JSON.parse(sessionStorage.getItem('slugsDataViews')) || null;

@@ -1,5 +1,5 @@
 <div class="configuration-content">
-    <pep-select [label]="'CHOOSE_NAVIGATION_TYPE' | translate" [options]="navigationToTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Data.Type"
+    <pep-select [label]="'NAVIGATE_TO.CHOOSE_NAVIGATION_TYPE' | translate" [options]="navigationToTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Data.Type"
         (valueChange)="onNavigationTypeChange($event)"></pep-select>
 
     <div *ngIf="isObjectNavigationType(currentConfiguration.Data.Type)" class="flex-row">
@@ -11,7 +11,7 @@
             <pep-textbox *ngIf="currentConfiguration.Data.Type !== 'Account Dashboard'" [value]="currentConfiguration.Data.ObjectData?.Value" 
                 (valueChange)="onPropertyValueChange($event, currentConfiguration.Data.ObjectData)"></pep-textbox>
             <pep-button *ngIf="currentConfiguration.Data.Type === 'Account Dashboard'" class="field-with-no-title" 
-                [value]="currentConfiguration.Data.ObjectData?.Value || ('CHOOSE_ACCOUNT' | translate)" (buttonClick)="chooseAccountClick($event)"></pep-button>
+                [value]="currentConfiguration.Data.ObjectData?.Value || ('NAVIGATE_TO.CHOOSE_ACCOUNT' | translate)" (buttonClick)="chooseAccountClick(addonBlockService)"></pep-button>
         </ng-container>
         <ng-container *ngIf="currentConfiguration.Data.ObjectData?.FlowParamSource === 'Static' && currentConfiguration.Data.Type === 'Slug'" >
             <!-- For static - when type is slug -->
@@ -27,44 +27,44 @@
         <mat-radio-group class="radio-group ">
             <mat-radio-button class="pep-radio-button md no-default-background" value="All Lists"
                 [checked]="currentConfiguration.Data.ViewType === 'All Lists'" (click)="onPropertyViewTypeChange('All Lists', currentConfiguration.Data.ActivitiesData)">
-                <span class="body-sm ellipsis">{{ 'ACTIVITIES_TYPE.ALL_LIST' | translate }}</span>
+                <span class="body-sm ellipsis">{{ 'NAVIGATE_TO.ACTIVITIES_TYPE.ALL_LIST' | translate }}</span>
             </mat-radio-button>
             <mat-radio-button class="pep-radio-button md no-default-background" value="Single List"
                 [checked]="currentConfiguration.Data.ViewType === 'Single List'" (click)="onPropertyViewTypeChange('Single List', currentConfiguration.Data.ActivitiesData)">
-                <span class="body-sm ellipsis">{{ 'ACTIVITIES_TYPE.SINGLE_LIST' | translate }}</span>
+                <span class="body-sm ellipsis">{{ 'NAVIGATE_TO.ACTIVITIES_TYPE.SINGLE_LIST' | translate }}</span>
             </mat-radio-button>
         </mat-radio-group>
 
-        <pep-select *ngIf="currentConfiguration.Data.ViewType === 'Single List'" [label]="'ACTIVITIES_TYPE.ACTIVITY_LIST_TITLE' | translate" 
+        <pep-select *ngIf="currentConfiguration.Data.ViewType === 'Single List'" [label]="'NAVIGATE_TO.ACTIVITIES_TYPE.ACTIVITY_LIST_TITLE' | translate" 
             [options]="activitiesListOptions" [emptyOption]="false" [value]="currentConfiguration.Data.ActivitiesData?.Value" (valueChange)="onPropertyValueChange($event, currentConfiguration.Data.ActivitiesData)"></pep-select>
     </div>
     <div *ngIf="currentConfiguration.Data.Type === 'Transaction'" class="flex-row one-column">
-        <pep-select [label]="'TRANSACTION_TYPE.TRANSACTION_VIEW_TITLE' | translate"  [options]="transactionViewListOptions"
+        <pep-select [label]="'NAVIGATE_TO.TRANSACTION_TYPE.TRANSACTION_VIEW_TITLE' | translate"  [options]="transactionViewListOptions"
             [emptyOption]="false" [value]="currentConfiguration.Data.ViewType" (valueChange)="onPropertyViewTypeChange($event, currentConfiguration.Data.TransactionData, false)"></pep-select>
 
         <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
-            title: ('TRANSACTION_TYPE.TRANSACTION_UUID' | translate),
+            title: ('NAVIGATE_TO.TRANSACTION_TYPE.TRANSACTION_UUID' | translate),
             configurationProperty: currentConfiguration.Data.TransactionData }">
         </ng-container>
 
         <ng-container *ngIf="currentConfiguration.Data.ViewType === 'Item Details' || currentConfiguration.Data.ViewType === 'Matrix'">
             <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
-                title: ('TRANSACTION_TYPE.CHILD_UUID' | translate),
+                title: ('NAVIGATE_TO.TRANSACTION_TYPE.CHILD_UUID' | translate),
                 configurationProperty: currentConfiguration.Data.ChildTransactionData }">
             </ng-container>
         </ng-container>
 
         <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
-            title: ('TRANSACTION_TYPE.QUERY_PARAMS' | translate),
+            title: ('NAVIGATE_TO.TRANSACTION_TYPE.QUERY_PARAMS' | translate),
             configurationProperty: currentConfiguration.Data.QsTransactionData }">
         </ng-container>
 
     </div>
 </div>
-<div class="pep-border-top mat-dialog-actions">
-    <pep-button value="{{'ACTIONS.CANCEL' | translate}}" styleType="weak" sizeType="md" classNames="pep-spacing-element" (buttonClick)="closeDialogClick($event)"></pep-button>
-    <pep-button value="{{'ACTIONS.DONE' | translate}}" styleType="strong" sizeType="md" classNames="pep-spacing-element" [disabled]="doneIsDisabled" (buttonClick)="doneClick($event)"></pep-button>
-</div>
+<!-- <div class="pep-border-top mat-dialog-actions">
+    <pep-button value="{{'COMMON.ACTIONS.CANCEL' | translate}}" styleType="weak" sizeType="md" classNames="pep-spacing-element" (buttonClick)="closeDialogClick($event)"></pep-button>
+    <pep-button value="{{'COMMON.ACTIONS.DONE' | translate}}" styleType="strong" sizeType="md" classNames="pep-spacing-element" [disabled]="doneIsDisabled" (buttonClick)="doneClick($event)"></pep-button>
+</div> -->
 
 
 <ng-template #chooseByParamSourceTemplate let-title="title" let-mandatory="mandatory" let-configurationProperty="configurationProperty" >

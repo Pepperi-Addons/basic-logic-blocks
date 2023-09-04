@@ -1,0 +1,26 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+    selector: 'logic-blocks-dialog-actions',
+    templateUrl: './dialog-actions.component.html',
+    styleUrls: ['./dialog-actions.component.scss']
+})
+export class DialogActionsComponent {
+    @Input() doneIsDisabled = true;
+    @Input() currentConfiguration: any = null;
+
+    @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
+  
+    onCloseDialogClick(event) {
+        this.hostEvents.emit({
+            type: 'close-dialog'
+        });
+    }
+    
+    onDoneClick(event) {
+        this.hostEvents.emit({
+            type: 'set-configuration',
+            configuration: this.currentConfiguration
+        });
+    }
+}

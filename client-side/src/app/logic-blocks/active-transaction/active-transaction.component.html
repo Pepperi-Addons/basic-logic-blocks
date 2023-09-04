@@ -1,10 +1,10 @@
 <div class="configuration-content">
     <div class="flex-row">
-        <pep-select [label]="'ACCOUNT_TITLE' | translate" [options]="parameterTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Account.FlowParamSource"
+        <pep-select [label]="'ACTIVE_TRANSACTIONS.ACCOUNT_TITLE' | translate" [options]="parameterTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Account.FlowParamSource"
             [mandatory]="true" (valueChange)="onFlowParamSourceChange($event, currentConfiguration.Account)"></pep-select>
 
         <!-- <pep-button *ngIf="currentConfiguration.Account.FlowParamSource === 'Static'" class="field-with-no-title" 
-            [value]="currentConfiguration.Account.Value || ('CHOOSE_ACCOUNT' | translate)" (buttonClick)="chooseAccountClick($event)"></pep-button> -->
+            [value]="currentConfiguration.Account.Value || ('ACTIVE_TRANSACTIONS.CHOOSE_ACCOUNT' | translate)" (buttonClick)="chooseAccountClick($event)"></pep-button> -->
         <pep-textbox *ngIf="currentConfiguration.Account.FlowParamSource === 'Static'"
             [value]="currentConfiguration.Account.Value" (valueChange)="onPropertyValueChange($event, currentConfiguration.Account)"></pep-textbox>
         <pep-select *ngIf="currentConfiguration.Account.FlowParamSource === 'Dynamic'" [options]="accountOptions" [emptyOption]="false" 
@@ -12,7 +12,7 @@
     </div>
     <div class="flex-row">
         <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
-            title: ('CATALOG_TITLE' | translate),
+            title: ('ACTIVE_TRANSACTIONS.CATALOG_TITLE' | translate),
             configurationProperty: currentConfiguration.Catalog, 
             staticOptions: catalogStaticOptions,
             dynamicOptions: catalogOptions }">
@@ -20,7 +20,7 @@
     </div>
     <div class="flex-row">
         <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
-            title: ('TRANSACTION_TYPE_TITLE' | translate),
+            title: ('ACTIVE_TRANSACTIONS.TRANSACTION_TYPE_TITLE' | translate),
             configurationProperty: currentConfiguration.TransactionType, 
             staticOptions: transactionTypeStaticOptions,
             dynamicOptions: transactionTypeOptions }">
@@ -28,7 +28,7 @@
     </div>
     <div class="flex-row">
         <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
-            title: ('STATUS_TITLE' | translate),
+            title: ('ACTIVE_TRANSACTIONS.STATUS_TITLE' | translate),
             mandatory: true,
             configurationProperty: currentConfiguration.Status, 
             staticOptions: statusStaticOptions,
@@ -37,10 +37,10 @@
         </ng-container>
     </div>
 </div>
-<div class="pep-border-top mat-dialog-actions">
-    <pep-button value="{{'ACTIONS.CANCEL' | translate}}" styleType="weak" sizeType="md" classNames="pep-spacing-element" (buttonClick)="closeDialogClick($event)"></pep-button>
-    <pep-button value="{{'ACTIONS.DONE' | translate}}" styleType="strong" sizeType="md" classNames="pep-spacing-element" [disabled]="doneIsDisabled" (buttonClick)="doneClick($event)"></pep-button>
-</div>
+<!-- <div class="pep-border-top mat-dialog-actions">
+    <pep-button value="{{'COMMON.ACTIONS.CANCEL' | translate}}" styleType="weak" sizeType="md" classNames="pep-spacing-element" (buttonClick)="closeDialogClick($event)"></pep-button>
+    <pep-button value="{{'COMMON.ACTIONS.DONE' | translate}}" styleType="strong" sizeType="md" classNames="pep-spacing-element" [disabled]="doneIsDisabled" (buttonClick)="doneClick($event)"></pep-button>
+</div> -->
 
 <ng-template #chooseByParamSourceTemplate let-title="title" let-mandatory="mandatory" let-configurationProperty="configurationProperty" 
     let-staticOptions="staticOptions" let-dynamicOptions="dynamicOptions" let-isStaticMulti="isStaticMulti">

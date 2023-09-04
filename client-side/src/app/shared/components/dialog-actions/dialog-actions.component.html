@@ -1,0 +1,11 @@
+<div class="pep-border-top mat-dialog-actions">
+    <!-- <button mat-button class="pep-spacing-element pep-button md weak" (click)="onCloseDialogClick($event)">
+        {{ 'COMMON.ACTIONS.CANCEL' | translate }}
+    </button>
+    <button mat-button class="pep-spacing-element pep-button md strong" [disabled]="doneIsDisabled" (click)="onDoneClick($event)">
+        {{ 'COMMON.ACTIONS.DONE' | translate }}
+    </button> -->
+
+    <pep-button value="{{'COMMON.ACTIONS.CANCEL' | translate}}" styleType="weak" sizeType="md" classNames="pep-spacing-element" (buttonClick)="onCloseDialogClick($event)"></pep-button>
+    <pep-button value="{{'COMMON.ACTIONS.DONE' | translate}}" styleType="strong" sizeType="md" classNames="pep-spacing-element" [disabled]="doneIsDisabled" (buttonClick)="onDoneClick($event)"></pep-button>
+</div>

@@ -12,19 +12,25 @@ import { SettingsComponent, SettingsModule } from './settings';
 
 import { NavigateToLogicBlockComponent, NavigateToLogicBlockModule } from './logic-blocks/navigate-to';
 import { ActiveTransactionLogicBlockComponent, ActiveTransactionLogicBlockModule } from './logic-blocks/active-transaction';
+import { GetValuesLogicBlockComponent, GetValuesLogicBlockModule } from './logic-blocks/get-values';
 
 import { config } from './app.config';
+import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 
 @NgModule({
     declarations: [
         AppComponent,
+        DialogActionsComponent, // Added here for use in all logic blocks (use the PepButtonModule so we have to add it here).
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        PepButtonModule,
         SettingsModule,
         NavigateToLogicBlockModule,
         ActiveTransactionLogicBlockModule,
+        GetValuesLogicBlockModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -56,7 +62,7 @@ export class AppModule implements DoBootstrap {
         // Define the logic blocks components.
         this.pepAddonService.defineCustomElement(`active-transaction-logic-block-element-${config.AddonUUID}`, ActiveTransactionLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`navigate-to-logic-block-element-${config.AddonUUID}`, NavigateToLogicBlockComponent, this.injector);
-        
+        this.pepAddonService.defineCustomElement(`get-values-logic-block-element-${config.AddonUUID}`, GetValuesLogicBlockComponent, this.injector);
     }
 }
 

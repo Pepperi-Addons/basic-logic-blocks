@@ -1,0 +1,17 @@
+@use '@pepperi-addons/ngx-lib/src/core/style/abstracts/variables';
+
+.configuration-content {
+    min-width: 32rem;
+    width: 32rem;
+
+    // .flex-row {
+    //     display: grid;
+    //     grid-template-columns: 1fr 2fr;
+    //     align-items: flex-start;
+    //     gap: variables.$spacing-lg;
+        
+    //     .field-with-no-title {
+    //         margin-top: variables.$form-field-title-height;
+    //     }
+    // }
+}

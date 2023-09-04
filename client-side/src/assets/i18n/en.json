@@ -1,3 +1,68 @@
 {
-    "Block_Title": "Block title"
+    "ACTIVE_TRANSACTIONS": {
+        "ACCOUNT_TITLE": "Account",
+        "CHOOSE_ACCOUNT": "Choose account",
+        "CHOOSE_ACCOUNT_TITLE": "Accounts",
+        "CATALOG_TITLE": "Catalog",
+        "CHOOSE_CATALOG": "Choose catalog",
+        "TRANSACTION_TYPE_TITLE": "Transaction type",
+        "CHOOSE_TRANSACTION_TYPE": "Choose transaction type",
+        "STATUS_TITLE": "Status",
+        "CHOOSE_STATUS": "Choose status"
+    },
+    "NAVIGATE_TO": {
+        "CHOOSE_NAVIGATION_TYPE": "Choose Navigation Type",
+        "CHOOSE_ACCOUNT": "Choose Account",
+        "CHOOSE_ACCOUNT_TITLE": "Accounts",
+        "NAVIGATION_TYPE": {
+            "HOME": "Home",
+            "BACK": "Back",
+            "ACTIVITIES": "Activities",
+            "ACCOUNTS": "Accounts",
+            "ACCOUNT_DASHBOARD": "Account Dashboard",
+            "USERS": "Users",
+            "CONTACTS": "Contacts",
+            "ITEMS": "Items",
+            "TRANSACTION": "Transaction",
+            "ACTIVITY": "Activity",
+            "SURVEY": "Survey",
+            "SLUG": "Slug",
+            "CUSTOM": "Custom"
+        },
+        "OBJECT_TYPE": {
+            "ACCOUNT_DASHBOARD_TITLE": "Account UUID",
+            "ACTIVITY_TITLE": "Activity UUID",
+            "SURVEY_TITLE": "Survey Key",
+            "SLUG_TITLE": "Slug",
+            "CUSTOM_TITLE": "URL"
+        },
+        "ACTIVITIES_TYPE": {
+            "ALL_LIST": "All Lists",
+            "SINGLE_LIST": "Single List",
+            "ACTIVITY_LIST_TITLE": "Activity List Options"
+        },
+        "TRANSACTION_TYPE": {
+            "TRANSACTION_VIEW_TITLE": "Transaction View",
+            "ORDER_CENTER": "Order Center",
+            "ITEM_DETAILS": "Item Details",
+            "MATRIX": "Matrix",
+            "CART": "Cart",
+            "HEADER": "Header",
+            "TRANSACTION_UUID": "Transaction UUID",
+            "CHILD_UUID": "Item UUID",
+            "QUERY_PARAMS": "Query Params"
+        }
+    },
+    "COMMON": {
+        "ACTIONS": {
+            "DONE": "Done",
+            "CANCEL": "Cancel"
+        },
+        "FIELDS_TITLE": {
+            "NAME": "Name",
+            "EXTERNALID": "External ID",
+            "CITY": "City",
+            "ZIPCODE": "Zip Code"
+        }
+    }
 }
