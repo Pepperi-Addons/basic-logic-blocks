@@ -1,7 +1,53 @@
+<ng-container #logicBlockHeader></ng-container>
+
 <div class="configuration-content">
-    
+    <pep-group-buttons-settings *ngIf="valuesTypesButtons?.length > 0" class="values-type max-width" groupType="custom" [btnsArray]="valuesTypesButtons" 
+        [btnKey]="currentConfiguration.ValuesType" (btnkeyChange)="onValuesTypeChange($event)"></pep-group-buttons-settings>
+    <div *ngIf="currentConfiguration.ValuesType === MANUAL_KEY" class="manual-tab">
+        <label class="body-sm">{{'GET_VALUES.MANUAL_OPTIONS.SUB_TITLE' | translate}}</label>
+
+        <pep-top-bar [inline]="true" [title]="'GET_VALUES.MANUAL_OPTIONS.OPTIONS_TITLE' | translate">
+            <div header-end-content>
+                <pep-button class="pep-spacing-element" [value]="'GET_VALUES.MANUAL_OPTIONS.ADD_OPTION' | translate" sizeType="sm" styleType="strong" (buttonClick)="onAddManualOption($event)"></pep-button>
+            </div>
+        </pep-top-bar>
+
+        <div id="manualOptions" class="manual-options-area mapped-fields-area" cdkDropList [cdkDropListData]="currentConfiguration.ManualOptions" (cdkDropListDropped)="onDropManualOption($event)">
+            <div *ngFor="let option of currentConfiguration.ManualOptions; let i = index" class="manual-option-container mapped-field-container" cdkDrag (cdkDragStarted)="onDragStart($event)" (cdkDragEnded)="onDragEnd($event)">
+                <ng-container *ngTemplateOutlet="manualOptionTemplate; context: {option: option, index: i}"></ng-container>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="currentConfiguration.ValuesType === MAPPED_KEY" class="mapped-tab">
+        
+        <label class="body-sm">{{'GET_VALUES.MAPPED_OPTIONS.SELECT_RESOURCE_HEADER' | translate}}</label>
+        <pep-select class="max-width" [options]="resourceOptions" [emptyOption]="false" [label]="'GET_VALUES.MAPPED_OPTIONS.SELECT_RESOURCE_TITLE' | translate"
+            [value]="currentConfiguration.MappedData?.Resource" (valueChange)="onMappedResourceChange($event)"></pep-select>
+        <div class="pep-border-bottom"></div>
+
+        <label class="body-sm">{{'GET_VALUES.MAPPED_OPTIONS.SELECT_RESOURCE_FIELD_KEY_HEADER' | translate}}</label>
+        <pep-select class="max-width" [options]="resourceFieldsOptions" [emptyOption]="false" [label]="'GET_VALUES.MAPPED_OPTIONS.SELECT_RESOURCE_FIELD_KEY_TITLE' | translate"
+        [value]="currentConfiguration.MappedData?.ResourceOptionKeyField" (valueChange)="onMappedResourceKeyChange($event)"></pep-select>
+        <div class="pep-border-bottom"></div>
+
+        <label class="body-sm">{{'GET_VALUES.MAPPED_OPTIONS.SELECT_RESOURCE_FIELD_TITLE_HEADER' | translate}}</label>
+        <pep-select class="max-width" [options]="resourceFieldsOptions" [emptyOption]="false" [label]="'GET_VALUES.MAPPED_OPTIONS.SELECT_RESOURCE_FIELD_TITLE_TITLE' | translate"
+        [value]="currentConfiguration.MappedData?.ResourceOptionTitleField" (valueChange)="onMappedResourceTitleChange($event)"></pep-select>
+        <div class="pep-border-bottom"></div>
+
+        Query Builder
+        <pep-query-builder [query]="currentConfiguration.MappedData?.ResourceQuery" (queryChange)="onMappedResourceQueryChange($event)"></pep-query-builder>
+    </div>
 </div>
-<!-- <div class="pep-border-top mat-dialog-actions">
-    <pep-button value="{{'COMMON.ACTIONS.CANCEL' | translate}}" styleType="weak" sizeType="md" classNames="pep-spacing-element" (buttonClick)="closeDialogClick($event)"></pep-button>
-    <pep-button value="{{'COMMON.ACTIONS.DONE' | translate}}" styleType="strong" sizeType="md" classNames="pep-spacing-element" [disabled]="doneIsDisabled" (buttonClick)="doneClick($event)"></pep-button>
-</div> -->
+    
+<ng-template #manualOptionTemplate let-option="option" let-index="index">
+    <div class="fields-wrapper">
+        <pep-textbox [label]="'GET_VALUES.MANUAL_OPTIONS.OPTION_KEY' | translate" [value]="option?.key || ''" (valueChange)="onManualOptionKeyChange($event, option)">
+        </pep-textbox>
+        <pep-textbox [label]="'GET_VALUES.MANUAL_OPTIONS.OPTION_TITLE' | translate" [value]="option?.value || ''" (valueChange)="onManualOptionTitleChange($event, option)">
+        </pep-textbox>
+       
+        <pep-button class="center-button" iconName="system_bin" (buttonClick)="onDeleteManualOption($event, option)"></pep-button>
+        <!-- <pep-button class="dup-button" iconName="system_copy" (buttonClick)="onDupplicateManualOption($event, option)"></pep-button> -->
+    </div>
+</ng-template>

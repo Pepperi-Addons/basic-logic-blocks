@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PepAddonService } from '@pepperi-addons/ngx-lib';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
@@ -14,13 +15,15 @@ import { NavigateToLogicBlockComponent, NavigateToLogicBlockModule } from './log
 import { ActiveTransactionLogicBlockComponent, ActiveTransactionLogicBlockModule } from './logic-blocks/active-transaction';
 import { GetValuesLogicBlockComponent, GetValuesLogicBlockModule } from './logic-blocks/get-values';
 
-import { config } from './app.config';
+import { DialogHeaderComponent } from './shared/components/dialog-header/dialog-header.component';
 import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
-import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+
+import { config } from './app.config';
 
 @NgModule({
     declarations: [
         AppComponent,
+        DialogHeaderComponent, // Added here for use in all logic blocks.
         DialogActionsComponent, // Added here for use in all logic blocks (use the PepButtonModule so we have to add it here).
     ],
     imports: [

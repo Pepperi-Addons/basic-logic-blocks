@@ -1,5 +1,6 @@
 {
     "ACTIVE_TRANSACTIONS": {
+        "TITLE": "Active Transactions",
         "ACCOUNT_TITLE": "Account",
         "CHOOSE_ACCOUNT": "Choose account",
         "CHOOSE_ACCOUNT_TITLE": "Accounts",
@@ -11,6 +12,7 @@
         "CHOOSE_STATUS": "Choose status"
     },
     "NAVIGATE_TO": {
+        "TITLE": "Navigate To",
         "CHOOSE_NAVIGATION_TYPE": "Choose Navigation Type",
         "CHOOSE_ACCOUNT": "Choose Account",
         "CHOOSE_ACCOUNT_TITLE": "Accounts",
@@ -51,6 +53,26 @@
             "TRANSACTION_UUID": "Transaction UUID",
             "CHILD_UUID": "Item UUID",
             "QUERY_PARAMS": "Query Params"
+        }
+    },
+    "GET_VALUES": {
+        "TITLE": "Get Values",
+        "MANUAL_OPTIONS": {
+            "TITLE": "Manual",
+            "SUB_TITLE": "A data source to define options using mapped evaluation",
+            "OPTIONS_TITLE": "Options",
+            "OPTION_KEY": "Key",
+            "OPTION_TITLE": "Title",
+            "ADD_OPTION": "Add Option"
+        },
+        "MAPPED_OPTIONS": {
+            "TITLE": "Mapped",
+            "SELECT_RESOURCE_HEADER": "A data resource to define options using mapped evaluation",
+            "SELECT_RESOURCE_TITLE": "Select Resource",
+            "SELECT_RESOURCE_FIELD_KEY_HEADER": "Select the resource field to be the option key",
+            "SELECT_RESOURCE_FIELD_KEY_TITLE": "Select key field",
+            "SELECT_RESOURCE_FIELD_TITLE_HEADER": "Select the resource field to be displayed",
+            "SELECT_RESOURCE_FIELD_TITLE_TITLE": "Select display title field"
         }
     },
     "COMMON": {

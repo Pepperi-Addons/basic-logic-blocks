@@ -1,4 +1,4 @@
-import { ComponentRef, Directive, EventEmitter, Input, OnDestroy, OnInit, Output, ViewContainerRef } from "@angular/core";
+import { AfterViewInit, ComponentRef, Directive, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { IPepOption } from "@pepperi-addons/ngx-lib";
 import { PepAddonBlockLoaderService } from "@pepperi-addons/ngx-lib/remote-loader";
@@ -6,15 +6,18 @@ import { AddonDataScheme, SchemeFieldType } from "@pepperi-addons/papi-sdk";
 import { Subject, takeUntil } from "rxjs";
 import { FlowParamSource } from "shared";
 import { BaseLogicBlockService } from "../../services/base-logic-blocks.service";
+import { DialogHeaderComponent } from "../dialog-header/dialog-header.component";
 import { DialogActionsComponent } from "../dialog-actions/dialog-actions.component";
 
 @Directive({})
-export abstract class BaseLogicBlockComponent implements OnInit, OnDestroy {
+export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
+    @ViewChild('logicBlockHeader', { read: ViewContainerRef, static: true }) logicBlockHeader: ViewContainerRef;
     @Input() hostObject: { Configuration: any, EventData: AddonDataScheme['Fields'] };
 
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     
     private readonly _destroyed: Subject<void>;
+    private headerContainerRef: ComponentRef<DialogHeaderComponent>;
     private actionsContainerRef: ComponentRef<DialogActionsComponent>;
     private doneIsDisabled = true;
     private abiDialogRef: any;
@@ -31,15 +34,18 @@ export abstract class BaseLogicBlockComponent implements OnInit, OnDestroy {
         this._destroyed = new Subject();
     }
 
+    private createHeaderComponent() {
+        this.headerContainerRef = this.logicBlockHeader.createComponent(DialogHeaderComponent);
+        this.headerContainerRef.location.nativeElement
+        this.headerContainerRef.instance.titleResourceKey = this.getTitleResourceKey();
+        this.logicBlockHeader.insert(this.headerContainerRef.hostView, 0);
+    }
+
     private createActionsComponent() {
         this.actionsContainerRef = this.viewContainerRef.createComponent(DialogActionsComponent);
-        
         this.actionsContainerRef.instance.doneIsDisabled = this.doneIsDisabled;
-        this.actionsContainerRef.instance.currentConfiguration = this.hostObject.Configuration;
-        this.actionsContainerRef.instance.hostEvents.subscribe((event) =>
-            this.hostEvents.emit(event)
-        );
-
+        this.actionsContainerRef.instance.currentConfiguration = this._currentConfiguration;
+        this.actionsContainerRef.instance.hostEvents.subscribe((event) => this.hostEvents.emit(event));
         this.viewContainerRef.insert(this.actionsContainerRef.hostView);
     }
 
@@ -156,9 +162,9 @@ export abstract class BaseLogicBlockComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        debugger;
+        // debugger;
         this.logicBlockService.initFlowParameters(this.hostObject?.EventData);
-        this._currentConfiguration = this.hostObject?.Configuration;
+        this._currentConfiguration = JSON.parse(JSON.stringify(this.hostObject?.Configuration));
         const defaultConfiguration = this.createDefaultConfiguration();
 
         if (!this._currentConfiguration || Object.keys(this._currentConfiguration).length === 0 || this._currentConfiguration.toString() === '{}') {
@@ -166,8 +172,10 @@ export abstract class BaseLogicBlockComponent implements OnInit, OnDestroy {
         }
 
         this.loadDataOnInit();
-        this.createActionsComponent();
+        
         this.loadAccountHostObject();
+        this.createHeaderComponent();
+        this.createActionsComponent();
         this.validateData();
     }
     
@@ -176,7 +184,21 @@ export abstract class BaseLogicBlockComponent implements OnInit, OnDestroy {
         this._destroyed.complete();
     }
     
+    onCloseDialogClick() {
+        this.hostEvents.emit({
+            type: 'close-dialog'
+        });
+    }
+    
+    onDoneClick() {
+        this.hostEvents.emit({
+            type: 'set-configuration',
+            configuration: this.currentConfiguration
+        });
+    }
+
     abstract get currentConfiguration(): any;
+    protected abstract getTitleResourceKey(): string;
     protected abstract loadDataOnInit(): void;
     protected abstract calculateDoneIsDisabled(): boolean;
     protected abstract createDefaultConfiguration(): any;

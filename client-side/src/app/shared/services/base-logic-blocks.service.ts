@@ -34,6 +34,16 @@ export abstract class BaseLogicBlockService {
         })
     }
 
+    changeCursorOnDragStart() {
+        document.body.classList.add('inheritCursors');
+        document.body.style.cursor = 'grabbing';
+    }
+
+    changeCursorOnDragEnd() {
+        document.body.classList.remove('inheritCursors');
+        document.body.style.cursor = 'unset';
+    }
+
     initFlowParameters(flowParameters: AddonDataScheme['Fields']) {
         this._flowParameters = flowParameters;
 

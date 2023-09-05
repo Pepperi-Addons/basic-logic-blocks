@@ -6,14 +6,14 @@ import { ActivitiesViewsType, FlowParamSource, NavigateToActivitiesConifuration,
     NavigateToStaticConifuration, NavigateToTransactionConifuration, NavigationType, TransactionViewsType, NavigateToConfiguration, 
     NavigateToConifurationProperty, isObjectNavigationType } from 'shared';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
-import { BaseLogicBlockComponent } from 'src/app/shared/components/base-logic-block.component.ts/base-logic-block.component';
+import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
 
 @Component({
     templateUrl: './navigate-to.component.html',
     styleUrls: ['./navigate-to.component.scss'],
     providers: [NavigateToLogicBlockService]
 })
-export class NavigateToLogicBlockComponent extends BaseLogicBlockComponent {
+export class NavigateToLogicBlockComponent extends BaseLogicBlockDirective {
     protected navigationToTypeOptions: IPepOption[] = [];
     protected stringFlowParamsOptions: IPepOption[] = [];
     protected slugStaticOptions: IPepOption[] = [];
@@ -131,25 +131,6 @@ export class NavigateToLogicBlockComponent extends BaseLogicBlockComponent {
     // Do nothing here the init implementation is in the loadDataOnInit function.
     // ngOnInit(): void { }
 
-    // onFlowParamSourceChange(value: FlowParamSource, configurationProperty: NavigateToConifurationProperty) {
-    //     if (!configurationProperty) {
-    //         configurationProperty = {};
-    //     }
-
-    //     configurationProperty.FlowParamSource = value;
-    //     configurationProperty.Value = null;
-    //     super.validateData();
-    // }
-
-    // onPropertyValueChange(value: string, configurationProperty: NavigateToConifurationProperty) {
-    //     if (!configurationProperty) {
-    //         configurationProperty = {};
-    //     }
-
-    //     configurationProperty.Value = value;
-    //     super.validateData();
-    // }
-
     onPropertyViewTypeChange(value: ActivitiesViewsType | TransactionViewsType, configurationProperty: NavigateToConifurationProperty, initValue = true) {
         if (this._currentConfiguration.Data.ViewType !== value) {
             this._currentConfiguration.Data.ViewType = value;
@@ -161,35 +142,6 @@ export class NavigateToLogicBlockComponent extends BaseLogicBlockComponent {
             super.validateData();
         }
     }
-
-    // chooseAccountClick(value) {
-    //     this.dialogRef = this.addonBlockService.loadAddonBlockInDialog({
-    //         container: this.viewContainerRef,
-    //         name: 'List',
-    //         hostObject: this.accountsHostObject,
-    //         hostEventsCallback: async ($event) => {
-    //             if($event.action === 'on-done') {
-    //                 this.onPropertyValueChange($event.data.selectedObjects[0], (this._currentConfiguration.Data as NavigateToObjectConifuration).ObjectData);
-    //                 this.dialogRef.close();
-    //             } else if($event.action === 'on-cancel') {
-    //                 this.dialogRef.close();
-    //             }
-    //         }
-    //     });
-    // }
-
-    // closeDialogClick(value) {
-    //     this.hostEvents.emit({
-    //         type: 'close-dialog'
-    //     });
-    // }
-    
-    // doneClick(value) {
-    //     this.hostEvents.emit({
-    //         type: 'set-configuration',
-    //         configuration: this._currentConfiguration
-    //     });
-    // }
 
     /**************************************************************************************/
     /*                            Override base functions.
@@ -205,6 +157,10 @@ export class NavigateToLogicBlockComponent extends BaseLogicBlockComponent {
 
     get currentConfiguration(): NavigateToConfiguration {
         return this._currentConfiguration;
+    }
+
+    protected getTitleResourceKey(): string {
+        return 'NAVIGATE_TO.TITLE';
     }
 
     protected loadDataOnInit(): void {

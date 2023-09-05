@@ -1,3 +1,5 @@
+<ng-container #logicBlockHeader></ng-container>
+
 <div class="configuration-content">
     <pep-select [label]="'NAVIGATE_TO.CHOOSE_NAVIGATION_TYPE' | translate" [options]="navigationToTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Data.Type"
         (valueChange)="onNavigationTypeChange($event)"></pep-select>
@@ -61,11 +63,6 @@
 
     </div>
 </div>
-<!-- <div class="pep-border-top mat-dialog-actions">
-    <pep-button value="{{'COMMON.ACTIONS.CANCEL' | translate}}" styleType="weak" sizeType="md" classNames="pep-spacing-element" (buttonClick)="closeDialogClick($event)"></pep-button>
-    <pep-button value="{{'COMMON.ACTIONS.DONE' | translate}}" styleType="strong" sizeType="md" classNames="pep-spacing-element" [disabled]="doneIsDisabled" (buttonClick)="doneClick($event)"></pep-button>
-</div> -->
-
 
 <ng-template #chooseByParamSourceTemplate let-title="title" let-mandatory="mandatory" let-configurationProperty="configurationProperty" >
     <div class="flex-row">

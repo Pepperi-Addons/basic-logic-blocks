@@ -4,7 +4,8 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { ActiveTransactionLogicBlockService } from './active-transaction.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
-import { BaseLogicBlockComponent } from 'src/app/shared/components/base-logic-block.component.ts/base-logic-block.component';
+import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
+import { FlowParamSource } from 'shared';
 
 export interface ActiveTransactionConifuration {
     Account: ActiveTransactionConifurationProperty;
@@ -12,8 +13,6 @@ export interface ActiveTransactionConifuration {
     TransactionType: ActiveTransactionConifurationProperty;
     Status: ActiveTransactionConifurationProperty;
 }
-
-export type FlowParamSource = 'Static' | 'Dynamic'
 
 export interface ActiveTransactionConifurationProperty {
     FlowParamSource: FlowParamSource;
@@ -26,7 +25,7 @@ export interface ActiveTransactionConifurationProperty {
     styleUrls: ['./active-transaction.component.scss'],
     providers: [ActiveTransactionLogicBlockService]
 })
-export class ActiveTransactionLogicBlockComponent extends BaseLogicBlockComponent {
+export class ActiveTransactionLogicBlockComponent extends BaseLogicBlockDirective {
     protected accountOptions: IPepOption[] = [];
     protected catalogOptions: IPepOption[] = [];
     protected catalogStaticOptions: IPepOption[] = [];
@@ -67,47 +66,6 @@ export class ActiveTransactionLogicBlockComponent extends BaseLogicBlockComponen
     // Do nothing here the init implementation is in the loadDataOnInit function.
     // ngOnInit(): void { }
 
-    // onFlowParamSourceChange(value: FlowParamSource, configurationProperty: ActiveTransactionConifurationProperty) {
-    //     configurationProperty.FlowParamSource = value;
-    //     configurationProperty.Value = null;
-    //     super.validateData();
-    // }
-
-    // onPropertyValueChange(value: string, configurationProperty: ActiveTransactionConifurationProperty) {
-    //     configurationProperty.Value = value;
-    //     super.validateData();
-    // }
-
-    // chooseAccountClick(value) {
-    //     this.dialogRef = this.addonBlockService.loadAddonBlockInDialog({
-    //         container: this.viewContainerRef,
-    //         name: 'List',
-    //         hostObject: this.accountsHostObject,
-    //         hostEventsCallback: async ($event) => {
-    //             if($event.action === 'on-done') {
-    //                 this._currentConfiguration.Account.Value = $event.data.selectedObjects[0];
-    //                 super.validateData();
-    //                 this.dialogRef.close();
-    //             } else if($event.action === 'on-cancel') {
-    //                 this.dialogRef.close();
-    //             }
-    //         }
-    //     });
-    // }
-
-    // closeDialogClick(value) {
-    //     this.hostEvents.emit({
-    //         type: 'close-dialog'
-    //     });
-    // }
-    
-    // doneClick(value) {
-    //     this.hostEvents.emit({
-    //         type: 'set-configuration',
-    //         configuration: this._currentConfiguration
-    //     });
-    // }
-
     /**************************************************************************************/
     /*                            Override base functions.
     /**************************************************************************************/
@@ -122,6 +80,10 @@ export class ActiveTransactionLogicBlockComponent extends BaseLogicBlockComponen
 
     get currentConfiguration(): ActiveTransactionConifuration {
         return this._currentConfiguration as ActiveTransactionConifuration;
+    }
+
+    protected getTitleResourceKey(): string {
+        return 'ACTIVE_TRANSACTIONS.TITLE';
     }
 
     protected loadDataOnInit(): void {

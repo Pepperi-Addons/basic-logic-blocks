@@ -23,4 +23,15 @@ export class DialogActionsComponent {
             configuration: this.currentConfiguration
         });
     }
+
+    // @Output() closeClick: EventEmitter<void> = new EventEmitter<void>();
+    // @Output() doneClick: EventEmitter<void> = new EventEmitter<void>();
+  
+    // onCloseDialogClick(event) {
+    //     this.closeClick.emit();
+    // }
+    
+    // onDoneClick(event) {
+    //     this.doneClick.emit();
+    // }
 }
