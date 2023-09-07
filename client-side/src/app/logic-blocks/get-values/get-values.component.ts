@@ -1,25 +1,13 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { GetValuesLogicBlockService } from './get-values.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
 import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { IPepButtonClickEvent, PepButton } from '@pepperi-addons/ngx-lib/button';
-
-export type valuesType = 'manual' | 'mapped';
-export interface GetValuesConifuration {
-    ValuesType: valuesType;
-    ManualOptions: IPepOption[];
-    MappedData?: GetValuesMappedConifuration;
-}
-
-export interface GetValuesMappedConifuration {
-    Resource?: string;
-    ResourceOptionKeyField?: string;
-    ResourceOptionTitleField?: string;
-    ResourceQuery?: any;
-}
+import { IPepQueryBuilderField, PepQueryBuilderComponent } from '@pepperi-addons/ngx-lib/query-builder';
+import { GetValuesConifuration, valuesType } from 'shared';
 
 @Component({
     templateUrl: './get-values.component.html',
@@ -27,6 +15,8 @@ export interface GetValuesMappedConifuration {
     providers: [GetValuesLogicBlockService]
 })
 export class GetValuesLogicBlockComponent extends BaseLogicBlockDirective {
+    @ViewChild('resourceQueryBuilder', { static: true }) resourceQueryBuilder: PepQueryBuilderComponent;
+
     protected readonly MANUAL_KEY = 'manual';
     protected readonly MAPPED_KEY = 'mapped';
 
@@ -34,6 +24,12 @@ export class GetValuesLogicBlockComponent extends BaseLogicBlockDirective {
 
     protected resourceOptions: IPepOption[] = [];
     protected resourceFieldsOptions: IPepOption[] = [];
+
+    protected qbFields: Array<IPepQueryBuilderField>;
+    protected qbVariableFields: Array<IPepQueryBuilderField>;
+    protected qbResourceQuery: any;
+
+    private isValid = true;
 
     constructor(
         viewContainerRef: ViewContainerRef,
@@ -97,19 +93,62 @@ export class GetValuesLogicBlockComponent extends BaseLogicBlockDirective {
         this.resourceFieldsOptions = this.logicBlockService.getResourceFieldsOptions(this.currentConfiguration.MappedData.Resource);
     }
 
+    private loadFilterFieldsByResource() {
+        const resource = this.logicBlockService.resourcesMap.get(this.currentConfiguration.MappedData.Resource);
+        const fields: IPepQueryBuilderField[] = []
+        
+        Object.keys(resource.Fields).forEach(fieldKey => {
+            const field = resource.Fields[fieldKey];
+            fields.push({
+                FieldID: fieldKey,
+                Title: fieldKey,
+                FieldType: field.Type
+            });
+        });
+
+        this.qbFields = fields;
+    }
+
+    private loadFlowVariableFields() {
+        const flowParametersByType = this.logicBlockService.flowParametersByType;
+        const fields: IPepQueryBuilderField[] = []
+        
+        Array.from(flowParametersByType.keys()).forEach(fieldType => {
+            const fieldsByType = flowParametersByType.get(fieldType).map(field => { return { FieldID: field.key, Title: field.value, FieldType: fieldType }})
+            fields.push(...fieldsByType);
+        });
+        
+        this.qbVariableFields = fields;
+    }
+    
+    private loadQueryBuilderData(isFirstTime: boolean = false) {
+        if (this.currentConfiguration.MappedData?.Resource) {
+            this.qbResourceQuery = JSON.parse(JSON.stringify(this.currentConfiguration.MappedData.ResourceQuery || {}));
+            this.loadFilterFieldsByResource();
+            
+            if (isFirstTime) {
+                this.loadFlowVariableFields();
+            }
+        }
+    }
+
     onMappedResourceChange(value: string) {
         if (!this.currentConfiguration.MappedData) {
             this.currentConfiguration.MappedData = {};
         }
 
         if (this.currentConfiguration.MappedData.Resource !== value) {
-
             this.currentConfiguration.MappedData.Resource = value;
             this.currentConfiguration.MappedData.ResourceOptionKeyField = '';
             this.currentConfiguration.MappedData.ResourceOptionTitleField = '';
 
-            // load the resource fields options.
+            // Load the resource fields options.
             this.loadResourceFieldsOptions();
+
+            // Load the query builder data.
+            // this.resourceQueryBuilder.reset();
+            this.currentConfiguration.MappedData.ResourceQuery = {};
+            this.loadQueryBuilderData();
         }
     }
 
@@ -123,6 +162,10 @@ export class GetValuesLogicBlockComponent extends BaseLogicBlockDirective {
 
     onMappedResourceQueryChange(value: any) {
         this.currentConfiguration.MappedData.ResourceQuery = value;
+    }
+
+    onMappedResourceQueryValidationChanged(isValid: boolean) {
+        this.isValid = isValid;
     }
 
     /**************************************************************************************/
@@ -157,6 +200,7 @@ export class GetValuesLogicBlockComponent extends BaseLogicBlockDirective {
             this.resourceOptions = options;
 
             this.loadResourceFieldsOptions();
+            this.loadQueryBuilderData(true);
         });
     }
 
@@ -169,8 +213,6 @@ export class GetValuesLogicBlockComponent extends BaseLogicBlockDirective {
     }
     
     protected calculateDoneIsDisabled(): boolean {
-        let isDisabled = false;
-
-        return isDisabled;
+        return !this.isValid;
     }
 }

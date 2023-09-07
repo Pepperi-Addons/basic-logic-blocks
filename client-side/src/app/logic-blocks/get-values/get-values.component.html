@@ -35,8 +35,9 @@
         [value]="currentConfiguration.MappedData?.ResourceOptionTitleField" (valueChange)="onMappedResourceTitleChange($event)"></pep-select>
         <div class="pep-border-bottom"></div>
 
-        Query Builder
-        <pep-query-builder [query]="currentConfiguration.MappedData?.ResourceQuery" (queryChange)="onMappedResourceQueryChange($event)"></pep-query-builder>
+        <pep-query-builder #resourceQueryBuilder class="resource-query" [query]="qbResourceQuery" [fields]="qbFields" [variableFields]="qbVariableFields" 
+            (queryChange)="onMappedResourceQueryChange($event)" (formValidationChange)="onMappedResourceQueryValidationChanged($event)">
+        </pep-query-builder>
     </div>
 </div>
     
@@ -48,6 +49,5 @@
         </pep-textbox>
        
         <pep-button class="center-button" iconName="system_bin" (buttonClick)="onDeleteManualOption($event, option)"></pep-button>
-        <!-- <pep-button class="dup-button" iconName="system_copy" (buttonClick)="onDupplicateManualOption($event, option)"></pep-button> -->
     </div>
 </ng-template>

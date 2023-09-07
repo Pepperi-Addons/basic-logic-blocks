@@ -4,6 +4,16 @@ export interface GetValueOption {
     Title: string;
 }
 
-export interface GetValueOptions {
-    Options: GetValueOption[];
+export type valuesType = 'manual' | 'mapped';
+export interface GetValuesConifuration {
+    ValuesType: valuesType;
+    ManualOptions: { key: string, value: string }[]; // IPepOption[];
+    MappedData?: GetValuesMappedConifuration;
+}
+
+export interface GetValuesMappedConifuration {
+    Resource?: string;
+    ResourceOptionKeyField?: string;
+    ResourceOptionTitleField?: string;
+    ResourceQuery?: any;
 }

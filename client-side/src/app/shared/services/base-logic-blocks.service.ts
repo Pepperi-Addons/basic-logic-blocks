@@ -13,6 +13,9 @@ export abstract class BaseLogicBlockService {
 
     private _flowParameters: AddonDataScheme['Fields'];
     private _flowParametersByType: Map<SchemeFieldType, IPepOption[]> = new Map<SchemeFieldType, IPepOption[]>();
+    get flowParametersByType(): ReadonlyMap<SchemeFieldType, IPepOption[]> {
+        return this._flowParametersByType;
+    }
 
     constructor(
         protected translate: TranslateService,

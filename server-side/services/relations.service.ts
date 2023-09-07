@@ -24,7 +24,7 @@ export class RelationsService {
     }
 
     private async createNavigateToLogicBlockRelation(): Promise<any> {
-        const blockName = 'NavigateTo';
+        const blockName = 'Navigate To';
 
         const filename = `file_${this.client.AddonUUID}`;
 
@@ -47,7 +47,7 @@ export class RelationsService {
     }
 
     private async createActiveTransactionLogicBlockRelation(): Promise<any> {
-        const blockName = 'ActiveTransaction';
+        const blockName = 'Active Transaction';
 
         const filename = `file_${this.client.AddonUUID}`;
 
@@ -70,7 +70,7 @@ export class RelationsService {
     }
 
     private async createGetValuesLogicBlockRelation(): Promise<any> {
-        const blockName = 'GetValues';
+        const blockName = 'Get Values';
 
         const filename = `file_${this.client.AddonUUID}`;
 

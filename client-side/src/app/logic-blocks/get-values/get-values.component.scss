@@ -67,5 +67,11 @@
         .pep-border-bottom {
             margin-bottom: 1rem;
         }
+
+        .resource-query {
+            display: block;
+            max-height: 12rem;
+            overflow: auto;
+        }
     }
 }

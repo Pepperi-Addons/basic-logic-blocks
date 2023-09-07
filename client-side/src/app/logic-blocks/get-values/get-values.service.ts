@@ -8,6 +8,9 @@ import { BaseLogicBlockService } from "src/app/shared/services/base-logic-blocks
 export class GetValuesLogicBlockService extends BaseLogicBlockService {
     
     private _resourcesMap: Map<string, AddonData> = new Map<string, AddonData>();
+    get resourcesMap(): ReadonlyMap<string, AddonData> {
+        return this._resourcesMap;
+    }
 
     constructor(
         translate: TranslateService,
@@ -19,7 +22,7 @@ export class GetValuesLogicBlockService extends BaseLogicBlockService {
 
     async getResourcesOptions(): Promise<IPepOption[]> {
         const resources = await this.papiClient.resources.resource('resources').get();
-// debugger;
+
         this._resourcesMap = new Map<string, AddonData>(resources.map(resource => [resource.Name, resource]));
         
         const options: IPepOption[] = resources.map(resource => ({ key: resource.Name, value: resource.Name }));
@@ -32,12 +35,9 @@ export class GetValuesLogicBlockService extends BaseLogicBlockService {
         
         if (resource) {
             options = Object.keys(resource.Fields).map(fieldKey => ({ key: fieldKey, value: fieldKey }));
-    
-            // options = this._resources.map(resource => ({ key: resource.Name, value: resource.Name }));
-
         }
+
         return options;
-        
     }
 
 }
