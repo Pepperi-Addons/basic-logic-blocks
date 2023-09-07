@@ -1,5 +1,5 @@
 import { IClient, IContext } from '@pepperi-addons/cpi-node/build/cpi-side/events';
-import { FieldType, parse, toApiQueryString, JSONFilter, JSONRegularFilter } from '@pepperi-addons/pepperi-filters'
+import { FieldType, parse, toApiQueryString, filter, JSONFilter, JSONRegularFilter } from '@pepperi-addons/pepperi-filters'
 import { GetValueOption, GetValuesConifuration, GetValuesMappedConifuration } from 'shared';
 
 class GetValuesCpiService {
@@ -15,7 +15,27 @@ class GetValuesCpiService {
         return paramValue;
     }
 
-    private async getValuesFromMappedData(mappedData: GetValuesMappedConifuration): Promise<GetValueOption[]> {
+    private getValue(object: any, apiName: string): any {
+        if (!apiName) {
+            return undefined;
+        }
+
+        if (typeof object !== 'object') {
+            return undefined;
+        }
+
+        // support regular APINames & dot anotation
+        if (apiName in object) {
+            return object[apiName];
+        }
+
+        // support nested object & arrays
+        apiName = apiName.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+        const arr = apiName.split('.');
+        return this.getValue(object[arr[0]], arr.slice(1).join('.'));
+    }
+
+    private async getValuesFromMappedData(mappedData: GetValuesMappedConifuration | undefined): Promise<GetValueOption[]> {
         let options: GetValueOption[] = [];
 
         if (mappedData && mappedData.Resource && mappedData.ResourceOptionKeyField && mappedData.ResourceOptionTitleField) {
@@ -27,13 +47,21 @@ class GetValuesCpiService {
                 const resourceQuery: JSONFilter = mappedData.ResourceQuery;
 
                 qsFilter = toApiQueryString(resourceQuery) || '';
+                // const a = toNgxFilter(resourceQuery);
             }
 
             const resource = await pepperi.resources.resource(mappedData.Resource).search({
-                Where: qsFilter,
-                Fields: [mappedData.ResourceOptionKeyField, mappedData.ResourceOptionTitleField],
+                // Where: qsFilter,
+                // Fields: [mappedData.ResourceOptionKeyField, mappedData.ResourceOptionTitleField],
             });
+            debugger;
+                
+            const res = filter(resource.Objects, mappedData.ResourceQuery, this.getValue);
 
+            if (res) {
+
+                debugger;
+            }
             options = resource?.Objects.map(obj => {
                 return {
                     Key: mappedData?.ResourceOptionKeyField ? obj[mappedData.ResourceOptionKeyField] : '',
@@ -52,14 +80,13 @@ class GetValuesCpiService {
             const client: IClient | undefined = context?.client || undefined;
 
             if (client) {
-                const data: GetValuesConifuration = body.Data || {};
+                // debugger;
+                const data: GetValuesConifuration = body || {};
 
                 if (data.ValuesType === 'manual') {
                     values.push(...data.ManualOptions.map(option => { return { Key: option.key, Title: option.value } }));
                 } else { // if (data.ValuesType === 'mapped')
-                    if (data.MappedData && data.MappedData.Resource && data.MappedData.ResourceOptionKeyField && data.MappedData.ResourceOptionTitleField) {
-                        values.push(...await this.getValuesFromMappedData(data.MappedData));
-                    }
+                    values.push(...await this.getValuesFromMappedData(data.MappedData));
                 }
             }
         }
