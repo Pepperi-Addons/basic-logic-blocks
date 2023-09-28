@@ -18,6 +18,15 @@ import { PepNgxCompositeLibModule } from '@pepperi-addons/ngx-composite-lib';
 import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib/group-buttons-settings';
 // import { LogicBlockComponent } from 'src/app/shared/components/logic-block/logic-block.component';
 
+import {
+    PepIconModule,
+    PepIconRegistry,
+    pepIconSystemBin,
+} from '@pepperi-addons/ngx-lib/icon';
+
+const pepIcons = [
+    pepIconSystemBin
+];
 @NgModule({
     declarations: [
         
@@ -30,6 +39,7 @@ import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib
         PepButtonModule,
         PepTextboxModule,
         PepSelectModule,
+        PepIconModule,
         PepRemoteLoaderModule,
         PepTopBarModule,
         PepQueryBuilderModule,
@@ -53,8 +63,11 @@ import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib
 export class GetValuesLogicBlockModule {
     constructor(
         translate: TranslateService,
+        private pepIconRegistry: PepIconRegistry,
         private pepAddonService: PepAddonService
+
     ) {
+        this.pepIconRegistry.registerIcons(pepIcons);
         this.pepAddonService.setDefaultTranslateLang(translate);
     }
 }
