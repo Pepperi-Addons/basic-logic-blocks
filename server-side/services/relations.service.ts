@@ -132,7 +132,7 @@ export class RelationsService {
             ModuleName: `CreateActivityLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
             ElementName: `create-activity-logic-block-element-${this.client.AddonUUID}`,
-            BlockExecutionRelativeURL: '/addon-cpi/activity',
+            BlockExecutionRelativeURL: '/addon-cpi/create_activity_uuid',
         };
 
         return await this.upsertRelation(logicBlockRelation);
