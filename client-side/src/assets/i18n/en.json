@@ -75,6 +75,24 @@
             "SELECT_RESOURCE_FIELD_TITLE_TITLE": "Select display title field"
         }
     },
+    "CREATE_TRANSACTION": {
+        "TITLE": "Create Transaction",
+        "ACCOUNT_TITLE": "Account",
+        "CHOOSE_ACCOUNT": "Choose account",
+        "CHOOSE_ACCOUNT_TITLE": "Accounts",
+        "CATALOG_TITLE": "Catalog",
+        "CHOOSE_CATALOG": "Choose catalog",
+        "TRANSACTION_TYPE_TITLE": "Transaction type",
+        "CHOOSE_TRANSACTION_TYPE": "Choose transaction type"
+    },
+    "CREATE_ACTIVITY": {
+        "TITLE": "Create Activity",
+        "ACCOUNT_TITLE": "Account",
+        "CHOOSE_ACCOUNT": "Choose account",
+        "CHOOSE_ACCOUNT_TITLE": "Accounts",
+        "ACTIVITY_TYPE_TITLE": "Activity type",
+        "CHOOSE_ACTIVITY_TYPE": "Choose activity type"
+    },
     "COMMON": {
         "ACTIONS": {
             "DONE": "Done",

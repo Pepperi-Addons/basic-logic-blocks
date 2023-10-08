@@ -14,6 +14,8 @@ import { SettingsComponent, SettingsModule } from './settings';
 import { NavigateToLogicBlockComponent, NavigateToLogicBlockModule } from './logic-blocks/navigate-to';
 import { ActiveTransactionLogicBlockComponent, ActiveTransactionLogicBlockModule } from './logic-blocks/active-transaction';
 import { GetValuesLogicBlockComponent, GetValuesLogicBlockModule } from './logic-blocks/get-values';
+import { CreateTransactionLogicBlockComponent, CreateTransactionLogicBlockModule } from './logic-blocks/create-transaction';
+import { CreateActivityLogicBlockComponent, CreateActivityLogicBlockModule } from './logic-blocks/create-activity';
 
 import { DialogHeaderComponent } from './shared/components/dialog-header/dialog-header.component';
 import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
@@ -34,6 +36,8 @@ import { config } from './app.config';
         NavigateToLogicBlockModule,
         ActiveTransactionLogicBlockModule,
         GetValuesLogicBlockModule,
+        CreateTransactionLogicBlockModule,
+        CreateActivityLogicBlockModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -66,6 +70,8 @@ export class AppModule implements DoBootstrap {
         this.pepAddonService.defineCustomElement(`active-transaction-logic-block-element-${config.AddonUUID}`, ActiveTransactionLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`navigate-to-logic-block-element-${config.AddonUUID}`, NavigateToLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`get-values-logic-block-element-${config.AddonUUID}`, GetValuesLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`create-transaction-logic-block-element-${config.AddonUUID}`, CreateTransactionLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`create-activity-logic-block-element-${config.AddonUUID}`, CreateActivityLogicBlockComponent, this.injector);
     }
 }
 

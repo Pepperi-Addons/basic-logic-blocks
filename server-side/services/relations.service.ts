@@ -92,6 +92,52 @@ export class RelationsService {
         return await this.upsertRelation(logicBlockRelation);
     }
 
+    private async createCreateTransactionLogicBlockRelation(): Promise<any> {
+        const blockName = 'Create Transaction';
+
+        const filename = `file_${this.client.AddonUUID}`;
+
+        const logicBlockRelation: Relation = {
+            RelationName: 'LogicBlock',
+            Name: blockName,
+            Description: `${blockName} block`,
+            Type: "NgComponent",
+            SubType: "NG14",
+            AddonUUID: this.client.AddonUUID,
+            AddonRelativeURL: filename,
+            ComponentName: `CreateTransactionLogicBlockComponent`, // This is should be the block component name (from the client-side)
+            ModuleName: `CreateTransactionLogicBlockModule`, // This is should be the block module name (from the client-side),
+            ElementsModule: 'WebComponents',
+            ElementName: `create-transaction-logic-block-element-${this.client.AddonUUID}`,
+            BlockExecutionRelativeURL: '/addon-cpi/create_transaction_uuid',
+        };
+
+        return await this.upsertRelation(logicBlockRelation);
+    }
+
+    private async createCreateActivityLogicBlockRelation(): Promise<any> {
+        const blockName = 'Create Activity';
+
+        const filename = `file_${this.client.AddonUUID}`;
+
+        const logicBlockRelation: Relation = {
+            RelationName: 'LogicBlock',
+            Name: blockName,
+            Description: `${blockName} block`,
+            Type: "NgComponent",
+            SubType: "NG14",
+            AddonUUID: this.client.AddonUUID,
+            AddonRelativeURL: filename,
+            ComponentName: `CreateActivityLogicBlockComponent`, // This is should be the block component name (from the client-side)
+            ModuleName: `CreateActivityLogicBlockModule`, // This is should be the block module name (from the client-side),
+            ElementsModule: 'WebComponents',
+            ElementName: `create-activity-logic-block-element-${this.client.AddonUUID}`,
+            BlockExecutionRelativeURL: '/addon-cpi/activity',
+        };
+
+        return await this.upsertRelation(logicBlockRelation);
+    }
+
     async upsertRelations(): Promise<boolean> {
         const dataPromises: Promise<any>[] = [];
 
@@ -99,6 +145,8 @@ export class RelationsService {
         dataPromises.push(this.createNavigateToLogicBlockRelation());
         dataPromises.push(this.createActiveTransactionLogicBlockRelation());
         dataPromises.push(this.createGetValuesLogicBlockRelation());
+        dataPromises.push(this.createCreateTransactionLogicBlockRelation());
+        dataPromises.push(this.createCreateActivityLogicBlockRelation());
 
         await Promise.all(dataPromises);
 
