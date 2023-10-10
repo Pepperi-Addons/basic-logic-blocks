@@ -61,7 +61,7 @@ class NavigateToCpiService {
             if (navigateToType === 'Account Dashboard') {
                 await client.navigateTo({ url: `accounts/home_page/${value}`, history: 'ClearTo' });
             } else if (navigateToType === 'Activity') {
-                await client.navigateTo({ url: `activities/${value}` });
+                await client.navigateTo({ url: `activities/details/${value}` });
             } else if (navigateToType === 'Survey') {
                 await client.navigateTo({ url: `surveys?survey_key=${value}` });
             } else if (navigateToType === 'Slug') {
