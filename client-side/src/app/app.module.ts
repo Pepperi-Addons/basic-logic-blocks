@@ -16,6 +16,7 @@ import { ActiveTransactionLogicBlockComponent, ActiveTransactionLogicBlockModule
 import { GetValuesLogicBlockComponent, GetValuesLogicBlockModule } from './logic-blocks/get-values';
 import { CreateTransactionLogicBlockComponent, CreateTransactionLogicBlockModule } from './logic-blocks/create-transaction';
 import { CreateActivityLogicBlockComponent, CreateActivityLogicBlockModule } from './logic-blocks/create-activity';
+import { CreateSurveyLogicBlockComponent, CreateSurveyLogicBlockModule } from './logic-blocks/create-survey';
 
 import { DialogHeaderComponent } from './shared/components/dialog-header/dialog-header.component';
 import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
@@ -38,6 +39,7 @@ import { config } from './app.config';
         GetValuesLogicBlockModule,
         CreateTransactionLogicBlockModule,
         CreateActivityLogicBlockModule,
+        CreateSurveyLogicBlockModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -72,6 +74,7 @@ export class AppModule implements DoBootstrap {
         this.pepAddonService.defineCustomElement(`get-values-logic-block-element-${config.AddonUUID}`, GetValuesLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`create-transaction-logic-block-element-${config.AddonUUID}`, CreateTransactionLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`create-activity-logic-block-element-${config.AddonUUID}`, CreateActivityLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`create-survey-logic-block-element-${config.AddonUUID}`, CreateSurveyLogicBlockComponent, this.injector);
     }
 }
 
