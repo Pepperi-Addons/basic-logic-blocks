@@ -93,6 +93,14 @@
         "ACTIVITY_TYPE_TITLE": "Activity type",
         "CHOOSE_ACTIVITY_TYPE": "Choose activity type"
     },
+    "CREATE_SURVEY": {
+        "TITLE": "Create Survey",
+        "ACCOUNT_TITLE": "Account",
+        "CHOOSE_ACCOUNT": "Choose account",
+        "CHOOSE_ACCOUNT_TITLE": "Accounts",
+        "SURVEY_TEMPLATE_TITLE": "Survey template",
+        "CHOOSE_SURVEY_TEMPLATE": "Choose survey template"
+    },
     "COMMON": {
         "ACTIONS": {
             "DONE": "Done",

@@ -2,6 +2,7 @@ import '@pepperi-addons/cpi-node'
 import { GetValueOption } from 'shared';
 import ActiveTransactionCpiService from './services/active-transaction.service';
 import CreateActivityCpiService from './services/create-activity.service';
+import CreateSurveyCpiService from './services/create-survey.service';
 import CreateTransactionCpiService from './services/create-transaction.service';
 import GetValuesCpiService from './services/get-values.service';
 import NavigateToCpiService from './services/navigate-to.service';
@@ -81,5 +82,20 @@ router.post('/create_activity_uuid', async (req, res) => {
 
     res.json({
         activityUUID: activityUUID
+    });
+})
+
+router.post('/create_survey_uuid', async (req, res) => {
+    let surveyUUID = '';
+// debugger;
+    if (req.body) {
+        const service = new CreateSurveyCpiService();
+        surveyUUID = await service.createSurveyUUID(req.body, req.context);
+    } else {
+        console.log('no body was sent');
+    }
+
+    res.json({
+        surveyUUID: surveyUUID
     });
 })
