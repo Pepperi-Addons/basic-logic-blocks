@@ -34,7 +34,7 @@ class ActiveTransactionCpiService extends BaseCpiService {
         return catalogFilterValue;
     }
 
-    private getTransactionTypeFilterValue(transactionType: string, context: any): string {
+    private getTransactionTypeFilterValue(transactionType: any, context: any): string {
         let transactionTypeFilterValue = '';
         const trasactionTypeValue = this.getParamValue(transactionType, context);
 
