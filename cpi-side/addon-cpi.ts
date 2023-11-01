@@ -6,6 +6,7 @@ import CreateSurveyCpiService from './services/create-survey.service';
 import CreateTransactionCpiService from './services/create-transaction.service';
 import GetValuesCpiService from './services/get-values.service';
 import NavigateToCpiService from './services/navigate-to.service';
+import OpenExternalCpiService from './services/open-external.service';
 
 export async function load(configuration: any): Promise<void>{
     return Promise.resolve();
@@ -97,5 +98,18 @@ router.post('/create_survey_uuid', async (req, res) => {
 
     res.json({
         surveyUUID: surveyUUID
+    });
+})
+
+router.post('/open_external', async (req, res) => {
+// debugger;
+    if (req.body) {
+        const service = new OpenExternalCpiService();
+        await service.openExternal(req.body, req.context);
+    } else {
+        console.log('no body was sent');
+    }
+
+    res.json({
     });
 })

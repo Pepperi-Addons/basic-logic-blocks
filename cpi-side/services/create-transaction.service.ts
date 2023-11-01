@@ -1,16 +1,6 @@
+import BaseCpiService from "./base-cpi.service";
 
-class CreateTransactionCpiService {
-
-    private getParamValue(param: any, context: any): any {
-        let paramValue = param?.Value || '';
-
-        // If the param source is dynamic, we will get the param value from the context.
-        if (param?.FlowParamSource === 'Dynamic') {
-            paramValue = context[paramValue] || '';
-        }
-
-        return paramValue;
-    }
+class CreateTransactionCpiService extends BaseCpiService {
 
     async createTransactionUUID(body: any, context: any) {
         let transactionUUID = '';

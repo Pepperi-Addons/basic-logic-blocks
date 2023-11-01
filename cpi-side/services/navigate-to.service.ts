@@ -4,19 +4,9 @@ import { NavigationType, ActivitiesViewsType, TransactionViewsType, NavigateToCo
     NavigateToObjectConifuration,
     NavigateToActivitiesConifuration,
     NavigateToTransactionConifuration} from 'shared';
+import BaseCpiService from './base-cpi.service';
 
-class NavigateToCpiService {
-
-    private getParamValue(param: any, context: any): any {
-        let paramValue = param?.Value || '';
-
-        // If the param source is dynamic, we will get the param value from the context.
-        if (param?.FlowParamSource === 'Dynamic') {
-            paramValue = context[paramValue] || '';
-        }
-
-        return paramValue;
-    }
+class NavigateToCpiService extends BaseCpiService {
 
     private async navigateToActivitiesUrl(data: BaseNavigateToConifuration, context: any, client: IClient) {
         const value = this.getParamValue((data as NavigateToActivitiesConifuration).ActivitiesData, context);

@@ -1,16 +1,6 @@
+import BaseCpiService from "./base-cpi.service";
 
-class CreateSurveyCpiService {
-
-    private getParamValue(param: any, context: any): any {
-        let paramValue = param?.Value || '';
-
-        // If the param source is dynamic, we will get the param value from the context.
-        if (param?.FlowParamSource === 'Dynamic') {
-            paramValue = context[paramValue] || '';
-        }
-
-        return paramValue;
-    }
+class CreateSurveyCpiService extends BaseCpiService {
 
     async createSurveyUUID(body: any, context: any) {
         let surveyUUID = '';

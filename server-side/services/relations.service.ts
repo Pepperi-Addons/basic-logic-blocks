@@ -161,6 +161,29 @@ export class RelationsService {
         return await this.upsertRelation(logicBlockRelation);
     }
 
+    private async createOpenExternalLogicBlockRelation(): Promise<any> {
+        const blockName = 'Open external';
+
+        const filename = `file_${this.client.AddonUUID}`;
+
+        const logicBlockRelation: Relation = {
+            RelationName: 'LogicBlock',
+            Name: blockName,
+            Description: `${blockName} block`,
+            Type: "NgComponent",
+            SubType: "NG14",
+            AddonUUID: this.client.AddonUUID,
+            AddonRelativeURL: filename,
+            ComponentName: `OpenExternalLogicBlockComponent`, // This is should be the block component name (from the client-side)
+            ModuleName: `OpenExternalLogicBlockModule`, // This is should be the block module name (from the client-side),
+            ElementsModule: 'WebComponents',
+            ElementName: `open-external-logic-block-element-${this.client.AddonUUID}`,
+            BlockExecutionRelativeURL: '/addon-cpi/open_external',
+        };
+
+        return await this.upsertRelation(logicBlockRelation);
+    }
+
     async upsertRelations(): Promise<boolean> {
         const dataPromises: Promise<any>[] = [];
 
@@ -171,6 +194,7 @@ export class RelationsService {
         dataPromises.push(this.createCreateTransactionLogicBlockRelation());
         dataPromises.push(this.createCreateActivityLogicBlockRelation());
         dataPromises.push(this.createCreateSurveyLogicBlockRelation());
+        dataPromises.push(this.createOpenExternalLogicBlockRelation());
 
         await Promise.all(dataPromises);
 

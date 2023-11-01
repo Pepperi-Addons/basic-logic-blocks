@@ -5,7 +5,7 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { ActiveTransactionLogicBlockService } from './active-transaction.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
-import { FlowParamSource } from 'shared';
+import { FlowParamSource, ConifurationProperty } from 'shared';
 
 export interface ActiveTransactionConifuration {
     Account: ActiveTransactionConifurationProperty;
@@ -14,10 +14,8 @@ export interface ActiveTransactionConifuration {
     Status: ActiveTransactionConifurationProperty;
 }
 
-export interface ActiveTransactionConifurationProperty {
-    FlowParamSource: FlowParamSource;
+export interface ActiveTransactionConifurationProperty extends ConifurationProperty {
     Type: SchemeFieldType;
-    Value: any;
 }
 
 @Component({

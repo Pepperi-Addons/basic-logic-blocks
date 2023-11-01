@@ -101,6 +101,14 @@
         "SURVEY_TEMPLATE_TITLE": "Survey template",
         "CHOOSE_SURVEY_TEMPLATE": "Choose survey template"
     },
+    "OPEN_EXTERNAL": {
+        "TITLE": "Open External",
+        "URL_TITLE": "URL",
+        "EXTERNAL_APP": "External App",
+        "EXTERNAL_APP_DESCRIPTION": "Allows to open an external application.<br/>According to the URL, the operating system will open the relevant application.",
+        "BROWSER": "Browser",
+        "BROWSER_DESCRIPTION": "Open a web site.<br/>On mobile app this will open the in-app browser.<br/>On web this will open in a new tab."
+    },
     "COMMON": {
         "ACTIONS": {
             "DONE": "Done",

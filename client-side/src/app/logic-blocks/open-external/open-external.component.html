@@ -1,0 +1,35 @@
+<ng-container #logicBlockHeader></ng-container>
+
+<div class="configuration-content">
+    <div class="flex-row">
+        <pep-select [label]="'OPEN_EXTERNAL.URL_TITLE' | translate" [options]="parameterTypeOptions" [emptyOption]="false" [value]="currentConfiguration.URL.FlowParamSource"
+            [mandatory]="true" (valueChange)="onFlowParamSourceChange($event, currentConfiguration.URL)"></pep-select>
+
+        <pep-textbox *ngIf="currentConfiguration.URL.FlowParamSource === 'Static'"
+            [value]="currentConfiguration.URL.Value" (valueChange)="onPropertyValueChange($event, currentConfiguration.URL)"></pep-textbox>
+        <pep-select *ngIf="currentConfiguration.URL.FlowParamSource === 'Dynamic'" [options]="urlOptions" [emptyOption]="false" 
+            [value]="currentConfiguration.URL.Value" (valueChange)="onPropertyValueChange($event, currentConfiguration.URL)"></pep-select>
+    </div>
+    <div class="flex-row">
+        <mat-radio-group class="radio-group ">
+            <mat-radio-button class="pep-radio-button md no-default-background" [value]="'OPEN_EXTERNAL.EXTERNAL_APP' | translate"
+                [checked]="currentConfiguration.Type === 'external-app'" (click)="onUrlTypeChange('external-app')">
+                <span class="body-sm ellipsis">{{ 'OPEN_EXTERNAL.EXTERNAL_APP' | translate }}</span>
+            </mat-radio-button>
+            <mat-radio-button class="pep-radio-button md no-default-background" [value]="'OPEN_EXTERNAL.BROWSER' | translate"
+                [checked]="currentConfiguration.Type === 'browser'" (click)="onUrlTypeChange('browser')">
+                <span class="body-sm ellipsis">{{ 'OPEN_EXTERNAL.BROWSER' | translate }}</span>
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div>
+        <span class="title body-md">{{ 'OPEN_EXTERNAL.EXTERNAL_APP' | translate }}</span>
+        <br/>
+        <p class="body-md" [innerHTML]="'OPEN_EXTERNAL.EXTERNAL_APP_DESCRIPTION' | translate"></p>
+    </div>
+    <div>
+        <span class="title body-md">{{ 'OPEN_EXTERNAL.EXTERNAL_APP' | translate }}</span>
+        <br/>
+        <p class="body-md" [innerHTML]="'OPEN_EXTERNAL.BROWSER_DESCRIPTION' | translate"></p>
+    </div>
+</div>

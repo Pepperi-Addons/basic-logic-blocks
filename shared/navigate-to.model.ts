@@ -1,4 +1,5 @@
-export type FlowParamSource = 'Static' | 'Dynamic'
+import { ConifurationProperty } from "./common.model";
+
 export type ActivitiesViewsType = 'All Lists' | 'Single List' | '';
 export type TransactionViewsType = 'Order Center' | 'Item Details' | 'Matrix' | 'Cart' | 'Header' | '';
 
@@ -16,22 +17,22 @@ export interface NavigateToStaticConifuration extends BaseNavigateToConifuration
 }
 export interface NavigateToObjectConifuration extends BaseNavigateToConifuration {
     Type: ObjectNavigationType;
-    ObjectData: NavigateToConifurationProperty;
+    ObjectData: ConifurationProperty;
     // FlowParamSource: FlowParamSource;
     // Value: any;
 }
 export interface NavigateToActivitiesConifuration extends BaseNavigateToConifuration {
     Type: ActivitiesNavigationType;
     ViewType: ActivitiesViewsType;
-    ActivitiesData: NavigateToConifurationProperty;
+    ActivitiesData: ConifurationProperty;
     // Value?: any;
 }
 export interface NavigateToTransactionConifuration extends BaseNavigateToConifuration {
     Type: TransactionNavigationType;
     ViewType: TransactionViewsType;
-    TransactionData: NavigateToConifurationProperty;
-    ChildTransactionData: NavigateToConifurationProperty;
-    QsTransactionData: NavigateToConifurationProperty;
+    TransactionData: ConifurationProperty;
+    ChildTransactionData: ConifurationProperty;
+    QsTransactionData: ConifurationProperty;
 
     // FlowParamSource: FlowParamSource;
     // Value?: any;
@@ -39,11 +40,6 @@ export interface NavigateToTransactionConifuration extends BaseNavigateToConifur
     // ChildValue?: any;
     // QsFlowParamSource?: FlowParamSource;
     // QsValue?: any;
-}
-
-export interface NavigateToConifurationProperty {
-    FlowParamSource?: FlowParamSource;
-    Value?: any;
 }
 
 export type StaticNavigationType = 'Home' | 'Back' | 'Accounts' | 'Users' | 'Contacts' | 'Items';

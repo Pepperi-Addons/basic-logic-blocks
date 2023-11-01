@@ -1,17 +1,7 @@
 import { FieldType, parse, JSONFilter, JSONRegularFilter } from '@pepperi-addons/pepperi-filters'
+import BaseCpiService from './base-cpi.service';
 
-class ActiveTransactionCpiService {
-
-    private getParamValue(param: any, context: any): any {
-        let paramValue = param?.Value || '';
-
-        // If the param source is dynamic, we will get the param value from the context.
-        if (param?.FlowParamSource === 'Dynamic') {
-            paramValue = context[paramValue] || '';
-        }
-
-        return paramValue;
-    }
+class ActiveTransactionCpiService extends BaseCpiService {
 
     private getAccountUUID(account: any, context: any): string {
         const accountValue = this.getParamValue(account, context);

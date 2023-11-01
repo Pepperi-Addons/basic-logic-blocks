@@ -5,7 +5,7 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { CreateSurveyLogicBlockService } from './create-survey.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
-import { FlowParamSource } from 'shared';
+import { ConifurationProperty } from 'shared';
 
 export interface CreateSurveyConifuration {
     Account: CreateSurveyConifurationProperty;
@@ -13,10 +13,8 @@ export interface CreateSurveyConifuration {
     // Resource: CreateSurveyConifurationProperty; // TODO: add this if neccessary (default is MySurveys).
 }
 
-export interface CreateSurveyConifurationProperty {
-    FlowParamSource: FlowParamSource;
+export interface CreateSurveyConifurationProperty extends ConifurationProperty {
     Type: SchemeFieldType;
-    Value: any;
 }
 
 @Component({

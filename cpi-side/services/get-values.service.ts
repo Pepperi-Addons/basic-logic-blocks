@@ -1,8 +1,9 @@
 import { IClient, IContext } from '@pepperi-addons/cpi-node/build/cpi-side/events';
 import { FieldType, parse, toApiQueryString, filter, JSONFilter, JSONBaseFilter } from '@pepperi-addons/pepperi-filters'
 import { GetValueOption, GetValuesConifuration, GetValuesMappedConifuration } from 'shared';
+import BaseCpiService from './base-cpi.service';
 
-class GetValuesCpiService {
+class GetValuesCpiService extends BaseCpiService {
 
     private setDynamicValuesInFilter(jsonFilter: JSONFilter, context: any) {
         if (jsonFilter.Operation === 'AND' || jsonFilter.Operation === 'OR') {

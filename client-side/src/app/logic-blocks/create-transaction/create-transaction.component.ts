@@ -5,7 +5,7 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { CreateTransactionLogicBlockService } from './create-transaction.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
-import { FlowParamSource } from 'shared';
+import { ConifurationProperty } from 'shared';
 
 export interface CreateTransactionConifuration {
     Account: CreateTransactionConifurationProperty;
@@ -13,10 +13,8 @@ export interface CreateTransactionConifuration {
     TransactionType: CreateTransactionConifurationProperty;
 }
 
-export interface CreateTransactionConifurationProperty {
-    FlowParamSource: FlowParamSource;
+export interface CreateTransactionConifurationProperty extends ConifurationProperty {
     Type: SchemeFieldType;
-    Value: any;
 }
 
 @Component({

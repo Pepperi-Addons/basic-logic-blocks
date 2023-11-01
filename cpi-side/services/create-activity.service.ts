@@ -1,16 +1,6 @@
+import BaseCpiService from "./base-cpi.service";
 
-class CreateActivityCpiService {
-
-    private getParamValue(param: any, context: any): any {
-        let paramValue = param?.Value || '';
-
-        // If the param source is dynamic, we will get the param value from the context.
-        if (param?.FlowParamSource === 'Dynamic') {
-            paramValue = context[paramValue] || '';
-        }
-
-        return paramValue;
-    }
+class CreateActivityCpiService extends BaseCpiService {
 
     async createActivityUUID(body: any, context: any) {
         let activityUUID = '';

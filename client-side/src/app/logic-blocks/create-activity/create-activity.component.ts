@@ -5,17 +5,15 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { CreateActivityLogicBlockService } from './create-activity.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
-import { FlowParamSource } from 'shared';
+import { ConifurationProperty } from 'shared';
 
 export interface CreateActivityConifuration {
     Account: CreateActivityConifurationProperty;
     ActivityType: CreateActivityConifurationProperty;
 }
 
-export interface CreateActivityConifurationProperty {
-    FlowParamSource: FlowParamSource;
+export interface CreateActivityConifurationProperty extends ConifurationProperty {
     Type: SchemeFieldType;
-    Value: any;
 }
 
 @Component({
