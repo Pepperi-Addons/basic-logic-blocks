@@ -4,7 +4,8 @@ import { IPepOption } from '@pepperi-addons/ngx-lib';
 import { NavigateToLogicBlockService } from './navigate-to.service';
 import { ActivitiesViewsType, FlowParamSource, NavigateToActivitiesConifuration, NavigateToObjectConifuration, 
     NavigateToStaticConifuration, NavigateToTransactionConifuration, NavigationType, TransactionViewsType, NavigateToConfiguration, 
-    NavigateToConifurationProperty, isObjectNavigationType } from 'shared';
+    isObjectNavigationType, 
+    ConifurationProperty} from 'shared';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
 
@@ -131,7 +132,7 @@ export class NavigateToLogicBlockComponent extends BaseLogicBlockDirective {
     // Do nothing here the init implementation is in the loadDataOnInit function.
     // ngOnInit(): void { }
 
-    onPropertyViewTypeChange(value: ActivitiesViewsType | TransactionViewsType, configurationProperty: NavigateToConifurationProperty, initValue = true) {
+    onPropertyViewTypeChange(value: ActivitiesViewsType | TransactionViewsType, configurationProperty: ConifurationProperty, initValue = true) {
         if (this._currentConfiguration.Data.ViewType !== value) {
             this._currentConfiguration.Data.ViewType = value;
     
