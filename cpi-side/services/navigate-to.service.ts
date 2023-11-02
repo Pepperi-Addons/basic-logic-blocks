@@ -14,7 +14,7 @@ class NavigateToCpiService extends BaseCpiService {
 
         if (viewType === 'All Lists' || (viewType === 'Single List' && value)) {
             const listID = viewType === 'Single List' ? `?listID=GL_${value}` : '';
-            await client.navigateTo({ url: `list/all_activities${listID}`, history: 'ClearTo' });
+            await client.navigateTo({ url: `/list/all_activities${listID}`, history: 'ClearTo' });
         }
     }
 
@@ -30,15 +30,15 @@ class NavigateToCpiService extends BaseCpiService {
             const childValue = this.getParamValue((data as NavigateToTransactionConifuration).ChildTransactionData, context);
 
             if (viewType === 'Order Center') {
-                await client.navigateTo({ url: `transactions/scope_items/${transactionValue}${qsValue}` });
+                await client.navigateTo({ url: `/transactions/scope_items/${transactionValue}${qsValue}` });
             } else if (viewType === 'Cart') {
-                await client.navigateTo({ url: `transactions/cart/${transactionValue}${qsValue}` });
+                await client.navigateTo({ url: `/transactions/cart/${transactionValue}${qsValue}` });
             } else if (viewType === 'Header') {
-                await client.navigateTo({ url: `transactions/details/${transactionValue}${qsValue}` });
+                await client.navigateTo({ url: `/transactions/details/${transactionValue}${qsValue}` });
             } else if (viewType === 'Item Details') {
-                await client.navigateTo({ url: `transactions/item_details/${transactionValue}/${childValue}${qsValue}` });
+                await client.navigateTo({ url: `/transactions/item_details/${transactionValue}/${childValue}${qsValue}` });
             } else if (viewType === 'Matrix') {
-                await client.navigateTo({ url: `transactions/matrix/${transactionValue}/${childValue}${qsValue}` });
+                await client.navigateTo({ url: `/transactions/matrix/${transactionValue}/${childValue}${qsValue}` });
             }
         }
     }
@@ -49,9 +49,9 @@ class NavigateToCpiService extends BaseCpiService {
             const value = this.getParamValue((data as NavigateToObjectConifuration).ObjectData, context);
 
             if (navigateToType === 'Account Dashboard') {
-                await client.navigateTo({ url: `accounts/home_page/${value}`, history: 'ClearTo' });
+                await client.navigateTo({ url: `/accounts/home_page/${value}`, history: 'ClearTo' });
             } else if (navigateToType === 'Activity') {
-                await client.navigateTo({ url: `activities/details/${value}` });
+                await client.navigateTo({ url: `/activities/details/${value}` });
             } else if (navigateToType === 'Survey') {
                 await client.navigateTo({ url: `surveys?survey_key=${value}` });
             } else if (navigateToType === 'Slug') {
@@ -76,17 +76,17 @@ class NavigateToCpiService extends BaseCpiService {
 
                 if (navigateToType) {
                     if (navigateToType === 'Home') {
-                        await client.navigateTo({ url: 'homepage', history: 'ClearAll' });
+                        await client.navigateTo({ url: '/homepage', history: 'ClearAll' });
                     } else if (navigateToType === 'Back') {
                         await client.navigateTo({ url: 'back' });
                     } else if (navigateToType === 'Accounts') {
-                        await client.navigateTo({ url: 'list/accounts', history: 'ClearTo' });
+                        await client.navigateTo({ url: '/list/accounts', history: 'ClearTo' });
                     } else if (navigateToType === 'Users') {
-                        await client.navigateTo({ url: 'list/users' });
+                        await client.navigateTo({ url: '/list/users' });
                     } else if (navigateToType === 'Contacts') {
-                        await client.navigateTo({ url: 'list/contacts' });
+                        await client.navigateTo({ url: '/list/contacts' });
                     } else if (navigateToType === 'Items') {
-                        await client.navigateTo({ url: 'list/items' });
+                        await client.navigateTo({ url: '/list/items' });
                     } else {
                         this.navigateToComplexUrl(navigateToType, data, context, client);
                     }
