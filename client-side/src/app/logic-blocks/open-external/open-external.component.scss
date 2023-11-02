@@ -13,5 +13,13 @@
         .field-with-no-title {
             margin-top: variables.$form-field-title-height;
         }
+
+        .radio-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: variables.$spacing-sm;
+            margin-bottom: variables.$form-spacing;
+        }
     }
 }

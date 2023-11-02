@@ -9,10 +9,8 @@ class OpenExternalCpiService extends BaseCpiService {
             const client: IClient | undefined = context?.client || undefined;
 
             if (client) {
-                const data = body.Data || {};
-                const openExternalType: UrlType = data.Type || 'external-app';
-
-                const value = this.getParamValue((data as OpenExternalConifuration).URL, context);
+                const openExternalType: UrlType = body.Type || 'external-app';
+                const value = this.getParamValue((body as OpenExternalConifuration).URL, context);
 
                 if (openExternalType === 'external-app') {
                     client.openURI({
