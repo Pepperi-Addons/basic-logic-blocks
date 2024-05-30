@@ -7,6 +7,7 @@ import CreateTransactionCpiService from './services/create-transaction.service';
 import GetValuesCpiService from './services/get-values.service';
 import NavigateToCpiService from './services/navigate-to.service';
 import OpenExternalCpiService from './services/open-external.service';
+import EditRichTextCpiService from './services/edit-rich-text.service';
 
 export async function load(configuration: any): Promise<void>{
     return Promise.resolve();
@@ -111,5 +112,18 @@ router.post('/open_external', async (req, res) => {
     }
 
     res.json({
+    });
+})
+
+router.post('/edit_rich_text', async (req, res) => {
+    if (req.body) {
+        const service = new EditRichTextCpiService();
+        // TODO - implement the edit rich text logic
+    } else {
+        console.log('no body was sent');
+    }
+
+    res.json({
+        configuration: {}
     });
 })

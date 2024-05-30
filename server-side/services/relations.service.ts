@@ -184,6 +184,30 @@ export class RelationsService {
         return await this.upsertRelation(logicBlockRelation);
     }
 
+    private async createEditRichTextLogicBlockRelation(): Promise<any> {
+        const blockName = 'EditRichText';
+
+        const filename = `file_${this.client.AddonUUID}`;
+
+        const logicBlockRelation: Relation = {
+            RelationName: 'LogicBlock',
+            Name: blockName,
+            Description: `${blockName} block`,
+            Type: "NgComponent",
+            SubType: "NG14",
+            AddonUUID: this.client.AddonUUID,
+            AddonRelativeURL: filename,
+            ComponentName: `EditRichTextLogicBlockComponent`, // This is should be the block component name (from the client-side)
+            ModuleName: `EditRichTextLogicBlockkModule`, // This is should be the block module name (from the client-side),
+            ElementsModule: 'WebComponents',
+            ElementName: `edit-rich-text-logic-block-element-${this.client.AddonUUID}`,
+            BlockExecutionRelativeURL: '/addon-cpi/edit_rich_text',
+            Title: 'Rich Text - Find & Replace',
+        };
+
+        return await this.upsertRelation(logicBlockRelation);
+    }
+
     async upsertRelations(): Promise<boolean> {
         const dataPromises: Promise<any>[] = [];
 
@@ -195,6 +219,7 @@ export class RelationsService {
         dataPromises.push(this.createCreateActivityLogicBlockRelation());
         dataPromises.push(this.createCreateSurveyLogicBlockRelation());
         dataPromises.push(this.createOpenExternalLogicBlockRelation());
+        dataPromises.push(this.createEditRichTextLogicBlockRelation());
 
         await Promise.all(dataPromises);
 

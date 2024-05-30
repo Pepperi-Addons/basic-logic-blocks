@@ -101,6 +101,9 @@
         "SURVEY_TEMPLATE_TITLE": "Survey template",
         "CHOOSE_SURVEY_TEMPLATE": "Choose survey template"
     },
+    "EDIT_RICH_TEXT": {
+        "TITLE": "Rich Text - Find & Replace"
+    },
     "OPEN_EXTERNAL": {
         "TITLE": "Open External",
         "URL_TITLE": "URL",

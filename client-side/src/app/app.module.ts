@@ -18,7 +18,7 @@ import { CreateTransactionLogicBlockComponent, CreateTransactionLogicBlockModule
 import { CreateActivityLogicBlockComponent, CreateActivityLogicBlockModule } from './logic-blocks/create-activity';
 import { CreateSurveyLogicBlockComponent, CreateSurveyLogicBlockModule } from './logic-blocks/create-survey';
 import { OpenExternalLogicBlockComponent, OpenExternalLogicBlockModule } from './logic-blocks/open-external';
-
+import { EditRichTextLogicBlockComponent, EditRichTextLogicBlockkModule } from './logic-blocks/edit-rich-text';
 import { DialogHeaderComponent } from './shared/components/dialog-header/dialog-header.component';
 import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
 
@@ -42,6 +42,7 @@ import { config } from './app.config';
         CreateActivityLogicBlockModule,
         CreateSurveyLogicBlockModule,
         OpenExternalLogicBlockModule,
+        EditRichTextLogicBlockkModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -78,6 +79,7 @@ export class AppModule implements DoBootstrap {
         this.pepAddonService.defineCustomElement(`create-activity-logic-block-element-${config.AddonUUID}`, CreateActivityLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`create-survey-logic-block-element-${config.AddonUUID}`, CreateSurveyLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`open-external-logic-block-element-${config.AddonUUID}`, OpenExternalLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`edit-rich-text-logic-block-element-${config.AddonUUID}`, EditRichTextLogicBlockComponent, this.injector);
     }
 }
 
