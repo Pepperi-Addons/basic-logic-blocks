@@ -39,6 +39,7 @@ export class EditorFormComponent implements OnInit {
     key: string;
 
     ngOnInit() {
+       
     }
 
     goBack() {

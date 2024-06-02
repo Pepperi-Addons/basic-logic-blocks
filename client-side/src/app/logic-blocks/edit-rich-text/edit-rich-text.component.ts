@@ -8,8 +8,9 @@ import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-bl
 import { ConifurationProperty } from 'shared';
 
 export interface EditRichTextConfiguration {
-    Account: EditRichTextConfigurationProperty;
-    ActivityType: EditRichTextConfigurationProperty;
+    Object: EditRichTextConfigurationProperty;
+    Find: EditRichTextConfigurationProperty;
+    Replace: EditRichTextConfigurationProperty;
 }
 
 export interface EditRichTextConfigurationProperty extends ConifurationProperty {
@@ -22,7 +23,8 @@ export interface EditRichTextConfigurationProperty extends ConifurationProperty 
     providers: [CreateEditRichTextService]
 })
 export class EditRichTextLogicBlockComponent extends BaseLogicBlockDirective {
-    protected accountOptions: IPepOption[] = [];
+    protected objectFlowParamsOptions: IPepOption[] = [];
+    protected stringFlowParamsOptions: IPepOption[] = [];
     
     constructor(
         viewContainerRef: ViewContainerRef,
@@ -34,8 +36,9 @@ export class EditRichTextLogicBlockComponent extends BaseLogicBlockDirective {
     }
 
     private loadOptions() {
-        const stringFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('String');
-        this.accountOptions = stringFlowParamsOptions;
+        this.stringFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('String');
+        this.objectFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('Object');
+        //this.accountOptions = stringFlowParamsOptions;
     }
 
     // Do nothing here the init implementation is in the loadDataOnInit function.
@@ -45,9 +48,7 @@ export class EditRichTextLogicBlockComponent extends BaseLogicBlockDirective {
     /*                            Override base functions.
     /**************************************************************************************/
 
-    protected onAccountChoose(accountUUID: string) {
-        this.onPropertyValueChange(accountUUID, this.currentConfiguration.Account);
-    }
+  
 
     /**************************************************************************************/
     /*                            Implements abstract functions.
@@ -70,20 +71,24 @@ export class EditRichTextLogicBlockComponent extends BaseLogicBlockDirective {
         //     this.currentConfiguration.ActivityType = defaultConfiguration.ActivityType;
         // }
 
-        // this.loadOptions();
+         this.loadOptions();
     }
 
     protected createDefaultConfiguration(): EditRichTextConfiguration {
         const config: EditRichTextConfiguration = {
-            Account: {
-                FlowParamSource: 'Static',
-                Type: 'String',
-                Value: null
+            Object: {
+                Type: 'Object',
+                Value: ''
             },
-            ActivityType: {
+            Find: {
                 FlowParamSource: 'Static',
                 Type: 'String',
-                Value: null
+                Value: ''
+            },
+            Replace: {
+                FlowParamSource: 'Static',
+                Type: 'String',
+                Value: ''
             }
         };
 
@@ -92,7 +97,7 @@ export class EditRichTextLogicBlockComponent extends BaseLogicBlockDirective {
     
     protected calculateDoneIsDisabled(): boolean {
         // TODO - Implement the logic here.
-        return true;
+        return false;
     }
      
 }

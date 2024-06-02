@@ -16,7 +16,6 @@ export class CreateSurveyLogicBlockService extends BaseLogicBlockService {
 
     async getSurveyTemplateOptions(): Promise<IPepOption[]> {
         // TODO:
-        debugger;
         const surveyTemplates = await this.papiClient.resources.resource('MySurveyTemplates').get();
         const options: IPepOption[] = surveyTemplates.map(template => ({ key: template.Key.toString(), value: template.Name }));
         return options;

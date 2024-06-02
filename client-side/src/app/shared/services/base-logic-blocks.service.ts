@@ -49,7 +49,6 @@ export abstract class BaseLogicBlockService {
 
     initFlowParameters(flowParameters: AddonDataScheme['Fields']) {
         this._flowParameters = flowParameters;
-
         Object.keys(this._flowParameters).forEach(key => {
             const param: SchemeField = this._flowParameters[key];
             if (!this._flowParametersByType.has(param.Type)) {
