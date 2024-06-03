@@ -5,8 +5,8 @@ class EditRichTextCpiService extends BaseCpiService {
         let configurationRes = '';
         if (context) {
             configurationRes = context[body.Object.FlowParamSource] || context['configuration'];
-            const findStr = this.getDynamicPageParamValue(body?.Find,context);
-            const replaceStr =this.getDynamicPageParamValue(body?.Replace,context);
+            const findStr = this.getDynamicPageParamValue(body?.Find, context);
+            const replaceStr =this.getDynamicPageParamValue(body?.Replace, context);
 
             configurationRes['RichText'] = configurationRes['RichText'].replace(new RegExp(findStr, 'g'), replaceStr);
             return configurationRes;
@@ -14,7 +14,7 @@ class EditRichTextCpiService extends BaseCpiService {
     }
 
     private getDynamicPageParamValue(value: any, context: any) {
-        if(value && value.FlowParamSource === 'Static') {
+        if (value && value.FlowParamSource === 'Static') {
             return value.Value || '';
         }
         else if (value && value.FlowParamSource === 'Dynamic') {
