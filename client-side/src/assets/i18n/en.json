@@ -126,5 +126,11 @@
             "CITY": "City",
             "ZIPCODE": "Zip Code"
         }
+    },
+    "EXTRACT_VALUE": {
+        "SELECT_OBJECT":"Select Object",
+        "PATH":"Path",
+        "SAVE_RESULT":"Save result as",
+        "TITLE":"Extract Value"
     }
 }

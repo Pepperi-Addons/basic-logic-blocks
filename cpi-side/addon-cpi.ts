@@ -127,3 +127,9 @@ router.post('/edit_rich_text', async (req, res) => {
         configuration: result
     });
 })
+
+router.post('/extract_value',async (req,res)=> {
+
+
+    //need to add logic according to prd and block
+})

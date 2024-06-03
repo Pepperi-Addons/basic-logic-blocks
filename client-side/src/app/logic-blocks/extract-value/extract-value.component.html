@@ -1,0 +1,45 @@
+<ng-container #logicBlockHeader></ng-container>
+
+<div class="configuration-content">
+    <div class="flex-row">
+        <!-- <pep-select [label]="'EXTRACT_VALUE.SELECT_OBJECT' | translate" [options]="parameterTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Account.FlowParamSource"
+            [mandatory]="true" (valueChange)="valueChange($event)"></pep-select>
+
+        <pep-textbox *ngIf="currentConfiguration.Account.FlowParamSource === 'Static'"
+            [value]="currentConfiguration.Account.Value" (valueChange)="valueChange($event)"></pep-textbox>
+        <pep-select *ngIf="currentConfiguration.Account.FlowParamSource === 'Dynamic'" [options]="objectOptions" [emptyOption]="false" 
+            [value]="currentConfiguration.Account.Value" (valueChange)="valueChange($event)"></pep-select> -->
+    </div>
+    <div class="flex-row">
+        <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
+            title: ('EXTRACT_VALUE.PATH' | translate),
+            configurationProperty: currentConfiguration, 
+            staticOptions: catalogStaticOptions,
+            dynamicOptions: catalogOptions,
+            mandatory: true }">
+        </ng-container>
+    </div>
+    <div class="flex-row">
+        <ng-container *ngTemplateOutlet="chooseByParamSourceTemplate; context: { 
+            title: ('EXTRACT_VALUE.SAVE_RESULT' | translate),
+            configurationProperty: currentConfiguration, 
+            staticOptions: transactionTypeStaticOptions,
+            dynamicOptions: transactionTypeOptions,
+            mandatory: true }">
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #chooseByParamSourceTemplate let-title="title" let-mandatory="mandatory" let-configurationProperty="configurationProperty" 
+    let-staticOptions="staticOptions" let-dynamicOptions="dynamicOptions" let-isStaticMulti="isStaticMulti">
+
+    <!-- Title & static dynamic dropdown -->
+    <!-- <pep-select [label]="title" [options]="parameterTypeOptions" [emptyOption]="false" [value]="configurationProperty.FlowParamSource"
+        [mandatory]="mandatory" (valueChange)="onFlowParamSourceChange($event, configurationProperty)"></pep-select> -->
+
+    <!-- Static || Dynamic dropdown -->
+    <!-- <pep-select *ngIf="configurationProperty.FlowParamSource === 'Static'" [type]="isStaticMulti ? 'multi' : 'select'" [options]="staticOptions" [emptyOption]="false" 
+        [value]="configurationProperty.Value" (valueChange)="onPropertyValueChange($event, configurationProperty)"></pep-select>
+    <pep-select *ngIf="configurationProperty.FlowParamSource === 'Dynamic'" [options]="dynamicOptions" [emptyOption]="false" 
+        [value]="configurationProperty.Value" (valueChange)="onPropertyValueChange($event, configurationProperty)"></pep-select>
+</ng-template> -->

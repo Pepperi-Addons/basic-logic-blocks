@@ -209,6 +209,32 @@ export class RelationsService {
         return await this.upsertRelation(logicBlockRelation);
     }
 
+
+    private async createExtractValueLogicBlockRelation(): Promise<any> {
+        const blockName = 'Extract Value';
+
+        const filename = `file_${this.client.AddonUUID}`;
+
+        const logicBlockRelation: Relation = {
+            RelationName: 'LogicBlock',
+            Name: blockName,
+            Description: `${blockName} block`,
+            Type: "NgComponent",
+            SubType: "NG14",
+            AddonUUID: this.client.AddonUUID,
+            AddonRelativeURL: filename,
+            ComponentName: `ExtractValueLogicBlockComponent`, // This is should be the block component name (from the client-side)
+            ModuleName: `ExtractValueLogicBlockkModule`, // This is should be the block module name (from the client-side),
+            ElementsModule: 'WebComponents',
+            ElementName: `extract-value-logic-block-element-${this.client.AddonUUID}`,
+            BlockExecutionRelativeURL: '/addon-cpi/extract_value',
+            Hidden: false,
+            Title: 'Extract Value',
+        };
+
+        return await this.upsertRelation(logicBlockRelation);
+    }
+
     async upsertRelations(): Promise<boolean> {
         const dataPromises: Promise<any>[] = [];
 
@@ -221,6 +247,7 @@ export class RelationsService {
         dataPromises.push(this.createCreateSurveyLogicBlockRelation());
         dataPromises.push(this.createOpenExternalLogicBlockRelation());
         dataPromises.push(this.createEditRichTextLogicBlockRelation());
+        dataPromises.push(this.createExtractValueLogicBlockRelation())
 
         await Promise.all(dataPromises);
 
