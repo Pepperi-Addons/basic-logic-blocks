@@ -116,14 +116,14 @@ router.post('/open_external', async (req, res) => {
 })
 
 router.post('/edit_rich_text', async (req, res) => {
-    if (req.body) {
+    let result = {}
+    if (req?.body) {
         const service = new EditRichTextCpiService();
-        // TODO - implement the edit rich text logic
+        result = await service.findReplaceText(req.body, req.context) ?? {};
     } else {
         console.log('no body was sent');
     }
-
     res.json({
-        configuration: {}
+        configuration: result
     });
 })

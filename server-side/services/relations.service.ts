@@ -185,7 +185,7 @@ export class RelationsService {
     }
 
     private async createEditRichTextLogicBlockRelation(): Promise<any> {
-        const blockName = 'EditRichText';
+        const blockName = 'Rich Text - Find Replace';
 
         const filename = `file_${this.client.AddonUUID}`;
 
@@ -202,6 +202,7 @@ export class RelationsService {
             ElementsModule: 'WebComponents',
             ElementName: `edit-rich-text-logic-block-element-${this.client.AddonUUID}`,
             BlockExecutionRelativeURL: '/addon-cpi/edit_rich_text',
+            Hidden: false,
             Title: 'Rich Text - Find & Replace',
         };
 
