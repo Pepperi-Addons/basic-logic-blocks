@@ -21,6 +21,7 @@ import { OpenExternalLogicBlockComponent, OpenExternalLogicBlockModule } from '.
 import { EditRichTextLogicBlockComponent, EditRichTextLogicBlockkModule } from './logic-blocks/edit-rich-text';
 import { DialogHeaderComponent } from './shared/components/dialog-header/dialog-header.component';
 import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
+import { ExtractValueLogicBlockComponent,ExtractValueLogicBlockModule } from './logic-blocks/extract-value';
 
 import { config } from './app.config';
 
@@ -43,6 +44,7 @@ import { config } from './app.config';
         CreateSurveyLogicBlockModule,
         OpenExternalLogicBlockModule,
         EditRichTextLogicBlockkModule,
+        ExtractValueLogicBlockModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -80,6 +82,7 @@ export class AppModule implements DoBootstrap {
         this.pepAddonService.defineCustomElement(`create-survey-logic-block-element-${config.AddonUUID}`, CreateSurveyLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`open-external-logic-block-element-${config.AddonUUID}`, OpenExternalLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`edit-rich-text-logic-block-element-${config.AddonUUID}`, EditRichTextLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`extract-value-logic-block-element-${config.AddonUUID}`, ExtractValueLogicBlockComponent, this.injector);
     }
 }
 

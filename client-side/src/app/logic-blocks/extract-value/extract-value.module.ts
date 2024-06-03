@@ -33,7 +33,7 @@ import { config } from '../../app.config';
         // Add here all used services.
     ]
 })
-export class CreateSurveyLogicBlockModule {
+export class ExtractValueLogicBlockModule {
     constructor(
         translate: TranslateService,
         private pepAddonService: PepAddonService

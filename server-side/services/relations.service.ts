@@ -247,7 +247,7 @@ export class RelationsService {
         dataPromises.push(this.createCreateSurveyLogicBlockRelation());
         dataPromises.push(this.createOpenExternalLogicBlockRelation());
         dataPromises.push(this.createEditRichTextLogicBlockRelation());
-        dataPromises.push(this.createExtractValueLogicBlockRelation())
+        dataPromises.push(this.createExtractValueLogicBlockRelation());
 
         await Promise.all(dataPromises);
 
