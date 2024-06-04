@@ -18,5 +18,6 @@ __exportStar(require("./common.model"), exports);
 __exportStar(require("./navigate-to.model"), exports);
 __exportStar(require("./get-values.model"), exports);
 __exportStar(require("./open-external.model"), exports);
+__exportStar(require("./search-data.model"), exports);
 __exportStar(require("./helper"), exports);
 //# sourceMappingURL=index.js.map

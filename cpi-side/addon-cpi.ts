@@ -8,6 +8,7 @@ import GetValuesCpiService from './services/get-values.service';
 import NavigateToCpiService from './services/navigate-to.service';
 import OpenExternalCpiService from './services/open-external.service';
 import EditRichTextCpiService from './services/edit-rich-text.service';
+import SearchDataCpiService from './services/search-data.service';
 
 export async function load(configuration: any): Promise<void>{
     return Promise.resolve();
@@ -135,4 +136,20 @@ router.post('/extract_value', async (req, res) => {
     })
 
     //need to add logic according to prd and block
+})
+
+
+router.post('/search_data', async (req, res) => {
+    let values: GetValueOption[] = [];
+// debugger;
+    if (req.body) {
+        const service = new SearchDataCpiService();
+        values = await service.searchData(req.body, req.context);
+    } else {
+        console.log('no body was sent');
+    }
+
+    res.json({
+        Options: values
+    });
 })

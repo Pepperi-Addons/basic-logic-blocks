@@ -19,9 +19,11 @@ import { CreateActivityLogicBlockComponent, CreateActivityLogicBlockModule } fro
 import { CreateSurveyLogicBlockComponent, CreateSurveyLogicBlockModule } from './logic-blocks/create-survey';
 import { OpenExternalLogicBlockComponent, OpenExternalLogicBlockModule } from './logic-blocks/open-external';
 import { EditRichTextLogicBlockComponent, EditRichTextLogicBlockkModule } from './logic-blocks/edit-rich-text';
+import { ExtractValueLogicBlockComponent, ExtractValueLogicBlockModule } from './logic-blocks/extract-value';
+import { SearchDataLogicBlockComponent, SearchDataLogicBlockModule } from './logic-blocks/search-data';
+
 import { DialogHeaderComponent } from './shared/components/dialog-header/dialog-header.component';
 import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
-import { ExtractValueLogicBlockComponent,ExtractValueLogicBlockModule } from './logic-blocks/extract-value';
 
 import { config } from './app.config';
 
@@ -45,6 +47,7 @@ import { config } from './app.config';
         OpenExternalLogicBlockModule,
         EditRichTextLogicBlockkModule,
         ExtractValueLogicBlockModule,
+        SearchDataLogicBlockModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -83,6 +86,7 @@ export class AppModule implements DoBootstrap {
         this.pepAddonService.defineCustomElement(`open-external-logic-block-element-${config.AddonUUID}`, OpenExternalLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`edit-rich-text-logic-block-element-${config.AddonUUID}`, EditRichTextLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`extract-value-logic-block-element-${config.AddonUUID}`, ExtractValueLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`search-data-logic-block-element-${config.AddonUUID}`, SearchDataLogicBlockComponent, this.injector);
     }
 }
 

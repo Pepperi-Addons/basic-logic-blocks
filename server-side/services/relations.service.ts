@@ -26,8 +26,6 @@ export class RelationsService {
     private async createNavigateToLogicBlockRelation(): Promise<any> {
         const blockName = 'Navigate To';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -35,7 +33,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `NavigateToLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `NavigateToLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -49,8 +47,6 @@ export class RelationsService {
     private async createActiveTransactionLogicBlockRelation(): Promise<any> {
         const blockName = 'Active Transaction';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -58,7 +54,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `ActiveTransactionLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `ActiveTransactionLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -72,8 +68,6 @@ export class RelationsService {
     private async createGetValuesLogicBlockRelation(): Promise<any> {
         const blockName = 'Get Values';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -81,7 +75,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `GetValuesLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `GetValuesLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -95,8 +89,6 @@ export class RelationsService {
     private async createCreateTransactionLogicBlockRelation(): Promise<any> {
         const blockName = 'Create Transaction';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -104,7 +96,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `CreateTransactionLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `CreateTransactionLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -118,8 +110,6 @@ export class RelationsService {
     private async createCreateActivityLogicBlockRelation(): Promise<any> {
         const blockName = 'Create Activity';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -127,7 +117,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `CreateActivityLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `CreateActivityLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -141,8 +131,6 @@ export class RelationsService {
     private async createCreateSurveyLogicBlockRelation(): Promise<any> {
         const blockName = 'Create Survey';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -150,7 +138,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `CreateSurveyLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `CreateSurveyLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -164,8 +152,6 @@ export class RelationsService {
     private async createOpenExternalLogicBlockRelation(): Promise<any> {
         const blockName = 'Open external';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -173,7 +159,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `OpenExternalLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `OpenExternalLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -187,8 +173,6 @@ export class RelationsService {
     private async createEditRichTextLogicBlockRelation(): Promise<any> {
         const blockName = 'Rich Text - Find Replace';
 
-        const filename = `file_${this.client.AddonUUID}`;
-
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: blockName,
@@ -196,7 +180,7 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
+            AddonRelativeURL: this.bundleFileName,
             ComponentName: `EditRichTextLogicBlockComponent`, // This is should be the block component name (from the client-side)
             ModuleName: `EditRichTextLogicBlockkModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
@@ -213,7 +197,28 @@ export class RelationsService {
     private async createExtractValueLogicBlockRelation(): Promise<any> {
         const blockName = 'Extract Value';
 
-        const filename = `file_${this.client.AddonUUID}`;
+        const logicBlockRelation: Relation = {
+            RelationName: 'LogicBlock',
+            Name: blockName,
+            Description: `${blockName} block`,
+            Type: "NgComponent",
+            SubType: "NG14",
+            AddonUUID: this.client.AddonUUID,
+            AddonRelativeURL: this.bundleFileName,
+            ComponentName: `ExtractValueLogicBlockComponent`, // This is should be the block component name (from the client-side)
+            ModuleName: `ExtractValueLogicBlockkModule`, // This is should be the block module name (from the client-side),
+            ElementsModule: 'WebComponents',
+            ElementName: `extract-value-logic-block-element-${this.client.AddonUUID}`,
+            BlockExecutionRelativeURL: '/addon-cpi/extract_value',
+            Hidden: false,
+            Title: 'Extract Value',
+        };
+
+        return await this.upsertRelation(logicBlockRelation);
+    }
+
+    private async createSearchDataLogicBlockRelation(): Promise<any> {
+        const blockName = 'Search Data';
 
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
@@ -222,14 +227,12 @@ export class RelationsService {
             Type: "NgComponent",
             SubType: "NG14",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: filename,
-            ComponentName: `ExtractValueLogicBlockComponent`, // This is should be the block component name (from the client-side)
-            ModuleName: `ExtractValueLogicBlockkModule`, // This is should be the block module name (from the client-side),
+            AddonRelativeURL: this.bundleFileName,
+            ComponentName: `SearchDataLogicBlockComponent`, // This is should be the block component name (from the client-side)
+            ModuleName: `SearchDataLogicBlockModule`, // This is should be the block module name (from the client-side),
             ElementsModule: 'WebComponents',
-            ElementName: `extract-value-logic-block-element-${this.client.AddonUUID}`,
-            BlockExecutionRelativeURL: '/addon-cpi/extract_value',
-            Hidden: false,
-            Title: 'Extract Value',
+            ElementName: `search-data-logic-block-element-${this.client.AddonUUID}`,
+            BlockExecutionRelativeURL: '/addon-cpi/search_data',
         };
 
         return await this.upsertRelation(logicBlockRelation);
@@ -248,6 +251,7 @@ export class RelationsService {
         dataPromises.push(this.createOpenExternalLogicBlockRelation());
         dataPromises.push(this.createEditRichTextLogicBlockRelation());
         dataPromises.push(this.createExtractValueLogicBlockRelation());
+        dataPromises.push(this.createSearchDataLogicBlockRelation());
 
         await Promise.all(dataPromises);
 
