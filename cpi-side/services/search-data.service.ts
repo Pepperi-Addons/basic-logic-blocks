@@ -21,7 +21,7 @@ class SearchDataCpiService extends BaseCpiService {
                 OrderBy: configuration.SortBy,
                 IncludeCount: true,
             });
-            
+
             searchData = filter(resource.Objects, configuration.ResourceQuery);
         }
 
