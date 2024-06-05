@@ -15,6 +15,7 @@
     <pep-query-builder #resourceQueryBuilder class="resource-query" [query]="qbResourceQuery" [fields]="qbFields" [variableFields]="qbVariableFields" 
         (queryChange)="onResourceQueryChange($event)" (formValidationChange)="onResourceQueryValidationChanged($event)">
     </pep-query-builder>
+    <div class="pep-border-bottom"></div>
 
     <!-- Sort -->
     <label class="body-sm">{{'SEARCH_DATA.SORT_BY_HEADER' | translate}}</label>
@@ -32,7 +33,7 @@
     <div class="pep-border-bottom"></div>
 
     <!-- Save result in -->
-    <pep-select class="max-width" [options]="flowObjectTypeParams" [label]="'SEARCH_DATA.SAVE_RESULT_IN_TITLE' | translate"
+    <pep-select class="max-width" [options]="flowObjectTypeParams" [mandatory]="true" [label]="'SEARCH_DATA.SAVE_RESULT_IN_TITLE' | translate"
     [value]="currentConfiguration.SaveResultIn" (valueChange)="onSaveResultInChange($event)"></pep-select>
     <!-- <div class="pep-border-bottom"></div> -->
 </div>

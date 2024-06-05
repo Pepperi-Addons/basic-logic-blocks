@@ -13,59 +13,13 @@
         max-width: 16rem;
     }
 
-    .manual-tab {
-        ::ng-deep {
-            .pep-top-bar-container {
-                .right-container {
-                    align-items: center;
-                }
-            } 
-        }
-        .manual-options-area {
-            max-height: 30rem;
-            overflow: auto;
-            // height: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: variables.$content-margin;
-            padding-inline: variables.$spacing-xs;
-            padding-top: variables.$content-margin;
-            padding-bottom: variables.$content-margin;
-            
-            &.cdk-drop-list-dragging {
-                ::ng-deep.placeholder-item {
-                    @include data-view-builder.mapped-field-item-container();
-                    @include mixins.state-regular-default(true);
-                    @include mixins.focus();
-                    height: variables.$draggable-item-height;
-                }
-            }
-    
-            // The mapped-field-container style declared in composite lib data-view-builder.scss because when dragging in list the item added to the end of the dom and we cannot style it here (component context).
-            .manual-option-container { 
-                cursor: grab;
-                @include data-view-builder.mapped-field-container();
-    
-                &.cdk-drag-placeholder {
-                    @include mixins.focus();
-    
-                    .fields-wrapper {
-                        opacity: 0;
-                    }
-                }
-            }
-        }
+    .pep-border-bottom {
+        margin-bottom: 1rem;
     }
 
-    .mapped-tab {
-        .pep-border-bottom {
-            margin-bottom: 1rem;
-        }
-
-        .resource-query {
-            display: block;
-            max-height: 12rem;
-            overflow: auto;
-        }
+    .resource-query {
+        display: block;
+        max-height: 12rem;
+        overflow: auto;
     }
 }
