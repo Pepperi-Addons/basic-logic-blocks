@@ -23,7 +23,7 @@ export class RelationsService {
         return await this.papiClient.addons.data.relations.upsert(relation);
     }
 
-    private async createLogicBlockRelation(name: string, elementNamePrefix: string, executionRelativeURL: string, componentNamePrefix: string = '', title: string = ''): Promise<any> {
+    private async createLogicBlockRelation(name: string, elementNamePrefix: string, executionRelativeURL: string, componentNamePrefix = '', title = ''): Promise<any> {
         componentNamePrefix = componentNamePrefix.length > 0 ? componentNamePrefix : name.trim();
 
         const logicBlockRelation: Relation = {
