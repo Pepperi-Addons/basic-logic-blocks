@@ -5,6 +5,7 @@
 @use '@pepperi-addons/ngx-composite-lib/src/core/style/components/data-view-builder';
 
 .configuration-content {
+    overflow: auto;
     min-height: 35rem;
     max-height: 40rem;
     min-width: 32rem;
@@ -18,6 +19,7 @@
     }
 
     .resource-query {
+        margin-bottom: 1rem;
         display: block;
         max-height: 12rem;
         overflow: auto;

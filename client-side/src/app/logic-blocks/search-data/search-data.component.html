@@ -8,14 +8,14 @@
 
     <label class="body-sm">{{'SEARCH_DATA.SELECT_RESOURCE_FIELDS_HEADER' | translate}}</label>
     <pep-select class="max-width" [options]="resourceFieldsOptions" [mandatory]="true" type="multi" [label]="'SEARCH_DATA.SELECT_RESOURCE_FIELDS_TITLE' | translate"
-    [value]="currentConfiguration.ResourceFields" (valueChange)="onResourceFieldsChange($event)"></pep-select>
+    [value]="resourceFields" (valueChange)="onResourceFieldsChange($event)"></pep-select>
     <div class="pep-border-bottom"></div>
 
     <label class="body-sm">{{'SEARCH_DATA.RESOURCE_QUERY_HEADER' | translate}}</label>
     <pep-query-builder #resourceQueryBuilder class="resource-query" [query]="qbResourceQuery" [fields]="qbFields" [variableFields]="qbVariableFields" 
         (queryChange)="onResourceQueryChange($event)" (formValidationChange)="onResourceQueryValidationChanged($event)">
     </pep-query-builder>
-    <div class="pep-border-bottom"></div>
+    <!-- <div class="pep-border-bottom"></div> -->
 
     <!-- Sort -->
     <label class="body-sm">{{'SEARCH_DATA.SORT_BY_HEADER' | translate}}</label>

@@ -20,6 +20,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
 
     protected resourceOptions: IPepOption[] = [];
     protected resourceFieldsOptions: IPepOption[] = [];
+    protected resourceFields: string = '';
     
     protected qbFields: Array<IPepQueryBuilderField>;
     protected qbVariableFields: Array<IPepQueryBuilderField>;
@@ -92,6 +93,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         if (this.currentConfiguration.Resource !== value) {
             this.currentConfiguration.Resource = value;
             this.currentConfiguration.ResourceFields = [];
+            this.resourceFields = '';
             this.currentConfiguration.SortBy = '';
 
             // Load the resource fields options.
@@ -101,11 +103,14 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
             // this.resourceQueryBuilder.reset();
             this.currentConfiguration.ResourceQuery = {};
             this.loadQueryBuilderData();
+            super.validateData();
         }
     }
 
     onResourceFieldsChange(value: string) {
+        this.resourceFields = value;
         this.currentConfiguration.ResourceFields = value.length > 0 ? value.split(';') : [];
+        super.validateData();
     }
 
     onResourceQueryChange(value: any) {
@@ -114,6 +119,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
 
     onResourceQueryValidationChanged(isValid: boolean) {
         this.isValid = isValid;
+        super.validateData();
     }
 
     onSortByChange(value: string) {
@@ -127,6 +133,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
 
     onSaveResultInChange(value: string) {
         this.currentConfiguration.SaveResultIn = value;
+        super.validateData();
     }
 
     /**************************************************************************************/
@@ -150,7 +157,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         
         this.logicBlockService.getResourcesOptions().then(options => {
             this.resourceOptions = options;
-
+            this.resourceFields = this.currentConfiguration.ResourceFields.join(';');
             this.loadResourceFieldsOptions();
             this.loadQueryBuilderData(true);
             this.flowObjectTypeParams = this.logicBlockService.flowParametersByType.get('Object');
