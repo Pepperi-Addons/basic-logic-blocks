@@ -8,6 +8,7 @@ import { CdkDragDrop, CdkDragEnd, CdkDragStart, moveItemInArray } from '@angular
 import { IPepButtonClickEvent, PepButton } from '@pepperi-addons/ngx-lib/button';
 import { IPepQueryBuilderField, PepQueryBuilderComponent } from '@pepperi-addons/ngx-lib/query-builder';
 import { SearchDataConifuration, valuesType } from 'shared';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     templateUrl: './search-data.component.html',
@@ -17,18 +18,15 @@ import { SearchDataConifuration, valuesType } from 'shared';
 export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
     @ViewChild('resourceQueryBuilder', { static: true }) resourceQueryBuilder: PepQueryBuilderComponent;
 
-    protected readonly MANUAL_KEY = 'manual';
-    protected readonly MAPPED_KEY = 'mapped';
-
-    protected valuesTypesButtons: Array<PepButton>;
-
     protected resourceOptions: IPepOption[] = [];
     protected resourceFieldsOptions: IPepOption[] = [];
-
+    
     protected qbFields: Array<IPepQueryBuilderField>;
     protected qbVariableFields: Array<IPepQueryBuilderField>;
     protected qbResourceQuery: any;
 
+    protected flowObjectTypeParams: Array<IPepOption> = [];
+    
     private isValid = true;
 
     constructor(
@@ -43,58 +41,16 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
     // Do nothing here the init implementation is in the loadDataOnInit function.
     // ngOnInit(): void { }
     
-    onValuesTypeChange(buttonKey: valuesType) {
-        // this.currentConfiguration.ValuesType = buttonKey;
-    }
-
-
     /**************************************************************************************/
-    /*                            Manual options functions.
-    /**************************************************************************************/
-
-    onDragStart(event: CdkDragStart) {
-        this.logicBlockService.changeCursorOnDragStart();
-    }
-
-    onDragEnd(event: CdkDragEnd) {
-        this.logicBlockService.changeCursorOnDragEnd();
-    }
-    
-    onDropManualOption(event: CdkDragDrop<any>) {
-        if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        }
-    }
-
-    onAddManualOption(event: IPepButtonClickEvent) {
-        this.currentConfiguration.ManualOptions.push({key: '', value: ''});
-    }
-
-    onManualOptionKeyChange(value: string, option: IPepOption) {
-        option.key = value;
-    }
-
-    onManualOptionTitleChange(value: string, option: IPepOption) {
-        option.value = value;
-    }
-
-    onDeleteManualOption(event: IPepButtonClickEvent, option: IPepOption) {
-        const optionIndex = this.currentConfiguration.ManualOptions.findIndex(o => o.key === option.key && o.value === option.value);
-        if (optionIndex > -1) {
-            this.currentConfiguration.ManualOptions.splice(optionIndex, 1);
-        }
-    }
-
-    /**************************************************************************************/
-    /*                            Mapped options functions.
+    /*                            Resource functions.
     /**************************************************************************************/
 
     private loadResourceFieldsOptions() {
-        this.resourceFieldsOptions = this.logicBlockService.getResourceFieldsOptions(this.currentConfiguration.MappedData.Resource);
+        this.resourceFieldsOptions = this.logicBlockService.getResourceFieldsOptions(this.currentConfiguration.Resource);
     }
 
     private loadFilterFieldsByResource() {
-        const resource = this.logicBlockService.resourcesMap.get(this.currentConfiguration.MappedData.Resource);
+        const resource = this.logicBlockService.resourcesMap.get(this.currentConfiguration.Resource);
         const fields: IPepQueryBuilderField[] = []
         
         Object.keys(resource.Fields).forEach(fieldKey => {
@@ -122,8 +78,8 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
     }
     
     private loadQueryBuilderData(isFirstTime: boolean = false) {
-        if (this.currentConfiguration.MappedData?.Resource) {
-            this.qbResourceQuery = JSON.parse(JSON.stringify(this.currentConfiguration.MappedData.ResourceQuery || {}));
+        if (this.currentConfiguration.Resource) {
+            this.qbResourceQuery = JSON.parse(JSON.stringify(this.currentConfiguration.ResourceQuery || {}));
             this.loadFilterFieldsByResource();
             
             if (isFirstTime) {
@@ -132,40 +88,45 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         }
     }
 
-    onMappedResourceChange(value: string) {
-        if (!this.currentConfiguration.MappedData) {
-            this.currentConfiguration.MappedData = {};
-        }
-
-        if (this.currentConfiguration.MappedData.Resource !== value) {
-            this.currentConfiguration.MappedData.Resource = value;
-            this.currentConfiguration.MappedData.ResourceOptionKeyField = '';
-            this.currentConfiguration.MappedData.ResourceOptionTitleField = '';
+    onResourceChange(value: string) {
+        if (this.currentConfiguration.Resource !== value) {
+            this.currentConfiguration.Resource = value;
+            this.currentConfiguration.ResourceFields = [];
+            this.currentConfiguration.SortBy = '';
 
             // Load the resource fields options.
             this.loadResourceFieldsOptions();
 
             // Load the query builder data.
             // this.resourceQueryBuilder.reset();
-            this.currentConfiguration.MappedData.ResourceQuery = {};
+            this.currentConfiguration.ResourceQuery = {};
             this.loadQueryBuilderData();
         }
     }
 
-    onMappedResourceKeyChange(value: string) {
-        this.currentConfiguration.MappedData.ResourceOptionKeyField = value;
+    onResourceFieldsChange(value: string) {
+        this.currentConfiguration.ResourceFields = value.length > 0 ? value.split(';') : [];
     }
 
-    onMappedResourceTitleChange(value: string) {
-        this.currentConfiguration.MappedData.ResourceOptionTitleField = value;
+    onResourceQueryChange(value: any) {
+        this.currentConfiguration.ResourceQuery = value;
     }
 
-    onMappedResourceQueryChange(value: any) {
-        this.currentConfiguration.MappedData.ResourceQuery = value;
-    }
-
-    onMappedResourceQueryValidationChanged(isValid: boolean) {
+    onResourceQueryValidationChanged(isValid: boolean) {
         this.isValid = isValid;
+    }
+
+    onSortByChange(value: string) {
+        this.currentConfiguration.SortBy = value;
+    }
+
+    onPageSizeChange(value: string) {
+        const numberValue = coerceNumberProperty(value, 10);
+        this.currentConfiguration.PageSize = numberValue;
+    }
+
+    onSaveResultInChange(value: string) {
+        this.currentConfiguration.SaveResultIn = value;
     }
 
     /**************************************************************************************/
@@ -182,37 +143,32 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
     }
 
     protected getTitleResourceKey(): string {
-        return 'GET_VALUES.TITLE';
+        return 'SEARCH_DATA.TITLE';
     }
 
     protected loadDataOnInit(): void {
-        this.translate.get('GET_VALUES.MANUAL_OPTIONS.TITLE').subscribe((res: string) => {
-            this.valuesTypesButtons = [{ 
-                key: this.MANUAL_KEY,
-                value: this.translate.instant('GET_VALUES.MANUAL_OPTIONS.TITLE')
-            }, { 
-                key: this.MAPPED_KEY,
-                value: this.translate.instant('GET_VALUES.MAPPED_OPTIONS.TITLE')
-            }];
-        });
-
+        
         this.logicBlockService.getResourcesOptions().then(options => {
             this.resourceOptions = options;
 
             this.loadResourceFieldsOptions();
             this.loadQueryBuilderData(true);
+            this.flowObjectTypeParams = this.logicBlockService.flowParametersByType.get('Object');
         });
     }
 
     protected createDefaultConfiguration(): SearchDataConifuration {
         const config: SearchDataConifuration = {
-            // ValuesType: this.MANUAL_KEY,
-            ManualOptions: [],
+            Resource: '',
+            ResourceFields: [],
+            // IsAsc: true,
+            PageSize: 10,
+            SaveResultIn: ''
         };
         return config;
     }
     
     protected calculateDoneIsDisabled(): boolean {
-        return !this.isValid;
+        return !this.currentConfiguration.Resource || !(this.currentConfiguration.ResourceFields?.length > 0) || !this.currentConfiguration.SaveResultIn || !this.isValid;
     }
 }

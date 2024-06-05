@@ -138,18 +138,17 @@ router.post('/extract_value', async (req, res) => {
     //need to add logic according to prd and block
 })
 
-
 router.post('/search_data', async (req, res) => {
-    let values: GetValueOption[] = [];
+    let result: any;
 // debugger;
     if (req.body) {
         const service = new SearchDataCpiService();
-        values = await service.searchData(req.body, req.context);
+        result = await service.searchData(req.body, req.context);
     } else {
         console.log('no body was sent');
     }
 
     res.json({
-        Options: values
+        searchData: result
     });
 })

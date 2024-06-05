@@ -5,19 +5,6 @@ import BaseCpiService from './base-cpi.service';
 
 class GetValuesCpiService extends BaseCpiService {
 
-    private setDynamicValuesInFilter(jsonFilter: JSONFilter, context: any) {
-        if (jsonFilter.Operation === 'AND' || jsonFilter.Operation === 'OR') {
-            this.setDynamicValuesInFilter(jsonFilter.LeftNode, context);
-            this.setDynamicValuesInFilter(jsonFilter.RightNode, context);
-        } else {
-            // If the value type is dynamic, we will override the value from the context.
-            if (jsonFilter['ValueType'] === 'Dynamic' && (jsonFilter as JSONBaseFilter).Values?.length > 0) {
-                const paramValue = (jsonFilter as JSONBaseFilter).Values[0];
-                (jsonFilter as JSONBaseFilter).Values[0] = context[paramValue] || '';
-            }
-        }
-    }
-
     private async getValuesFromMappedData(mappedData: GetValuesMappedConifuration | undefined, context: any): Promise<GetValueOption[]> {
         let options: GetValueOption[] = [];
 
