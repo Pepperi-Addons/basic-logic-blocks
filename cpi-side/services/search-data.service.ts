@@ -7,7 +7,7 @@ class SearchDataCpiService extends BaseCpiService {
 
     private async getSearchData(configuration: SearchDataConifuration | undefined, context: any): Promise<any> {
         let searchData: any;
-debugger;
+// debugger;
         if (configuration && configuration.Resource) {
 
             // If there is query need to build the filter, set the flow params values in the filter if needed.
