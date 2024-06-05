@@ -20,5 +20,10 @@ export class ExtractValueLogicBlockService extends BaseLogicBlockService {
     // extractFromtArray(query: string,data: any[]) {
     //     const extractedValue = jsonPath.query(data,``)
     // }
+
+
+    // async getObjectOptions(currentConfiguration: ExtractValueConifuration): Promise<IPepOption[]> {
+    //     const objects = await this.papiClient
+    // }
     
 }

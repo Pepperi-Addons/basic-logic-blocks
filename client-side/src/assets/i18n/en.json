@@ -130,8 +130,10 @@
     "EXTRACT_VALUE": {
         "SELECT_OBJECT":"Select Object",
         "PATH":"Path",
+        "PATH_SOURCE":"Path Source",
         "SAVE_RESULT":"Save result as",
-        "TITLE":"Extract Value"
+        "TITLE":"Extract Value",
+        "SAVE":"Save result in"
     },
     "SEARCH_DATA": {
         "TITLE": "Search Data",

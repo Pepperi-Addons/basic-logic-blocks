@@ -7,7 +7,13 @@ import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loade
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
 import { ConifurationProperty } from 'shared';
 
+
 export interface ExtractValueConifuration {
+    Object: ExtractValueConifurationProperty;
+    SourcePathState: ExtractValueConifurationProperty;
+    SourcePath: ExtractValueConifurationProperty;
+    SaveSourceOn: ExtractValueConifurationProperty;
+    Value: ExtractValueConifurationProperty;
 }
 
 export interface ExtractValueConifurationProperty extends ConifurationProperty {
@@ -20,11 +26,9 @@ export interface ExtractValueConifurationProperty extends ConifurationProperty {
     providers: [ExtractValueLogicBlockService]
 })
 export class ExtractValueLogicBlockComponent extends BaseLogicBlockDirective {
-    protected accountOptions: IPepOption[] = [];
-    protected catalogOptions: IPepOption[] = [];
-    protected catalogStaticOptions: IPepOption[] = [];
-    protected transactionTypeOptions: IPepOption[] = [];
-    protected transactionTypeStaticOptions: IPepOption[] = [];
+    protected objectFlowParamsOptions: IPepOption[] = [];
+    protected allFlowParamsOptions: IPepOption[] = [];
+    isDynamicPath = false;
     
     constructor(
         viewContainerRef: ViewContainerRef,
@@ -36,19 +40,25 @@ export class ExtractValueLogicBlockComponent extends BaseLogicBlockDirective {
     }
 
     private loadOptions() {
-        // const stringFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('String');
+        this.objectFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('Object');
+        this.allFlowParamsOptions = this.loadFlowVariableFields();
 
-        // this.accountOptions = stringFlowParamsOptions;
-        // this.catalogOptions = stringFlowParamsOptions;
-        // this.logicBlockService.getCatalogsOptions(this.currentConfiguration).then((catalogsOptions: IPepOption[]) => {
-        //     this.catalogStaticOptions = catalogsOptions; 
-        // });
+        console.log(this.objectFlowParamsOptions);
+        console.log(this.allFlowParamsOptions );
+    }
 
-        // this.transactionTypeOptions = stringFlowParamsOptions;
-        // this.logicBlockService.getTransactionTypeOptions().then((transactionTypeOptions: IPepOption[]) => {
-        //     this.transactionTypeStaticOptions = transactionTypeOptions; 
-        // });
 
+    private loadFlowVariableFields() {
+        const flowParametersByType = this.logicBlockService.flowParametersByType;
+        const fields: IPepOption[] = [];
+        
+        Array.from(flowParametersByType.keys()).forEach(fieldType => {
+            console.log(fieldType);
+            const fieldsByType = flowParametersByType.get(fieldType).map(field => { return { key: field.key, value: field.value }});
+            fields.push(...fieldsByType);
+        });
+        
+        return fields;
     }
 
     // Do nothing here the init implementation is in the loadDataOnInit function.
@@ -58,9 +68,7 @@ export class ExtractValueLogicBlockComponent extends BaseLogicBlockDirective {
     /*                            Override base functions.
     /**************************************************************************************/
 
-    protected onAccountChoose(accountUUID: string) {
-        //this.onPropertyValueChange(accountUUID, this.currentConfiguration.Account);
-    }
+
 
     /**************************************************************************************/
     /*                            Implements abstract functions.
@@ -79,33 +87,33 @@ export class ExtractValueLogicBlockComponent extends BaseLogicBlockDirective {
     }
 
     protected loadDataOnInit(): void {
-        const defaultConfiguration = this.createDefaultConfiguration();
-        // if (!this.currentConfiguration.Account) {
-        //     this.currentConfiguration.Account = defaultConfiguration.Account;
-        // }
-        // if (!this.currentConfiguration.Catalog) {
-        //     this.currentConfiguration.Catalog = defaultConfiguration.Catalog;
-        // }
-        // if (!this.currentConfiguration.TransactionType) {
-        //     this.currentConfiguration.TransactionType = defaultConfiguration.TransactionType;
-        // }
-
+        this.createDefaultConfiguration();
         this.loadOptions();
     }
 
     protected createDefaultConfiguration(): ExtractValueConifuration {
         const config: ExtractValueConifuration = {
-            Account: {
+            Object: {
+                FlowParamSource: 'Static',
+                Type: 'Object',
+                Value: null
+            },
+            SourcePath: {
                 FlowParamSource: 'Static',
                 Type: 'String',
                 Value: null
             },
-            Catalog: {
+            Value: {
                 FlowParamSource: 'Static',
                 Type: 'String',
                 Value: null
             },
-            TransactionType: {
+            SaveSourceOn: {
+                FlowParamSource: 'Static',
+                Type: 'String',
+                Value: null
+            },
+            SourcePathState: {
                 FlowParamSource: 'Static',
                 Type: 'String',
                 Value: null
