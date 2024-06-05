@@ -23,9 +23,7 @@ export class RelationsService {
         return await this.papiClient.addons.data.relations.upsert(relation);
     }
 
-    private async createLogicBlockRelation(name: string, elementNamePrefix: string, executionRelativeURL: string, componentNamePrefix: string = '', title: string = ''): Promise<any> {
-        componentNamePrefix = componentNamePrefix.length > 0 ? componentNamePrefix : name.trim();
-
+    private async createLogicBlockRelation(name: string, elementNamePrefix: string, executionRelativeURL: string, componentNamePrefix: string, title = ''): Promise<any> {
         const logicBlockRelation: Relation = {
             RelationName: 'LogicBlock',
             Name: name,
@@ -47,7 +45,7 @@ export class RelationsService {
     }
 
     private async createNavigateToLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Navigate To', 'navigate-to', '/addon-cpi/navigate_to');
+        return await this.createLogicBlockRelation('Navigate To', 'navigate-to', '/addon-cpi/navigate_to', 'NavigateTo');
         // const blockName = 'Navigate To';
 
         // const logicBlockRelation: Relation = {
@@ -69,7 +67,7 @@ export class RelationsService {
     }
 
     private async createActiveTransactionLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Active Transaction', 'active-transaction', '/addon-cpi/get_active_transaction_uuid');
+        return await this.createLogicBlockRelation('Active Transaction', 'active-transaction', '/addon-cpi/get_active_transaction_uuid', 'ActiveTransaction');
         // const blockName = 'Active Transaction';
 
         // const logicBlockRelation: Relation = {
@@ -91,7 +89,7 @@ export class RelationsService {
     }
 
     private async createGetValuesLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Get Values', 'get-values', '/addon-cpi/get_values');
+        return await this.createLogicBlockRelation('Get Values', 'get-values', '/addon-cpi/get_values', 'GetValues');
         // const blockName = 'Get Values';
 
         // const logicBlockRelation: Relation = {
@@ -113,7 +111,7 @@ export class RelationsService {
     }
 
     private async createCreateTransactionLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Create Transaction', 'create-transaction', '/addon-cpi/create_transaction_uuid');
+        return await this.createLogicBlockRelation('Create Transaction', 'create-transaction', '/addon-cpi/create_transaction_uuid', 'CreateTransaction');
         // const blockName = 'Create Transaction';
 
         // const logicBlockRelation: Relation = {
@@ -135,7 +133,7 @@ export class RelationsService {
     }
 
     private async createCreateActivityLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Create Activity', 'create-activity', '/addon-cpi/create_activity_uuid');
+        return await this.createLogicBlockRelation('Create Activity', 'create-activity', '/addon-cpi/create_activity_uuid', 'CreateActivity');
         // const blockName = 'Create Activity';
 
         // const logicBlockRelation: Relation = {
@@ -157,7 +155,7 @@ export class RelationsService {
     }
 
     private async createCreateSurveyLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Create Survey', 'create-survey', '/addon-cpi/create_survey_uuid');
+        return await this.createLogicBlockRelation('Create Survey', 'create-survey', '/addon-cpi/create_survey_uuid', 'CreateSurvey');
         // const blockName = 'Create Survey';
 
         // const logicBlockRelation: Relation = {
@@ -225,7 +223,7 @@ export class RelationsService {
     }
 
     private async createExtractValueLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Extract Value', 'extract-value', '/addon-cpi/extract_value');
+        return await this.createLogicBlockRelation('Extract Value', 'extract-value', '/addon-cpi/extract_value', 'ExtractValue');
         // const blockName = 'Extract Value';
 
         // const logicBlockRelation: Relation = {
@@ -249,7 +247,7 @@ export class RelationsService {
     }
 
     private async createSearchDataLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Search Data', 'search-data', '/addon-cpi/search_data');
+        return await this.createLogicBlockRelation('Search Data', 'search-data', '/addon-cpi/search_data', 'SearchData');
         // const blockName = 'Search Data';
 
         // const logicBlockRelation: Relation = {
