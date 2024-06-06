@@ -147,11 +147,11 @@ router.post('/search_data', async (req, res) => {
     } else {
         console.log('no body was sent');
     }
-    
+
     const tmpRes = {};
     if (result && req.body.SaveResultIn) {
         tmpRes[req.body.SaveResultIn] = result;
     }
-        
+
     res.json(tmpRes);
 })
