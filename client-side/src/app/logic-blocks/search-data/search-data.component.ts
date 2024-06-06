@@ -126,6 +126,10 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         this.currentConfiguration.SortBy = value;
     }
 
+    onIsAscChanged(value: boolean) {
+        this.currentConfiguration.IsAsc = value;
+    }
+
     onPageSizeChange(value: string) {
         const numberValue = coerceNumberProperty(value, 10);
         this.currentConfiguration.PageSize = numberValue;
@@ -168,7 +172,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         const config: SearchDataConifuration = {
             Resource: '',
             ResourceFields: [],
-            // IsAsc: true,
+            IsAsc: true,
             PageSize: 10,
             SaveResultIn: ''
         };

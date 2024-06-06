@@ -21,10 +21,19 @@
     <label class="body-sm">{{'SEARCH_DATA.SORT_BY_HEADER' | translate}}</label>
     <pep-select class="max-width" [options]="resourceFieldsOptions" [label]="'SEARCH_DATA.SORT_BY_TITLE' | translate"
         [value]="currentConfiguration.SortBy" (valueChange)="onSortByChange($event)"></pep-select>
-    <div class="pep-border-bottom"></div>
-
+    
     <!-- Asc -->
-    <!-- TODO: -->
+    <mat-radio-group class="radio-group ">
+        <mat-radio-button class="pep-radio-button md no-default-background" value="true"
+            [checked]="currentConfiguration.IsAsc" (click)="onIsAscChanged(true)">
+            <span class="body-sm ellipsis">{{ 'SEARCH_DATA.ASC' | translate }}</span>
+        </mat-radio-button>
+        <mat-radio-button class="pep-radio-button md no-default-background" value="false"
+            [checked]="!currentConfiguration.IsAsc" (click)="onIsAscChanged(false)">
+            <span class="body-sm ellipsis">{{ 'SEARCH_DATA.DESC' | translate }}</span>
+        </mat-radio-button>
+    </mat-radio-group>
+    <div class="pep-border-bottom"></div>
 
     <!-- Page size -->
     <label class="body-sm">{{'SEARCH_DATA.PAGE_SIZE_HEADER' | translate}}</label>

@@ -18,7 +18,7 @@ class SearchDataCpiService extends BaseCpiService {
             searchData = await pepperi.resources.resource(configuration.Resource).search({
                 Fields: configuration.ResourceFields,
                 PageSize: configuration.PageSize,
-                OrderBy: configuration.SortBy,
+                OrderBy: `${configuration.SortBy} ${configuration.IsAsc ? 'asc' : 'desc'}`,
                 IncludeCount: true,
             });
 

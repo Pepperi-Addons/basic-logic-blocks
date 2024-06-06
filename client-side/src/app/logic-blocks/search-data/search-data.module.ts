@@ -22,6 +22,7 @@ import {
     PepIconRegistry,
     pepIconSystemBin,
 } from '@pepperi-addons/ngx-lib/icon';
+import { MatRadioModule } from '@angular/material/radio';
 
 const pepIcons = [
     pepIconSystemBin
@@ -35,6 +36,7 @@ const pepIcons = [
     imports: [
         CommonModule,
         DragDropModule,
+        MatRadioModule,
         PepButtonModule,
         PepTextboxModule,
         PepSelectModule,

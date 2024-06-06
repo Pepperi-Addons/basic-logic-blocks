@@ -144,6 +144,8 @@
         "RESOURCE_QUERY_HEADER": "Define the search criteria",
         "SORT_BY_HEADER": "Select the fields to sort by",
         "SORT_BY_TITLE": "Sort By",
+        "ASC": "Ascending",
+        "DESC": "Descending",
         "PAGE_SIZE_HEADER": "Select the number of objects to return",
         "PAGE_SIZE_TITLE": "Page Size",
         "SAVE_RESULT_IN_TITLE": "Save result in"

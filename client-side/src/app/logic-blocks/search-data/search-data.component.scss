@@ -5,6 +5,7 @@
 @use '@pepperi-addons/ngx-composite-lib/src/core/style/components/data-view-builder';
 
 .configuration-content {
+    padding-inline: variables.$spacing-xs;
     overflow: auto;
     min-height: 35rem;
     max-height: 40rem;
@@ -15,13 +16,21 @@
     }
 
     .pep-border-bottom {
-        margin-bottom: 1rem;
+        margin-bottom: variables.$spacing-lg;
     }
 
     .resource-query {
-        margin-bottom: 1rem;
+        margin-bottom: variables.$spacing-lg;
         display: block;
         max-height: 12rem;
         overflow: auto;
+    }
+
+    .radio-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: variables.$spacing-sm;
+        margin-bottom: variables.$form-spacing;
     }
 }
