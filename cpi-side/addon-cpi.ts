@@ -1,5 +1,5 @@
 import '@pepperi-addons/cpi-node'
-import { GetValueOption } from 'shared';
+import { GetValueOption, SearchDataConifuration } from 'shared';
 import ActiveTransactionCpiService from './services/active-transaction.service';
 import CreateActivityCpiService from './services/create-activity.service';
 import CreateSurveyCpiService from './services/create-survey.service';
@@ -147,8 +147,11 @@ router.post('/search_data', async (req, res) => {
     } else {
         console.log('no body was sent');
     }
-
-    res.json({
-        searchData: result
-    });
+    
+    const tmpRes = {};
+    if (result && req.body.SaveResultIn) {
+        tmpRes[req.body.SaveResultIn] = result;
+    }
+        
+    res.json(tmpRes);
 })

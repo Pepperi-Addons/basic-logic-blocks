@@ -7,7 +7,7 @@ class SearchDataCpiService extends BaseCpiService {
 
     private async getSearchData(configuration: SearchDataConifuration | undefined, context: any): Promise<any> {
         let searchData: any;
-// debugger;
+
         if (configuration && configuration.Resource) {
 
             // If there is query need to build the filter, set the flow params values in the filter if needed.
@@ -15,14 +15,15 @@ class SearchDataCpiService extends BaseCpiService {
                 this.setDynamicValuesInFilter(configuration.ResourceQuery, context);
             }
 
-            const resource = await pepperi.resources.resource(configuration.Resource).search({
+            searchData = await pepperi.resources.resource(configuration.Resource).search({
                 Fields: configuration.ResourceFields,
                 PageSize: configuration.PageSize,
                 OrderBy: configuration.SortBy,
                 IncludeCount: true,
             });
 
-            searchData = filter(resource.Objects, configuration.ResourceQuery);
+            searchData.Objects = filter(searchData.Objects, configuration.ResourceQuery);
+            searchData.Count = searchData.Objects.length;
         }
 
         return searchData;
