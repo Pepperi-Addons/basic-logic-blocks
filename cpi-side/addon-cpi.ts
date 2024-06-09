@@ -9,6 +9,7 @@ import NavigateToCpiService from './services/navigate-to.service';
 import OpenExternalCpiService from './services/open-external.service';
 import EditRichTextCpiService from './services/edit-rich-text.service';
 import SearchDataCpiService from './services/search-data.service';
+import ExtractValueCpiService from './services/extract-value.service';
 
 export async function load(configuration: any): Promise<void>{
     return Promise.resolve();
@@ -130,9 +131,15 @@ router.post('/edit_rich_text', async (req, res) => {
 })
 
 router.post('/extract_value', async (req, res) => {
+    let result = {};
+    if(req?.body) {
+        const service = new ExtractValueCpiService();
+        const path = req.body?.path;
+        result = await service.getValue([    { user: { id: 1, name: 'Alice', roles: [{ role: 'admin' }, { role: 'user' }] } },
+        { user: { id: 2, name: 'Bob', roles: [{ role: 'user' }] } },],path);
+    }
     res.json({
-        req: req,
-        res: res
+        result: result
     })
 
     //need to add logic according to prd and block

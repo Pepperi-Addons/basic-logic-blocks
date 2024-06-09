@@ -3,7 +3,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { IPepOption, PepHttpService, PepSessionService } from "@pepperi-addons/ngx-lib";
 import { ExtractValueConifuration } from "./extract-value.component"; 
 import { BaseLogicBlockService } from "src/app/shared/services/base-logic-blocks.service";
-import * as jsonPath from 'jsonpath';
 
 
 @Injectable()
