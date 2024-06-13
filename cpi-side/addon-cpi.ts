@@ -131,19 +131,24 @@ router.post('/edit_rich_text', async (req, res) => {
 })
 
 router.post('/extract_value', async (req, res) => {
+//     debugger;
+//   console.log("body");
+//   console.log(req.body);
+//   console.log("context");
+//   console.log(req.context);
     let result = {};
-    if(req?.body) {
+    if (req?.body) {
         const service = new ExtractValueCpiService();
-        const path = req.body?.path;
-        result = await service.getValue([    { user: { id: 1, name: 'Alice', roles: [{ role: 'admin' }, { role: 'user' }] } },
-        { user: { id: 2, name: 'Bob', roles: [{ role: 'user' }] } },],path);
+        const body = req?.body ? req.body : {};
+        const context = req?.context ? req.context : {};
+        result = await service.extraction(body, context) ?? {};
+    } else {
+      console.log('no path was sent');
     }
     res.json({
         result: result
     })
-
-    //need to add logic according to prd and block
-})
+});
 
 router.post('/search_data', async (req, res) => {
     let result: any;

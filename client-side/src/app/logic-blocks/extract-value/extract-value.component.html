@@ -7,9 +7,9 @@
         [label]="'EXTRACT_VALUE.SELECT_OBJECT' | translate"
         [options]="objectFlowParamsOptions"
         [emptyOption]="false"
-        [value]="currentConfiguration.Object.Value"
+        [value]="currentConfiguration?.Object?.Value"
         [mandatory]="true"
-        (valueChange)="valueChange($event)"
+        (valueChange)="onPropertyValueChange($event,currentConfiguration.Object)"
       ></pep-select>
     </div>
 
@@ -19,7 +19,8 @@
           chooseByParamSourceTemplate;
           context: {
             title: ('EXTRACT_VALUE.PATH' | translate),
-            configurationProperty: currentConfiguration.SourcePathState
+            configurationProperty: currentConfiguration.SourcePath,
+            staticValue:''
           }
         "
       >
@@ -33,7 +34,7 @@
         [emptyOption]="false"
         [value]="currentConfiguration?.SaveSourceOn?.Value"
         [mandatory]="true"
-        (valueChange)="valueChange($event)"
+        (valueChange)="onPropertyValueChange($event,currentConfiguration.SaveSourceOn)"
       ></pep-select>
     </div>
   </div>
@@ -46,18 +47,18 @@
   >
     <div class="flex-row">
       <pep-select
-        [disabled]="!currentConfiguration?.Object?.FlowParamSource"
+        [disabled]="!currentConfiguration?.SourcePath?.FlowParamSource"
         [label]="title"
         [options]="parameterTypeOptions"
         [emptyOption]="false"
-        [value]="configurationProperty?.SourcePathState?.Value"
+        [value]="configurationProperty?.FlowParamSource"
         [mandatory]="mandatory"
         (valueChange)="onFlowParamSourceChange($event, configurationProperty)"
       ></pep-select>
 
       <!-- For static -->
       <pep-textbox
-        [disabled]="!currentConfiguration?.Object?.FlowParamSource"
+        [disabled]="!currentConfiguration?.SourcePath?.FlowParamSource"
         *ngIf="configurationProperty?.FlowParamSource === 'Static'"
         [value]="configurationProperty?.Value"
         (valueChange)="onPropertyValueChange($event, configurationProperty)"
@@ -65,7 +66,7 @@
 
       <!-- For dynamic - show flow params -->
       <pep-select
-        [disabled]="!currentConfiguration?.Object?.FlowParamSource"
+        [disabled]="!currentConfiguration?.SourcePath?.FlowParamSource"
         *ngIf="configurationProperty?.FlowParamSource === 'Dynamic'"
         [options]="allFlowParamsOptions"
         [emptyOption]="false"
