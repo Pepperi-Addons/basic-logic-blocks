@@ -8,7 +8,6 @@ class ExtractValueCpiService extends BaseCpiService {
     const object = JSON.parse(context[value?.Object?.Value]);
     const getValue = this.getValue(object, path);
     const res = {
-      ...value,
       Value: { Value: getValue, Type: this.getType(getValue) },
     };
     return res;
@@ -17,17 +16,6 @@ class ExtractValueCpiService extends BaseCpiService {
   private getType(value: any) {
     const type = typeof value;
     return type.charAt(0).toUpperCase() + type.slice(1);
-  }
-
-  private getDynamicPageParamValue(value: any, context: any) {
-    if (value && value.FlowParamSource === "Static") {
-      return value.Value || "";
-    } else if (value && value.FlowParamSource === "Dynamic") {
-      const pageParams = context.State?.PageParameters || {};
-      return pageParams[value.Value] || "";
-    }
-
-    return value.Value;
   }
 
   private splitPath(path: string): (string | number | "*")[] {
@@ -85,6 +73,17 @@ class ExtractValueCpiService extends BaseCpiService {
 
     return current;
   }
+
+  // private getDynamicPageParamValue(value: any, context: any) {
+  //   if (value && value.FlowParamSource === "Static") {
+  //     return value.Value || "";
+  //   } else if (value && value.FlowParamSource === "Dynamic") {
+  //     const pageParams = context.State?.PageParameters || {};
+  //     return pageParams[value.Value] || "";
+  //   }
+
+  //   return value.Value;
+  // }
 }
 
 export default ExtractValueCpiService;

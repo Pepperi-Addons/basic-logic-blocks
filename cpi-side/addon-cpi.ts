@@ -131,23 +131,23 @@ router.post('/edit_rich_text', async (req, res) => {
 })
 
 router.post('/extract_value', async (req, res) => {
-//     debugger;
-//   console.log("body");
-//   console.log(req.body);
-//   console.log("context");
-//   console.log(req.context);
     let result = {};
     if (req?.body) {
         const service = new ExtractValueCpiService();
         const body = req?.body ? req.body : {};
         const context = req?.context ? req.context : {};
-        result = await service.extraction(body, context) ?? {};
+        result = await service.extraction(body, context);
     } else {
-      console.log('no path was sent');
+      console.log('no path/source object was sent');
     }
-    res.json({
-        result: result
-    })
+    const tmpRes = {};
+    if (result['Value'] && req.body.SaveSourceOn) {
+        tmpRes[req.body.SaveSourceOn.Value] = result['Value'].Value;
+    } else {
+        console.log('no value was retrieve on said path');
+    }
+
+    res.json(tmpRes);
 });
 
 router.post('/search_data', async (req, res) => {

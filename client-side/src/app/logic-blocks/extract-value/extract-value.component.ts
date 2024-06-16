@@ -9,7 +9,6 @@ import { ConifurationProperty } from "shared";
 
 export interface ExtractValueConifuration {
   Object: ExtractValueConifurationProperty;
-  // SourcePathState: ExtractValueConifurationProperty;
   SourcePath: ExtractValueConifurationProperty;
   SaveSourceOn: ExtractValueConifurationProperty;
   Value: ExtractValueConifurationProperty;
@@ -37,12 +36,16 @@ export class ExtractValueLogicBlockComponent extends BaseLogicBlockDirective {
     super(viewContainerRef, translate, logicBlockService);
   }
 
+    /**************************************************************************************/
+  /*                            load data base functions.
+    /**************************************************************************************/
+
   private loadOptions() {
     this.objectFlowParamsOptions =
       this.logicBlockService.getFlowParametersOptions("Object");
     this.allFlowParamsOptions = this.loadFlowVariableFields();
 
-    console.log(this.currentConfiguration);
+    console.log(this.objectFlowParamsOptions);
   }
 
   private loadFlowVariableFields() {
@@ -114,4 +117,5 @@ export class ExtractValueLogicBlockComponent extends BaseLogicBlockDirective {
       !this.currentConfiguration.SourcePath.Value
     );
   }
+
 }
