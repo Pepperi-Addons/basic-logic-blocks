@@ -131,7 +131,7 @@ router.post('/edit_rich_text', async (req, res) => {
 })
 
 router.post('/extract_value', async (req, res) => {
-    let result = {};
+    let result: any = {};
     if (req?.body) {
         const service = new ExtractValueCpiService();
         const body = req?.body ? req.body : {};
@@ -141,7 +141,7 @@ router.post('/extract_value', async (req, res) => {
       console.log('no path/source object was sent');
     }
     const tmpRes = {};
-    if (result['Value'] && req.body.SaveSourceOn) {
+    if (result && Object.keys(result).length > 0 && result['Value'] && req.body.SaveSourceOn) {
         tmpRes[req.body.SaveSourceOn.Value] = result['Value'].Value;
     } else {
         console.log('no value was retrieve on said path');

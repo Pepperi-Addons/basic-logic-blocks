@@ -4,13 +4,17 @@ type AnyObject = { [key: string]: any };
 
 class ExtractValueCpiService extends BaseCpiService {
   extraction(value: any, context: any) {
-    const path = value?.SourcePath?.Value ? value?.SourcePath?.Value : "";
-    const object = JSON.parse(context[value?.Object?.Value]);
-    const getValue = this.getValue(object, path);
-    const res = {
-      Value: { Value: getValue, Type: this.getType(getValue) },
-    };
-    return res;
+    try {
+      const path = value?.SourcePath?.Value ? value?.SourcePath?.Value : "";
+      const object = JSON.parse(context[value?.Object?.Value]);
+      const getValue = this.getValue(object, path);
+      return {
+        Value: { Value: getValue, Type: this.getType(getValue) },
+      };
+    } catch(e) {
+      console.log((e as Error).message);
+      return {};
+    }
   }
 
   private getType(value: any) {

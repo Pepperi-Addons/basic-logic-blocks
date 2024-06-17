@@ -1,6 +1,6 @@
 import { TranslateService } from "@ngx-translate/core";
 import { SchemeFieldType } from "@pepperi-addons/papi-sdk";
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, ViewContainerRef } from "@angular/core";
 import { IPepOption } from "@pepperi-addons/ngx-lib";
 import { ExtractValueLogicBlockService } from "./extract-value.service";
 import { PepAddonBlockLoaderService } from "@pepperi-addons/ngx-lib/remote-loader";
@@ -82,7 +82,6 @@ export class ExtractValueLogicBlockComponent extends BaseLogicBlockDirective {
   }
 
   protected loadDataOnInit(): void {
-    //this.createDefaultConfiguration();
     this.loadOptions();
   }
 
