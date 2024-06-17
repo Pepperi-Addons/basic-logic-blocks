@@ -11,7 +11,7 @@ class ExtractValueCpiService extends BaseCpiService {
       return {
         Value: { Value: getValue, Type: this.getType(getValue) },
       };
-    } catch(e) {
+    } catch (e) {
       console.log((e as Error).message);
       return {};
     }
