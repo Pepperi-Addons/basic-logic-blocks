@@ -6,7 +6,7 @@ class ExtractValueCpiService extends BaseCpiService {
   extraction(value: any, context: any) {
     try {
       const path = value?.SourcePath?.Value ? value?.SourcePath?.Value : "";
-      const object = JSON.parse(context[value?.Object?.Value]);
+      const object = context[value?.Object?.Value] ? context[value?.Object?.Value] : {};
       const getValue = this.getValue(object, path);
       return {
         Value: { Value: getValue, Type: this.getType(getValue) },
