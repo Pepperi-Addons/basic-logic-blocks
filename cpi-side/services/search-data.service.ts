@@ -1,5 +1,5 @@
 import { IClient, IContext } from '@pepperi-addons/cpi-node/build/cpi-side/events';
-import { filter } from '@pepperi-addons/pepperi-filters'
+import { filter, toApiQueryString } from '@pepperi-addons/pepperi-filters'
 import { GetValueOption, SearchDataConifuration } from 'shared';
 import BaseCpiService from './base-cpi.service';
 
@@ -9,27 +9,31 @@ class SearchDataCpiService extends BaseCpiService {
         let searchData: any;
 
         if (configuration && configuration.Resource) {
+            let where: any = undefined;
 
             // If there is query need to build the filter, set the flow params values in the filter if needed.
             if (configuration.ResourceQuery) {
                 this.setDynamicValuesInFilter(configuration.ResourceQuery, context);
+                where = toApiQueryString(configuration.ResourceQuery);
             }
 
             searchData = await pepperi.resources.resource(configuration.Resource).search({
+                Where: where,
                 Fields: configuration.ResourceFields,
                 PageSize: configuration.PageSize,
                 OrderBy: `${configuration.SortBy} ${configuration.IsAsc ? 'asc' : 'desc'}`,
                 IncludeCount: true,
             });
 
-            searchData.Objects = filter(searchData.Objects, configuration.ResourceQuery);
-            searchData.Count = searchData.Objects.length;
+            // searchData.Objects = filter(searchData.Objects, configuration.ResourceQuery);
+            // searchData.Count = searchData.Objects.length;
         }
 
         return searchData;
     }
 
     async searchData(body: any, context: any): Promise<any> {
+        debugger;
         let result: any;
 
         if (context) {
