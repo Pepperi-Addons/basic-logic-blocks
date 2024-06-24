@@ -5,7 +5,7 @@ type AnyObject = { [key: string]: any };
 class ExtractValueCpiService extends BaseCpiService {
   extraction(value: any, context: any) {
     try {
-      const path = value?.SourcePath?.Value ? value?.SourcePath?.Value : "";
+      const path = this.extractPath(value.SourcePath, context);
       const object = context[value?.Object?.Value] ? context[value?.Object?.Value] : {};
       const getValue = this.getValue(object, path);
       return {
@@ -14,6 +14,23 @@ class ExtractValueCpiService extends BaseCpiService {
     } catch (e) {
       console.log((e as Error).message);
       return {};
+    }
+  }
+
+  private extractPath(
+    sourcePath: { Value: string; FlowParamSource: string; Type: any },
+    context: any
+  ) {
+    switch (sourcePath.FlowParamSource) {
+      case "Static": {
+        return sourcePath.Value;
+      }
+      case "Dynamic": {
+        return context[sourcePath.Value];
+      }
+      default: {
+        return sourcePath.Value;
+      }
     }
   }
 
