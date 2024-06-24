@@ -34,6 +34,32 @@ class ExtractValueCpiService extends BaseCpiService {
     }
   }
 
+  hasValue<T, K extends keyof T>(obj: T, key: K): boolean {
+    if (obj == null) {
+        return false; // Check if the object is null or undefined
+    }
+
+    const value = obj[key];
+
+    if (value === undefined || value === null) {
+        return false; // Property is undefined or null
+    }
+
+    if (typeof value === 'object' && !Array.isArray(value)) {
+        // For objects, check if they have any properties
+        return Object.keys(value).length > 0;
+    }
+
+    if (Array.isArray(value)) {
+        // For arrays, check if they have any elements
+        return value.length > 0;
+    }
+
+    // For other types, just check if they are not empty or falsey
+    return Boolean(value);
+}
+  
+
   private getType(value: any) {
     const type = typeof value;
     return type.charAt(0).toUpperCase() + type.slice(1);
