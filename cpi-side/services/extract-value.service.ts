@@ -6,7 +6,9 @@ class ExtractValueCpiService extends BaseCpiService {
   extraction(value: any, context: any) {
     try {
       const path = this.extractPath(value.SourcePath, context);
-      const object = context[value?.Object?.Value] ? context[value?.Object?.Value] : {};
+      const object = context[value?.Object?.Value]
+        ? context[value?.Object?.Value]
+        : {};
       const getValue = this.getValue(object, path);
       return {
         Value: { Value: getValue, Type: this.getType(getValue) },
@@ -34,31 +36,30 @@ class ExtractValueCpiService extends BaseCpiService {
     }
   }
 
-  hasValue<T, K extends keyof T>(obj: T, key: K): boolean {
-    if (obj == null) {
-        return false; // Check if the object is null or undefined
+  hasValue<T>(obj: T): boolean {
+    if (obj === null || obj === undefined) {
+      return false; // Check if the object is null or undefined
     }
 
-    const value = obj[key];
+    const value = obj['Value'];
 
     if (value === undefined || value === null) {
-        return false; // Property is undefined or null
+      return false; // Property is undefined or null
     }
 
-    if (typeof value === 'object' && !Array.isArray(value)) {
-        // For objects, check if they have any properties
-        return Object.keys(value).length > 0;
+    if (typeof value === "object" && !Array.isArray(value)) {
+      // For objects, check if they have any properties
+      return Object.keys(value).length > 0;
     }
 
     if (Array.isArray(value)) {
-        // For arrays, check if they have any elements
-        return value.length > 0;
+      // For arrays, check if they have any elements
+      return value.length > 0;
     }
 
     // For other types, just check if they are not empty or falsey
     return Boolean(value);
-}
-  
+  }
 
   private getType(value: any) {
     const type = typeof value;

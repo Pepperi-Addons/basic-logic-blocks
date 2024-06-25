@@ -143,7 +143,7 @@ router.post('/extract_value', async (req, res) => {
     const tmpRes = {};
     if (result && Object.keys(result).length > 0 && result['Value'] && req.body.SaveSourceOn) {
         const service = new ExtractValueCpiService();
-        tmpRes[req.body.SaveSourceOn.Value] = service.hasValue(result['Value'].Value,req.body.SaveSourceOn.Value) ? result['Value'].Value : '';
+        tmpRes[req.body.SaveSourceOn.Value] = service.hasValue(result['Value']) ? result['Value'].Value : '';
     } else {
         console.log('no value was retrieve on said path');
     }
