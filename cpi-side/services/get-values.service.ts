@@ -9,17 +9,27 @@ class GetValuesCpiService extends BaseCpiService {
         let options: GetValueOption[] = [];
 
         if (mappedData && mappedData.Resource && mappedData.ResourceOptionKeyField && mappedData.ResourceOptionTitleField) {
+            let where: any = undefined;
 
             // If there is query need to build the filter, set the flow params values in the filter if needed.
             if (mappedData.ResourceQuery) {
                 this.setDynamicValuesInFilter(mappedData.ResourceQuery, context);
+                where = toApiQueryString(mappedData.ResourceQuery);
             }
 
-            const resource = await pepperi.resources.resource(mappedData.Resource).search({});
-            const res = filter(resource.Objects, mappedData.ResourceQuery);
+            const key = mappedData?.ResourceOptionKeyField || '';
+            const title = mappedData?.ResourceOptionTitleField || '';
 
-            if (res) {
-                options = res.map(obj => {
+            const resource = await pepperi.resources.resource(mappedData.Resource).search({
+                Where: where,
+                Fields: [key, title],
+                OrderBy: `${title} asc`
+            });
+
+            // const res = filter(resource.Objects, mappedData.ResourceQuery);
+
+            if (resource) {
+                options = resource.Objects.map(obj => {
                     return {
                         Key: mappedData?.ResourceOptionKeyField ? obj[mappedData.ResourceOptionKeyField] : '',
                         Title: mappedData?.ResourceOptionTitleField ? obj[mappedData.ResourceOptionTitleField] : ''
