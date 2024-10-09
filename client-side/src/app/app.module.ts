@@ -26,6 +26,7 @@ import { DialogHeaderComponent } from './shared/components/dialog-header/dialog-
 import { DialogActionsComponent } from './shared/components/dialog-actions/dialog-actions.component';
 
 import { config } from './app.config';
+import { SearchDataMultipleResourcesLogicBlockComponent } from './logic-blocks/search-data/search-data-multiple-resources';
 
 @NgModule({
     declarations: [
@@ -87,6 +88,7 @@ export class AppModule implements DoBootstrap {
         this.pepAddonService.defineCustomElement(`edit-rich-text-logic-block-element-${config.AddonUUID}`, EditRichTextLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`extract-value-logic-block-element-${config.AddonUUID}`, ExtractValueLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`search-data-logic-block-element-${config.AddonUUID}`, SearchDataLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`search-data-multiple-resources-logic-block-element-${config.AddonUUID}`, SearchDataMultipleResourcesLogicBlockComponent, this.injector);
     }
 }
 
