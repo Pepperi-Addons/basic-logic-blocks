@@ -7,6 +7,7 @@ import { SearchDataLogicBlockComponent } from '../search-data.component';
 import { SearchDataLogicBlockService } from '../search-data.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
+import { SearchDataConifuration } from 'shared';
 
 @Component({
   templateUrl: './search-data-multiple-resources.component.html',
@@ -17,7 +18,33 @@ import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-bl
 // here component name should be in following structure <componentName+LogicBlockComponent> 
 // <SearchDataMultipleResources+LogicBlockComponent> = SearchDataMultipleResourcesLogicBlockComponent
 // Also here we are extending SearchDataLogicBlockComponent to get the flow configuration from the logic blocks
-export class SearchDataMultipleResourcesLogicBlockComponent extends SearchDataLogicBlockComponent {
+export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlockDirective {
+  
+  get currentConfiguration(): SearchDataConifuration {
+    console.log('inside the getConfiguration ', this._currentConfiguration);
+    return this._currentConfiguration;
+}
+  protected getTitleResourceKey(): string {
+    return 'SEARCH_DATA.TITLE';
+  }
+  protected loadDataOnInit(): void {
+    
+    console.log('loadDataOnInit() overrided method call', this.currentConfiguration)
+    this.run();
+  }
+  protected calculateDoneIsDisabled(): boolean {
+    return !this.currentConfiguration.Resource || !(this.currentConfiguration.ResourceFields?.length > 0) || !this.currentConfiguration.SaveResultIn;
+}
+protected createDefaultConfiguration(): SearchDataConifuration {
+  const config: SearchDataConifuration = {
+      Resource: '',
+      ResourceFields: [],
+      IsAsc: true,
+      PageSize: 10,
+      SaveResultIn: ''
+  };
+  return config;
+}
 
   items = [];
   isLoaded: boolean = false;
@@ -28,7 +55,7 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends SearchDataLo
         public addonBlockService: PepAddonBlockLoaderService,
         public translate: TranslateService,
   ) {
-    super(viewContainerRef, translate,logicBlockService, addonBlockService);
+    super(viewContainerRef, translate,logicBlockService);
     this.items = [];
     console.log('constructore loaded from SearchDataMultipleResourcesLogicBlockComponent!!!!', this.items);
    }
@@ -39,9 +66,9 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends SearchDataLo
     this.isLoaded = true;
 }
 
-  ngOnInit(): void {
-    this.run();
-  }
+  // ngOnInit(): void {
+  //   this.run();
+  // }
 
   async onListClicked($event: IPepFormFieldClickEvent)
     {
