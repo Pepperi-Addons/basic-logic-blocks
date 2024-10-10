@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { SearchDataLogicBlockService } from './search-data.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
@@ -9,6 +9,8 @@ import { IPepButtonClickEvent, PepButton } from '@pepperi-addons/ngx-lib/button'
 import { IPepQueryBuilderField, PepQueryBuilderComponent } from '@pepperi-addons/ngx-lib/query-builder';
 import { SearchDataConifuration, valuesType } from 'shared';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogActionsComponent } from 'src/app/shared/components/dialog-actions/dialog-actions.component';
 
 @Component({
     templateUrl: './search-data.component.html',
@@ -17,7 +19,7 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
 })
 export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
     @ViewChild('resourceQueryBuilder', { static: true }) resourceQueryBuilder: PepQueryBuilderComponent;
-
+    @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     protected resourceOptions: IPepOption[] = [];
     protected resourceFieldsOptions: IPepOption[] = [];
     protected resourceFields: string = '';
@@ -34,9 +36,12 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         viewContainerRef: ViewContainerRef,
         translate: TranslateService,
         protected logicBlockService: SearchDataLogicBlockService,
-        public addonBlockService: PepAddonBlockLoaderService
+        public addonBlockService: PepAddonBlockLoaderService,
+        @Inject(MAT_DIALOG_DATA) public data: any
         ) {
             super(viewContainerRef, translate, logicBlockService);
+            // this we are doing b'z this component may call from any other component
+            this.hostObject =  this.hostObject? this.hostObject : data;
     }
 
     // Do nothing here the init implementation is in the loadDataOnInit function.

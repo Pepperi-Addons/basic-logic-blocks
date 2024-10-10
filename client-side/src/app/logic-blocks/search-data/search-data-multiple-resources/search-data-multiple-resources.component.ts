@@ -8,6 +8,7 @@ import { SearchDataLogicBlockService } from '../search-data.service';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { BaseLogicBlockDirective } from 'src/app/shared/components/base-logic-block.directive/base-logic-block.directive';
 import { SearchDataConifuration } from 'shared';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   templateUrl: './search-data-multiple-resources.component.html',
@@ -19,29 +20,32 @@ import { SearchDataConifuration } from 'shared';
 // <SearchDataMultipleResources+LogicBlockComponent> = SearchDataMultipleResourcesLogicBlockComponent
 // Also here we are extending SearchDataLogicBlockComponent to get the flow configuration from the logic blocks
 export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlockDirective {
-  
+  listEmptyState = {
+    show: true
+  }
   get currentConfiguration(): SearchDataConifuration {
     console.log('inside the getConfiguration ', this._currentConfiguration);
-    return this._currentConfiguration;
+    return this._currentConfiguration as SearchDataConifuration;
 }
   protected getTitleResourceKey(): string {
     return 'SEARCH_DATA.TITLE';
   }
   protected loadDataOnInit(): void {
     
-    console.log('loadDataOnInit() overrided method call', this.currentConfiguration)
+    console.log('loadDataOnInit() overrided method call', this.hostObject, '\n ..... ', this.currentConfiguration)
     this.run();
   }
   protected calculateDoneIsDisabled(): boolean {
-    return !this.currentConfiguration.Resource || !(this.currentConfiguration.ResourceFields?.length > 0) || !this.currentConfiguration.SaveResultIn;
+    return false;
 }
 protected createDefaultConfiguration(): SearchDataConifuration {
+  // TODO: first check from flow response what that you are getting that will be set to default.
   const config: SearchDataConifuration = {
       Resource: '',
       ResourceFields: [],
       IsAsc: true,
       PageSize: 10,
-      SaveResultIn: ''
+      SaveResultIn: 'temp' // check how to pass this?
   };
   return config;
 }
@@ -50,6 +54,7 @@ protected createDefaultConfiguration(): SearchDataConifuration {
   isLoaded: boolean = false;
   listDataSource: IPepGenericListDataSource;
   constructor(
+    private dialogService: DialogService,
     viewContainerRef: ViewContainerRef,
         protected logicBlockService: SearchDataLogicBlockService,
         public addonBlockService: PepAddonBlockLoaderService,
@@ -86,11 +91,11 @@ protected createDefaultConfiguration(): SearchDataConifuration {
   getDataSource(): IPepGenericListDataSource {
     return {
       init: async(parameters: IPepGenericListParams) => {
-        // call BE api to get the list of items and assign to this.items = 
-        // Steps.Congifuration
         console.log('this.currentConfiguration', this.currentConfiguration)
-        this.items = [
-        ]
+        if(Object.values(this.currentConfiguration).length){
+          this.items.push(this.currentConfiguration)
+        }
+        
         return Promise.resolve({
           dataView: {
             Context: {
@@ -109,7 +114,7 @@ protected createDefaultConfiguration(): SearchDataConifuration {
                 ReadOnly: true
               },
               {
-                FieldID: 'Fields',
+                FieldID: 'ResourceFields',
                 Type: 'TextBox',
                 Title: 'Fields',
                 Mandatory: false,
@@ -188,19 +193,18 @@ protected createDefaultConfiguration(): SearchDataConifuration {
     }   
   }
 
-  addResource()
-    {
-
-      console.log('AddResources function called')
-        // let callback = async (data) => {
-        //     if (data) {
-        //         // instead of reload
-        //         this.GenericList.dataSource = this.listDataSource;
-        //         this.dialogService.openOKDialog(this.translate.instant("add_title"), this.translate.instant("script_added"), async ()=>{});
-        //     }
-        // }
-        
-        // this.dialogService.openDialog(this.translate.instant("Add Script"), ScriptEditorFormComponent, [], { data: {} }, callback);
+  addResource() {
+        let callback = async (data) => {
+          // debugger;
+          console.log('callback called from searchData component', data);
+            // if (data) {
+            //     // instead of reload
+            //     this.GenericList.dataSource = this.listDataSource;
+            //     this.dialogService.openOKDialog(this.translate.instant("add_title"), this.translate.instant("script_added"), async ()=>{});
+            // }
+        }
+        this.hostObject.Configuration = this.currentConfiguration;
+        this.dialogService.openDialog(this.translate.instant("SEARCH_DATA.TITLE"), SearchDataLogicBlockComponent, [], this.hostObject, callback);
     }
 
 }
