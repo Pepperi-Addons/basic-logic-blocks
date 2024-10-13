@@ -46,7 +46,6 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         this.actionsContainerRef.instance.doneIsDisabled = this.doneIsDisabled;
         this.actionsContainerRef.instance.currentConfiguration = this._currentConfiguration;
         this.actionsContainerRef.instance.hostEvents.subscribe((event) =>{
-            // debugger;
             return this.hostEvents.emit(event);
         } );
         this.viewContainerRef.insert(this.actionsContainerRef.hostView);
@@ -191,7 +190,7 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         this.hostEvents.emit({
             type: 'close-dialog'
         });
-        // debugger;
+        // 
         // this.hostEvents.emit({
         //     type: 'afterClosed'
         // });

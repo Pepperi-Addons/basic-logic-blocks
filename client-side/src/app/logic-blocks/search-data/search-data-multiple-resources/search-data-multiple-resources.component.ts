@@ -38,14 +38,13 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
   protected calculateDoneIsDisabled(): boolean {
     return false;
 }
-protected createDefaultConfiguration(): SearchDataConifuration {
-  // TODO: first check from flow response what that you are getting that will be set to default.
+protected createDefaultConfiguration(): SearchDataConifuration | undefined {
   const config: SearchDataConifuration = {
       Resource: '',
       ResourceFields: [],
       IsAsc: true,
       PageSize: 10,
-      SaveResultIn: 'temp' // check how to pass this?
+      SaveResultIn: ''
   };
   return config;
 }
@@ -92,7 +91,7 @@ protected createDefaultConfiguration(): SearchDataConifuration {
     return {
       init: async(parameters: IPepGenericListParams) => {
         console.log('this.currentConfiguration', this.currentConfiguration)
-        if(Object.values(this.currentConfiguration).length){
+        if(this.currentConfiguration && Object.values(this.currentConfiguration).length){
           this.items.push(this.currentConfiguration)
         }
         
@@ -193,18 +192,20 @@ protected createDefaultConfiguration(): SearchDataConifuration {
     }   
   }
 
+  reload(){
+    this.listDataSource = this.getDataSource();
+  }
+
   addResource() {
         let callback = async (data) => {
-          // debugger;
-          console.log('callback called from searchData component', data);
-            // if (data) {
-            //     // instead of reload
-            //     this.GenericList.dataSource = this.listDataSource;
-            //     this.dialogService.openOKDialog(this.translate.instant("add_title"), this.translate.instant("script_added"), async ()=>{});
-            // }
+          // callback will called from SearchData component with updated data
+          console.log('callback called from searchData component upon done button clicked', data);
+          if (data) {
+              this.items.push(data);
+               this.reload();
+          }
         }
         this.hostObject.Configuration = this.currentConfiguration;
         this.dialogService.openDialog(this.translate.instant("SEARCH_DATA.TITLE"), SearchDataLogicBlockComponent, [], this.hostObject, callback);
-    }
-
+  }
 }

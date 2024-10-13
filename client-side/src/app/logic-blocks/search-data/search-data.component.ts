@@ -9,7 +9,7 @@ import { IPepButtonClickEvent, PepButton } from '@pepperi-addons/ngx-lib/button'
 import { IPepQueryBuilderField, PepQueryBuilderComponent } from '@pepperi-addons/ngx-lib/query-builder';
 import { SearchDataConifuration, valuesType } from 'shared';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogActionsComponent } from 'src/app/shared/components/dialog-actions/dialog-actions.component';
 
 @Component({
@@ -17,12 +17,16 @@ import { DialogActionsComponent } from 'src/app/shared/components/dialog-actions
     styleUrls: ['./search-data.component.scss'],
     providers: [SearchDataLogicBlockService]
 })
-export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
+export class SearchDataLogicBlockComponent implements OnInit {
     @ViewChild('resourceQueryBuilder', { static: true }) resourceQueryBuilder: PepQueryBuilderComponent;
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
+    @Input() hostObject: any;
     protected resourceOptions: IPepOption[] = [];
     protected resourceFieldsOptions: IPepOption[] = [];
     protected resourceFields: string = '';
+    private _currentConfiguration: SearchDataConifuration;
+    doneIsDisabled: boolean = true;
+    title: string = 'SEARCH_DATA.TITLE';
     
     protected qbFields: Array<IPepQueryBuilderField>;
     protected qbVariableFields: Array<IPepQueryBuilderField>;
@@ -37,15 +41,19 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         translate: TranslateService,
         protected logicBlockService: SearchDataLogicBlockService,
         public addonBlockService: PepAddonBlockLoaderService,
+        public dialogRef: MatDialogRef<SearchDataLogicBlockComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
         ) {
-            super(viewContainerRef, translate, logicBlockService);
             // this we are doing b'z this component may call from any other component
             this.hostObject =  this.hostObject? this.hostObject : data;
     }
 
     // Do nothing here the init implementation is in the loadDataOnInit function.
-    // ngOnInit(): void { }
+    ngOnInit(): void {
+        this.logicBlockService.initFlowParameters(this.hostObject?.EventData);
+        this.loadDataOnInit();
+        this.validateData();
+    }
     
     /**************************************************************************************/
     /*                            Resource functions.
@@ -108,14 +116,18 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
             // this.resourceQueryBuilder.reset();
             this.currentConfiguration.ResourceQuery = {};
             this.loadQueryBuilderData();
-            super.validateData();
+            this.validateData();
         }
+    }
+
+    protected validateData(): void {
+        this.doneIsDisabled = this.calculateDoneIsDisabled();
     }
 
     onResourceFieldsChange(value: string) {
         this.resourceFields = value;
         this.currentConfiguration.ResourceFields = value.length > 0 ? value.split(';') : [];
-        super.validateData();
+        this.validateData();
     }
 
     onResourceQueryChange(value: any) {
@@ -124,7 +136,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
 
     onResourceQueryValidationChanged(isValid: boolean) {
         this.isValid = isValid;
-        super.validateData();
+        this.validateData();
     }
 
     onSortByChange(value: string) {
@@ -142,7 +154,7 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
 
     onSaveResultInChange(value: string) {
         this.currentConfiguration.SaveResultIn = value;
-        super.validateData();
+        this.validateData();
     }
 
     /**************************************************************************************/
@@ -155,15 +167,14 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
     /**************************************************************************************/
 
     get currentConfiguration(): SearchDataConifuration {
-        return this._currentConfiguration;
+        if(!this._currentConfiguration) {
+            this._currentConfiguration = this.hostObject.Configuration;
+        }
+        return this._currentConfiguration as SearchDataConifuration ;
     }
 
-    protected getTitleResourceKey(): string {
-        return 'SEARCH_DATA.TITLE';
-    }
+    loadDataOnInit(): void {
 
-    protected loadDataOnInit(): void {
-        
         this.logicBlockService.getResourcesOptions().then(options => {
             this.resourceOptions = options;
             this.resourceFields = this.currentConfiguration.ResourceFields.join(';');
@@ -173,18 +184,28 @@ export class SearchDataLogicBlockComponent extends BaseLogicBlockDirective {
         });
     }
 
-    protected createDefaultConfiguration(): SearchDataConifuration {
+    createDefaultConfiguration(): SearchDataConifuration {
         const config: SearchDataConifuration = {
             Resource: '',
             ResourceFields: [],
             IsAsc: true,
             PageSize: 10,
-            SaveResultIn: ''
+            SaveResultIn: 'temp'
         };
         return config;
     }
     
-    protected calculateDoneIsDisabled(): boolean {
-        return !this.currentConfiguration.Resource || !(this.currentConfiguration.ResourceFields?.length > 0) || !this.currentConfiguration.SaveResultIn || !this.isValid;
+    calculateDoneIsDisabled(): boolean {
+        return !this.currentConfiguration?.Resource || !(this.currentConfiguration?.ResourceFields?.length > 0) || !this.currentConfiguration?.SaveResultIn || !this.isValid;
+    }
+
+    onSave(){
+        console.log('onsave function called', event);
+        this.dialogRef.close(this.currentConfiguration);
+    }
+
+    onClose(){
+        console.log('onClose function called', event);
+        this.dialogRef.close();
     }
 }

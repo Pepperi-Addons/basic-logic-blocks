@@ -15,7 +15,6 @@ export class DialogActionsComponent {
         this.hostEvents.emit({
             type: 'close-dialog'
         });
-        // debugger;
         this.hostEvents.emit({
             type: 'afterClosed'
         });

@@ -1,4 +1,8 @@
-<ng-container #logicBlockHeader></ng-container>
+<ng-container>
+    <div class="pep-border-bottom mat-dialog-title">
+        <label class="dialog-title" >{{ title | translate }}</label>
+    </div>
+</ng-container>
 
 <div class="configuration-content">
     <label class="body-sm">{{'SEARCH_DATA.SELECT_RESOURCE_HEADER' | translate}}</label>
@@ -46,3 +50,10 @@
     [value]="currentConfiguration?.SaveResultIn" (valueChange)="onSaveResultInChange($event)"></pep-select>
     <!-- <div class="pep-border-bottom"></div> -->
 </div>
+
+<ng-container pep-dialog-actions>
+    <div class="actions-container">
+        <pep-button [value]="'Done' | translate" [styleType]="'strong'" [disabled]="doneIsDisabled" sizeType="md" (buttonClick)="onSave()"></pep-button>
+        <pep-button [value]="'Cancel' | translate" [styleType]="'regular'" sizeType="md" (buttonClick)="onClose()"></pep-button>
+    </div>
+</ng-container>
