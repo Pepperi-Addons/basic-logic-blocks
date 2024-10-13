@@ -89,7 +89,7 @@ export class RelationsService {
     }
 
     private async createGetValuesLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Get Values', 'get-values', '/addon-cpi/get_values', 'GetValues');
+        return await this.createLogicBlockRelation('Get Values', 'get-values', '/addon-cpi/get_values', 'GetValues', 'Filter - Get Values');
         // const blockName = 'Get Values';
 
         // const logicBlockRelation: Relation = {

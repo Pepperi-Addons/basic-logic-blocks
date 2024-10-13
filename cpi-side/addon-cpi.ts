@@ -16,42 +16,62 @@ export async function load(configuration: any): Promise<void>{
 }
 
 export const router = Router()
-router.post('/navigate_to', async (req, res) => {
+router.post('/navigate_to', async (req, res, next) => {
 // debugger;
-    if (req.body) {
-        const service = new NavigateToCpiService();
-        await service.navigateTo(req.body, req.context);
-    } else {
-        console.log('no body was sent');
+    try {
+        if (req.body) {
+            const service = new NavigateToCpiService();
+            await service.navigateTo(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
     res.json({
     });
 })
 
-router.post('/get_active_transaction_uuid', async (req, res) => {
+router.post('/get_active_transaction_uuid', async (req, res, next) => {
+    const tmpRes = {};
     let transactionUUID = '';
-// debugger;
-    if (req.body) {
-        const service = new ActiveTransactionCpiService();
-        transactionUUID = await service.getActiveTransactionUUID(req.body, req.context);
-    } else {
-        console.log('no body was sent');
+    // debugger;
+    try {
+        if (req.body) {
+            const service = new ActiveTransactionCpiService();
+            transactionUUID = await service.getActiveTransactionUUID(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
-    res.json({
-        transactionUUID: transactionUUID
-    });
+    if (req.body.SaveResultIn) {
+        tmpRes[req.body.SaveResultIn] = transactionUUID;
+    } else {
+        tmpRes['transactionUUID'] = transactionUUID;
+    }
+
+    res.json(tmpRes);
 })
 
-router.post('/get_values', async (req, res) => {
+router.post('/get_values', async (req, res, next) => {
     let values: GetValueOption[] = [];
 // debugger;
-    if (req.body) {
-        const service = new GetValuesCpiService();
-        values = await service.getValues(req.body, req.context);
-    } else {
-        console.log('no body was sent');
+    try {
+        if (req.body) {
+            const service = new GetValuesCpiService();
+            values = await service.getValues(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
     res.json({
@@ -59,111 +79,163 @@ router.post('/get_values', async (req, res) => {
     });
 })
 
-router.post('/create_transaction_uuid', async (req, res) => {
+router.post('/create_transaction_uuid', async (req, res, next) => {
     let transactionUUID = '';
+    const tmpRes = {};
 // debugger;
-    if (req.body) {
-        const service = new CreateTransactionCpiService();
-        transactionUUID = await service.createTransactionUUID(req.body, req.context);
-    } else {
-        console.log('no body was sent');
+    try {
+        if (req.body) {
+            const service = new CreateTransactionCpiService();
+            transactionUUID = await service.createTransactionUUID(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
-    res.json({
-        transactionUUID: transactionUUID
-    });
+    if (req.body.SaveResultIn) {
+        tmpRes[req.body.SaveResultIn] = transactionUUID;
+    } else {
+        tmpRes['transactionUUID'] = transactionUUID;
+    }
+
+    res.json(tmpRes);
 })
 
-router.post('/create_activity_uuid', async (req, res) => {
+router.post('/create_activity_uuid', async (req, res, next) => {
     let activityUUID = '';
+    const tmpRes = {};
 // debugger;
-    if (req.body) {
-        const service = new CreateActivityCpiService();
-        activityUUID = await service.createActivityUUID(req.body, req.context);
-    } else {
-        console.log('no body was sent');
+    try {
+        if (req.body) {
+            const service = new CreateActivityCpiService();
+            activityUUID = await service.createActivityUUID(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
-    res.json({
-        activityUUID: activityUUID
-    });
+    if (req.body.SaveResultIn) {
+        tmpRes[req.body.SaveResultIn] = activityUUID;
+    } else {
+        tmpRes['activityUUID'] = activityUUID;
+    }
+
+    res.json(tmpRes);
 })
 
-router.post('/create_survey_uuid', async (req, res) => {
+router.post('/create_survey_uuid', async (req, res, next) => {
     let surveyUUID = '';
+    const tmpRes = {};
 // debugger;
-    if (req.body) {
-        const service = new CreateSurveyCpiService();
-        surveyUUID = await service.createSurveyUUID(req.body, req.context);
+    try {
+        if (req.body) {
+            const service = new CreateSurveyCpiService();
+            surveyUUID = await service.createSurveyUUID(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
+    }
+
+    if (req.body.SaveResultIn) {
+        tmpRes[req.body.SaveResultIn] = surveyUUID;
     } else {
-        console.log('no body was sent');
+        tmpRes['surveyUUID'] = surveyUUID;
+    }
+
+    res.json(tmpRes);
+})
+
+router.post('/open_external', async (req, res, next) => {
+// debugger;
+    try {
+        if (req.body) {
+            const service = new OpenExternalCpiService();
+            await service.openExternal(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
     res.json({
-        surveyUUID: surveyUUID
     });
 })
 
-router.post('/open_external', async (req, res) => {
-// debugger;
-    if (req.body) {
-        const service = new OpenExternalCpiService();
-        await service.openExternal(req.body, req.context);
-    } else {
-        console.log('no body was sent');
-    }
-
-    res.json({
-    });
-})
-
-router.post('/edit_rich_text', async (req, res) => {
+router.post('/edit_rich_text', async (req, res, next) => {
     let result = {}
-    if (req?.body) {
-        const service = new EditRichTextCpiService();
-        result = await service.findReplaceText(req.body, req.context) ?? {};
-    } else {
-        console.log('no body was sent');
+    try {
+        if (req?.body) {
+            const service = new EditRichTextCpiService();
+            result = await service.findReplaceText(req.body, req.context) ?? {};
+        } else {
+            console.log('no body was sent');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
+
     res.json({
         configuration: result
     });
 })
 
-router.post('/extract_value', async (req, res) => {
+router.post('/extract_value', async (req, res, next) => {
     let result: any = {};
-    if (req?.body) {
-        const service = new ExtractValueCpiService();
-        const body = req?.body ? req.body : {};
-        const context = req?.context ? req.context : {};
-        result = await service.extraction(body, context);
-    } else {
-      console.log('no path/source object was sent');
-    }
     const tmpRes = {};
-    if (result && Object.keys(result).length > 0 && result['Value'] && req.body.SaveSourceOn) {
-        const service = new ExtractValueCpiService();
-        tmpRes[req.body.SaveSourceOn.Value] = service.hasValue(result['Value']) ? result['Value'].Value : '';
-    } else {
-        console.log('no value was retrieve on said path');
+
+    try {
+        if (req?.body) {
+            const service = new ExtractValueCpiService();
+            const body = req?.body ? req.body : {};
+            const context = req?.context ? req.context : {};
+            result = await service.extraction(body, context);
+        } else {
+          console.log('no path/source object was sent');
+        }
+        if (result && Object.keys(result).length > 0 && result['Value'] && req.body.SaveSourceOn) {
+            const service = new ExtractValueCpiService();
+            tmpRes[req.body.SaveSourceOn.Value] = service.hasValue(result['Value']) ? result['Value'].Value : '';
+        } else {
+            console.log('no value was retrieve on said path');
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
     res.json(tmpRes);
 });
 
-router.post('/search_data', async (req, res) => {
+router.post('/search_data', async (req, res, next) => {
     let result: any;
-// debugger;
-    if (req.body) {
-        const service = new SearchDataCpiService();
-        result = await service.searchData(req.body, req.context);
-    } else {
-        console.log('no body was sent');
-    }
-
     const tmpRes = {};
-    if (result && req.body.SaveResultIn) {
-        tmpRes[req.body.SaveResultIn] = result;
+// debugger;
+    try {
+        if (req.body) {
+            const service = new SearchDataCpiService();
+            result = await service.searchData(req.body, req.context);
+        } else {
+            console.log('no body was sent');
+        }
+    
+        if (result && req.body.SaveResultIn) {
+            tmpRes[req.body.SaveResultIn] = result;
+        }
+    } catch (err) {
+        console.log(err);
+        next(err)
     }
 
     res.json(tmpRes);
