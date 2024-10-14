@@ -199,7 +199,8 @@ protected createDefaultConfiguration(): SearchDataConifuration | undefined {
           // callback will called from SearchData component with updated data
           console.log('callback called from searchData component upon done button clicked', data);
           if (data) {
-              this.items.push(data);
+              // set the data to currentConfiguration it wil pushed into list items
+              this._currentConfiguration = data;
               this.reload();
           }
         }
