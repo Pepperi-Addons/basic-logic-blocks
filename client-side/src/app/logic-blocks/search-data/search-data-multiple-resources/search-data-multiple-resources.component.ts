@@ -24,14 +24,13 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
     show: true
   }
   get currentConfiguration(): SearchDataConifuration {
-    console.log('inside the getConfiguration ', this._currentConfiguration);
     return this._currentConfiguration as SearchDataConifuration;
 }
   protected getTitleResourceKey(): string {
     return 'SEARCH_DATA.TITLE';
   }
+
   protected loadDataOnInit(): void {
-    
     console.log('loadDataOnInit() overrided method call', this.hostObject, '\n ..... ', this.currentConfiguration)
     this.run();
   }
@@ -60,12 +59,10 @@ protected createDefaultConfiguration(): SearchDataConifuration | undefined {
         public translate: TranslateService,
   ) {
     super(viewContainerRef, translate,logicBlockService);
-    this.items = [];
     console.log('constructore loaded from SearchDataMultipleResourcesLogicBlockComponent!!!!', this.items);
    }
 
    async run() {
-    console.log('run() called!!!!!')
     this.listDataSource = this.getDataSource();
     this.isLoaded = true;
 }
@@ -92,6 +89,7 @@ protected createDefaultConfiguration(): SearchDataConifuration | undefined {
       init: async(parameters: IPepGenericListParams) => {
         console.log('this.currentConfiguration', this.currentConfiguration)
         if(this.currentConfiguration && Object.values(this.currentConfiguration).length){
+          console.log('this.items', this.items)
           this.items.push(this.currentConfiguration)
         }
         
@@ -202,10 +200,10 @@ protected createDefaultConfiguration(): SearchDataConifuration | undefined {
           console.log('callback called from searchData component upon done button clicked', data);
           if (data) {
               this.items.push(data);
-               this.reload();
+              this.reload();
           }
         }
         this.hostObject.Configuration = this.currentConfiguration;
-        this.dialogService.openDialog(this.translate.instant("SEARCH_DATA.TITLE"), SearchDataLogicBlockComponent, [], this.hostObject, callback);
+        this.dialogService.openDialog(this.translate.instant("SEARCH_DATA.TITLE"), SearchDataLogicBlockComponent, [], {...this.hostObject, isAddClicked: true}, callback);
   }
 }

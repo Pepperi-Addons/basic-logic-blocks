@@ -46,9 +46,12 @@ export class SearchDataLogicBlockComponent implements OnInit {
         ) {
             // this we are doing b'z this component may call from any other component
             this.hostObject =  this.hostObject? this.hostObject : data;
+            if(this.hostObject?.isAddClicked){
+                // if component loaded with Add button than init default configuration
+                this.hostObject.Configuration = this.createDefaultConfiguration();
+            }
     }
 
-    // Do nothing here the init implementation is in the loadDataOnInit function.
     ngOnInit(): void {
         this.logicBlockService.initFlowParameters(this.hostObject?.EventData);
         this.loadDataOnInit();
@@ -185,12 +188,12 @@ export class SearchDataLogicBlockComponent implements OnInit {
     }
 
     createDefaultConfiguration(): SearchDataConifuration {
-        const config: SearchDataConifuration = {
+        const config: SearchDataConifuration  = {
             Resource: '',
             ResourceFields: [],
             IsAsc: true,
             PageSize: 10,
-            SaveResultIn: 'temp'
+            SaveResultIn: ''
         };
         return config;
     }
