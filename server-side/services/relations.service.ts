@@ -247,9 +247,6 @@ export class RelationsService {
     }
 
     private async createSearchDataLogicBlockRelation(): Promise<any> {
-        // MJ reference point need to replace this relation component name as any other component
-        // replace with 'search-data-multiple-resources'
-        // return await this.createLogicBlockRelation('Search Data', 'search-data', '/addon-cpi/search_data', 'SearchData');
         return await this.createLogicBlockRelation('Search Data', 'search-data-multiple-resources', '/addon-cpi/search_data', 'SearchDataMultipleResources');
         // const blockName = 'Search Data';
 
