@@ -221,8 +221,9 @@ router.post('/extract_value', async (req, res, next) => {
 router.post('/search_data', async (req, res, next) => {
     let result: any;
     const tmpRes = {};
+    debugger;
 // debugger;
-    try {
+    // try {
         if (req.body) {
             const service = new SearchDataCpiService();
             result = await service.searchData(req.body, req.context);
@@ -233,10 +234,10 @@ router.post('/search_data', async (req, res, next) => {
         if (result && req.body.SaveResultIn) {
             tmpRes[req.body.SaveResultIn] = result;
         }
-    } catch (err) {
-        console.log(err);
-        next(err)
-    }
+    // } catch (err) {
+    //     console.log(err);
+    //     next(err)
+    // }
 
     res.json(tmpRes);
 })

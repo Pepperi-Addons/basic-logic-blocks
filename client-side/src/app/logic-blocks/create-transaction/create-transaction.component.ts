@@ -11,6 +11,7 @@ export interface CreateTransactionConifuration {
     Account: CreateTransactionConifurationProperty;
     Catalog: CreateTransactionConifurationProperty;
     TransactionType: CreateTransactionConifurationProperty;
+    SaveResultIn?: string;
 }
 
 export interface CreateTransactionConifurationProperty extends ConifurationProperty {
@@ -28,6 +29,7 @@ export class CreateTransactionLogicBlockComponent extends BaseLogicBlockDirectiv
     protected catalogStaticOptions: IPepOption[] = [];
     protected transactionTypeOptions: IPepOption[] = [];
     protected transactionTypeStaticOptions: IPepOption[] = [];
+    protected flowObjectTypeParams: Array<IPepOption> = [];
     
     constructor(
         viewContainerRef: ViewContainerRef,
@@ -41,6 +43,7 @@ export class CreateTransactionLogicBlockComponent extends BaseLogicBlockDirectiv
     private loadOptions() {
         const stringFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('String');
 
+        this.flowObjectTypeParams = stringFlowParamsOptions;
         this.accountOptions = stringFlowParamsOptions;
         this.catalogOptions = stringFlowParamsOptions;
         this.logicBlockService.getCatalogsOptions(this.currentConfiguration).then((catalogsOptions: IPepOption[]) => {
@@ -115,7 +118,11 @@ export class CreateTransactionLogicBlockComponent extends BaseLogicBlockDirectiv
     }
     
     protected calculateDoneIsDisabled(): boolean {
-        return !this.currentConfiguration.Account.Value || !this.currentConfiguration.Catalog.Value || !this.currentConfiguration.TransactionType.Value;
+        return !this.currentConfiguration.Account.Value || !this.currentConfiguration.Catalog.Value || !this.currentConfiguration.TransactionType.Value || !this.currentConfiguration.SaveResultIn;
     }
      
+    onSaveResultInChange(value: string) {
+        this.currentConfiguration.SaveResultIn = value;
+        super.validateData();
+    }
 }

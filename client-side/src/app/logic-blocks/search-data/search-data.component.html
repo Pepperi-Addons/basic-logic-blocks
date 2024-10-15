@@ -1,6 +1,9 @@
 <ng-container #logicBlockHeader></ng-container>
 
 <div class="configuration-content">
+    <div>
+        <p>{{'SEARCH_DATA.SUB_TITLE' | translate}}</p>
+    </div>
     <label class="body-sm">{{'SEARCH_DATA.SELECT_RESOURCE_HEADER' | translate}}</label>
     <pep-select class="max-width" [options]="resourceOptions" [mandatory]="true" [emptyOption]="false" [label]="'SEARCH_DATA.SELECT_RESOURCE_TITLE' | translate"
         [value]="currentConfiguration.Resource" (valueChange)="onResourceChange($event)"></pep-select>

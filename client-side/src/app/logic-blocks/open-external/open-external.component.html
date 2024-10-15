@@ -1,6 +1,9 @@
 <ng-container #logicBlockHeader></ng-container>
 
 <div class="configuration-content">
+    <div>
+        <p>{{'OPEN_EXTERNAL.SUB_TITLE' | translate}}</p>
+    </div>
     <div class="flex-row">
         <pep-select [label]="'OPEN_EXTERNAL.URL_TITLE' | translate" [options]="parameterTypeOptions" [emptyOption]="false" [value]="currentConfiguration.URL.FlowParamSource"
             [mandatory]="true" (valueChange)="onFlowParamSourceChange($event, currentConfiguration.URL)"></pep-select>

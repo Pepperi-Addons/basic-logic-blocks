@@ -10,6 +10,7 @@ import { ConifurationProperty } from 'shared';
 export interface CreateActivityConifuration {
     Account: CreateActivityConifurationProperty;
     ActivityType: CreateActivityConifurationProperty;
+    SaveResultIn?: string;
 }
 
 export interface CreateActivityConifurationProperty extends ConifurationProperty {
@@ -25,6 +26,7 @@ export class CreateActivityLogicBlockComponent extends BaseLogicBlockDirective {
     protected accountOptions: IPepOption[] = [];
     protected activityTypeOptions: IPepOption[] = [];
     protected activityTypeStaticOptions: IPepOption[] = [];
+    protected flowObjectTypeParams: Array<IPepOption> = [];
     
     constructor(
         viewContainerRef: ViewContainerRef,
@@ -38,8 +40,8 @@ export class CreateActivityLogicBlockComponent extends BaseLogicBlockDirective {
     private loadOptions() {
         const stringFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('String');
 
+        this.flowObjectTypeParams = stringFlowParamsOptions;
         this.accountOptions = stringFlowParamsOptions;
-        
         this.activityTypeOptions = stringFlowParamsOptions;
         this.logicBlockService.getActivityTypeOptions().then((activityTypeOptions: IPepOption[]) => {
             this.activityTypeStaticOptions = activityTypeOptions; 
@@ -100,7 +102,11 @@ export class CreateActivityLogicBlockComponent extends BaseLogicBlockDirective {
     }
     
     protected calculateDoneIsDisabled(): boolean {
-        return !this.currentConfiguration.Account.Value || !this.currentConfiguration.ActivityType.Value;
+        return !this.currentConfiguration.Account.Value || !this.currentConfiguration.ActivityType.Value || !this.currentConfiguration.SaveResultIn;
     }
-     
+
+    onSaveResultInChange(value: string) {
+        this.currentConfiguration.SaveResultIn = value;
+        super.validateData();
+    }
 }

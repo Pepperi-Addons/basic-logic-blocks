@@ -1,6 +1,7 @@
 {
     "ACTIVE_TRANSACTIONS": {
         "TITLE": "Active Transactions",
+        "SUB_TITLE": "Returns the current active order.",
         "ACCOUNT_TITLE": "Account",
         "CHOOSE_ACCOUNT": "Choose account",
         "CHOOSE_ACCOUNT_TITLE": "Accounts",
@@ -13,6 +14,7 @@
     },
     "NAVIGATE_TO": {
         "TITLE": "Navigate To",
+        "SUB_TITLE": "Navigates to another view.",
         "CHOOSE_NAVIGATION_TYPE": "Choose Navigation Type",
         "CHOOSE_ACCOUNT": "Choose Account",
         "CHOOSE_ACCOUNT_TITLE": "Accounts",
@@ -56,6 +58,7 @@
         }
     },
     "GET_VALUES": {
+        "SUB_TITLE": "Returns options list to be used in the Filter page block. Can be used only in flows called from the Filter page block.",
         "TITLE": "Get Values",
         "MANUAL_OPTIONS": {
             "TITLE": "Manual",
@@ -77,6 +80,7 @@
     },
     "CREATE_TRANSACTION": {
         "TITLE": "Create Transaction",
+        "SUB_TITLE": "Creates a transaction and returns its UUID.",
         "ACCOUNT_TITLE": "Account",
         "CHOOSE_ACCOUNT": "Choose account",
         "CHOOSE_ACCOUNT_TITLE": "Accounts",
@@ -87,6 +91,7 @@
     },
     "CREATE_ACTIVITY": {
         "TITLE": "Create Activity",
+        "SUB_TITLE": "Creates an activity and returns its UUID.",
         "ACCOUNT_TITLE": "Account",
         "CHOOSE_ACCOUNT": "Choose account",
         "CHOOSE_ACCOUNT_TITLE": "Accounts",
@@ -95,6 +100,7 @@
     },
     "CREATE_SURVEY": {
         "TITLE": "Create Survey",
+        "SUB_TITLE": "Creates a survey and returns its UUID.",
         "ACCOUNT_TITLE": "Account",
         "CHOOSE_ACCOUNT": "Choose account",
         "CHOOSE_ACCOUNT_TITLE": "Accounts",
@@ -103,12 +109,14 @@
     },
     "EDIT_RICH_TEXT": {
         "TITLE": "Rich Text - Find & Replace",
+        "SUB_TITLE": "Replaces text in rich text object of a Rich Text page block. Can be used only in flows called from the on load event of the Rich Text page block.",
         "OBJECT_LABEL": "Rich Text Object",
         "FIND_LABEL": "Find Text",
         "REPLACE_LABEL": "Replace Text"
     },
     "OPEN_EXTERNAL": {
         "TITLE": "Open External",
+        "SUB_TITLE": "Opens a website or application.",
         "URL_TITLE": "URL",
         "EXTERNAL_APP": "External App",
         "EXTERNAL_APP_DESCRIPTION": "Allows to open an external application.<br/>According to the URL, the operating system will open the relevant application.",
@@ -124,10 +132,12 @@
             "NAME": "Name",
             "EXTERNALID": "External ID",
             "CITY": "City",
-            "ZIPCODE": "Zip Code"
+            "ZIPCODE": "Zip Code",
+            "SAVE_RESULT_IN_TITLE": "Save result in"
         }
     },
     "EXTRACT_VALUE": {
+        "SUB_TITLE": "Returns an extracted value from a flow parameter of type object.",
         "SELECT_OBJECT":"Select Object",
         "PATH":"Path",
         "PATH_SOURCE":"Path Source",
@@ -137,6 +147,7 @@
     },
     "SEARCH_DATA": {
         "TITLE": "Search Data",
+        "SUB_TITLE": "Returns data from a resource.",
         "SELECT_RESOURCE_HEADER": "Select a resource",
         "SELECT_RESOURCE_TITLE": "Select Resource",
         "SELECT_RESOURCE_FIELDS_HEADER": "Select the resource fields to be return",

@@ -11,6 +11,7 @@ export interface CreateSurveyConifuration {
     Account: CreateSurveyConifurationProperty;
     SurveyTemplate: CreateSurveyConifurationProperty;
     // Resource: CreateSurveyConifurationProperty; // TODO: add this if neccessary (default is MySurveys).
+    SaveResultIn?: string;
 }
 
 export interface CreateSurveyConifurationProperty extends ConifurationProperty {
@@ -26,6 +27,7 @@ export class CreateSurveyLogicBlockComponent extends BaseLogicBlockDirective {
     protected accountOptions: IPepOption[] = [];
     protected surveyTemplateOptions: IPepOption[] = [];
     protected surveyTemplateStaticOptions: IPepOption[] = [];
+    protected flowObjectTypeParams: Array<IPepOption> = [];
     
     constructor(
         viewContainerRef: ViewContainerRef,
@@ -39,13 +41,12 @@ export class CreateSurveyLogicBlockComponent extends BaseLogicBlockDirective {
     private loadOptions() {
         const stringFlowParamsOptions = this.logicBlockService.getFlowParametersOptions('String');
 
+        this.flowObjectTypeParams = stringFlowParamsOptions;
         this.accountOptions = stringFlowParamsOptions;
-        
         this.surveyTemplateOptions = stringFlowParamsOptions;
         this.logicBlockService.getSurveyTemplateOptions().then((surveyTemplateOptions: IPepOption[]) => {
             this.surveyTemplateStaticOptions = surveyTemplateOptions; 
         });
-
     }
 
     // Do nothing here the init implementation is in the loadDataOnInit function.
@@ -101,7 +102,11 @@ export class CreateSurveyLogicBlockComponent extends BaseLogicBlockDirective {
     }
     
     protected calculateDoneIsDisabled(): boolean {
-        return !this.currentConfiguration.Account.Value || !this.currentConfiguration.SurveyTemplate.Value;
+        return !this.currentConfiguration.Account.Value || !this.currentConfiguration.SurveyTemplate.Value || !this.currentConfiguration.SaveResultIn;
     }
      
+    onSaveResultInChange(value: string) {
+        this.currentConfiguration.SaveResultIn = value;
+        super.validateData();
+    }
 }

@@ -1,6 +1,9 @@
 <ng-container #logicBlockHeader></ng-container>
 
 <div class="configuration-content">
+    <div>
+        <p>{{'GET_VALUES.SUB_TITLE' | translate}}</p>
+    </div>
     <pep-group-buttons-settings *ngIf="valuesTypesButtons?.length > 0" class="values-type max-width" groupType="custom" [btnsArray]="valuesTypesButtons" 
         [btnKey]="currentConfiguration.ValuesType" (btnkeyChange)="onValuesTypeChange($event)"></pep-group-buttons-settings>
     <div *ngIf="currentConfiguration.ValuesType === MANUAL_KEY" class="manual-tab">

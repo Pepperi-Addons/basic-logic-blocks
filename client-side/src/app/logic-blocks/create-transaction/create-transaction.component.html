@@ -1,6 +1,9 @@
 <ng-container #logicBlockHeader></ng-container>
 
 <div class="configuration-content">
+    <div>
+        <p>{{'CREATE_TRANSACTION.SUB_TITLE' | translate}}</p>
+    </div>
     <div class="flex-row">
         <pep-select [label]="'CREATE_TRANSACTION.ACCOUNT_TITLE' | translate" [options]="parameterTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Account.FlowParamSource"
             [mandatory]="true" (valueChange)="onFlowParamSourceChange($event, currentConfiguration.Account)"></pep-select>
@@ -27,6 +30,11 @@
             dynamicOptions: transactionTypeOptions,
             mandatory: true }">
         </ng-container>
+    </div>
+    <div>
+        <!-- Save result in -->
+        <pep-select class="max-width" [options]="flowObjectTypeParams" [mandatory]="true" [label]="'COMMON.FIELDS_TITLE.SAVE_RESULT_IN_TITLE' | translate"
+        [value]="currentConfiguration.SaveResultIn" (valueChange)="onSaveResultInChange($event)"></pep-select>
     </div>
 </div>
 

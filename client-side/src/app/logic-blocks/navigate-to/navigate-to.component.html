@@ -1,6 +1,9 @@
 <ng-container #logicBlockHeader></ng-container>
 
 <div class="configuration-content">
+    <div>
+        <p>{{'NAVIGATE_TO.SUB_TITLE' | translate}}</p>
+    </div>
     <pep-select [label]="'NAVIGATE_TO.CHOOSE_NAVIGATION_TYPE' | translate" [options]="navigationToTypeOptions" [emptyOption]="false" [value]="currentConfiguration.Data.Type"
         (valueChange)="onNavigationTypeChange($event)"></pep-select>
 
