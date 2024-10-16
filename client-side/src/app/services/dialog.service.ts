@@ -15,7 +15,7 @@ export class DialogService {
   ) { }
 
 
-  openDialog(title: string, content: ComponentType<any>, buttons: Array<PepDialogActionButton>, input: any, callbackFunc?: (any) => void, sizeType: PepDialogSizeType = 'inline'): void {
+  openDialog(title: string, content: ComponentType<any>, buttons: Array<PepDialogActionButton>, input: any, callbackFunc?: (any) => void, sizeType: PepDialogSizeType = 'regular'): void {
     //const dialogConfig = this.dialogService.getDialogConfig({ disableClose: false, panelClass: 'pepperi-standalone' }, 'inline')
     const dialogConfig = this.dialogService.getDialogConfig({}, sizeType)
     const data = new PepDialogData({ title: title, actionsType: 'custom', showClose : true, showHeader : true, content: content, actionButtons: buttons })

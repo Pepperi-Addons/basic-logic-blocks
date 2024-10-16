@@ -87,8 +87,7 @@ export class AppModule implements DoBootstrap {
         this.pepAddonService.defineCustomElement(`open-external-logic-block-element-${config.AddonUUID}`, OpenExternalLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`edit-rich-text-logic-block-element-${config.AddonUUID}`, EditRichTextLogicBlockComponent, this.injector);
         this.pepAddonService.defineCustomElement(`extract-value-logic-block-element-${config.AddonUUID}`, ExtractValueLogicBlockComponent, this.injector);
-        this.pepAddonService.defineCustomElement(`search-data-logic-block-element-${config.AddonUUID}`, SearchDataLogicBlockComponent, this.injector);
-        this.pepAddonService.defineCustomElement(`search-data-multiple-resources-logic-block-element-${config.AddonUUID}`, SearchDataMultipleResourcesLogicBlockComponent, this.injector);
+        this.pepAddonService.defineCustomElement(`search-data-logic-block-element-${config.AddonUUID}`, SearchDataMultipleResourcesLogicBlockComponent, this.injector);
     }
 }
 

@@ -247,25 +247,7 @@ export class RelationsService {
     }
 
     private async createSearchDataLogicBlockRelation(): Promise<any> {
-        return await this.createLogicBlockRelation('Search Data', 'search-data-multiple-resources', '/addon-cpi/search_data', 'SearchDataMultipleResources');
-        // const blockName = 'Search Data';
-
-        // const logicBlockRelation: Relation = {
-        //     RelationName: 'LogicBlock',
-        //     Name: blockName,
-        //     Description: `${blockName} block`,
-        //     Type: "NgComponent",
-        //     SubType: "NG14",
-        //     AddonUUID: this.client.AddonUUID,
-        //     AddonRelativeURL: this.bundleFileName,
-        //     ComponentName: `SearchDataLogicBlockComponent`, // This is should be the block component name (from the client-side)
-        //     ModuleName: `SearchDataLogicBlockModule`, // This is should be the block module name (from the client-side),
-        //     ElementsModule: 'WebComponents',
-        //     ElementName: `search-data-logic-block-element-${this.client.AddonUUID}`,
-        //     BlockExecutionRelativeURL: '/addon-cpi/search_data',
-        // };
-
-        // return await this.upsertRelation(logicBlockRelation);
+        return await this.createLogicBlockRelation('Search Data', 'search-data', '/addon-cpi/search_data', 'SearchDataMultipleResources');
     }
 
     async upsertRelations(): Promise<boolean> {

@@ -167,9 +167,10 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         // debugger;
         this.logicBlockService.initFlowParameters(this.hostObject?.EventData);
         this._currentConfiguration = JSON.parse(JSON.stringify(this.hostObject?.Configuration));
+        console.log('from base-logic-block-directive --> this._currentConfiguration ', this._currentConfiguration)
         const defaultConfiguration = this.createDefaultConfiguration();
-
         if (!this._currentConfiguration || Object.keys(this._currentConfiguration).length === 0 || this._currentConfiguration.toString() === '{}') {
+            console.log('from base-logic-block-directive --> defaultConfiguration : ', defaultConfiguration);
             this._currentConfiguration = defaultConfiguration;
         }
 

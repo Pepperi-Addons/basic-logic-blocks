@@ -7,7 +7,7 @@
 <div class="configuration-content">
     <label class="body-sm">{{'SEARCH_DATA.SELECT_RESOURCE_HEADER' | translate}}</label>
     <pep-select class="max-width" [options]="resourceOptions" [mandatory]="true" [emptyOption]="false" [label]="'SEARCH_DATA.SELECT_RESOURCE_TITLE' | translate"
-        [value]="currentConfiguration?.Resource" (valueChange)="onResourceChange($event)"></pep-select>
+        [value]="currentConfiguration.Resource" (valueChange)="onResourceChange($event)"></pep-select>
     <div class="pep-border-bottom"></div>
 
     <label class="body-sm">{{'SEARCH_DATA.SELECT_RESOURCE_FIELDS_HEADER' | translate}}</label>
@@ -24,16 +24,16 @@
     <!-- Sort -->
     <label class="body-sm">{{'SEARCH_DATA.SORT_BY_HEADER' | translate}}</label>
     <pep-select class="max-width" [options]="resourceFieldsOptions" [label]="'SEARCH_DATA.SORT_BY_TITLE' | translate"
-        [value]="currentConfiguration?.SortBy" (valueChange)="onSortByChange($event)"></pep-select>
+        [value]="currentConfiguration.SortBy" (valueChange)="onSortByChange($event)"></pep-select>
     
     <!-- Asc -->
     <mat-radio-group class="radio-group ">
         <mat-radio-button class="pep-radio-button md no-default-background" value="true"
-            [checked]="currentConfiguration?.IsAsc" (click)="onIsAscChanged(true)">
+            [checked]="currentConfiguration.IsAsc" (click)="onIsAscChanged(true)">
             <span class="body-sm ellipsis">{{ 'SEARCH_DATA.ASC' | translate }}</span>
         </mat-radio-button>
         <mat-radio-button class="pep-radio-button md no-default-background" value="false"
-            [checked]="!currentConfiguration?.IsAsc" (click)="onIsAscChanged(false)">
+            [checked]="!currentConfiguration.IsAsc" (click)="onIsAscChanged(false)">
             <span class="body-sm ellipsis">{{ 'SEARCH_DATA.DESC' | translate }}</span>
         </mat-radio-button>
     </mat-radio-group>
@@ -42,18 +42,20 @@
     <!-- Page size -->
     <label class="body-sm">{{'SEARCH_DATA.PAGE_SIZE_HEADER' | translate}}</label>
     <pep-textbox class="max-width" [label]="'SEARCH_DATA.PAGE_SIZE_TITLE' | translate" type="int" [minValue]="1" [maxValue]="100" 
-        [value]="currentConfiguration?.PageSize" (valueChange)="onPageSizeChange($event)"></pep-textbox>
+        [value]="currentConfiguration.PageSize" (valueChange)="onPageSizeChange($event)"></pep-textbox>
     <div class="pep-border-bottom"></div>
 
     <!-- Save result in -->
     <pep-select class="max-width" [options]="flowObjectTypeParams" [mandatory]="true" [label]="'SEARCH_DATA.SAVE_RESULT_IN_TITLE' | translate"
-    [value]="currentConfiguration?.SaveResultIn" (valueChange)="onSaveResultInChange($event)"></pep-select>
+    [value]="currentConfiguration.SaveResultIn" (valueChange)="onSaveResultInChange($event)"></pep-select>
     <!-- <div class="pep-border-bottom"></div> -->
 </div>
 
 <ng-container pep-dialog-actions>
-    <div class="actions-container">
-        <pep-button [value]="'Done' | translate" [styleType]="'strong'" [disabled]="doneIsDisabled" sizeType="md" (buttonClick)="onSave()"></pep-button>
-        <pep-button [value]="'Cancel' | translate" [styleType]="'regular'" sizeType="md" (buttonClick)="onClose()"></pep-button>
+    <div class="flex-container">
+        <div class="flex-buttons">
+            <pep-button [value]="'Cancel' | translate" [styleType]="'regular'" sizeType="md" (buttonClick)="onClose()"></pep-button>
+            <pep-button [value]="'Done' | translate" [styleType]="'strong'" [disabled]="doneIsDisabled" sizeType="md" (buttonClick)="onSave()"></pep-button>
+        </div>
     </div>
 </ng-container>
