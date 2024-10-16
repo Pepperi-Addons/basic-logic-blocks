@@ -173,25 +173,29 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
           title: this.translate.instant("Edit"),
           handler: async (selectedData) => {
             console.log("Edit selected called with item key", selectedData);
-            // let obj = this.paramsVec.find(elem => elem.Name == selectedData.rows[0]);
-            // let callback = async (data) => {
-            //     if (data) {
-            //       this.updateParamList(data);
-            //     }
-            // }
-            // this.dialogService.openDialog(this.translate.instant("Edit Parameter"), ScriptParamFormComponent, [], { data: obj }, callback);
+            this.hostObject.Configuration = this.currentConfiguration;
+            this.dialogService.openDialog(
+              this.translate.instant("SEARCH_DATA.TITLE"),
+              SearchDataLogicBlockComponent,
+              [],
+              this.hostObject,
+              this.addResourceCB
+            );
           },
         });
         actions.push({
           title: this.translate.instant("Delete"),
           handler: async (selectedData) => {
             console.log("Delete selected called with item key", selectedData);
-            // this.dialogService.openCancelContinueDialog(this.translate.instant("delete_title") , this.translate.instant("delete_confirm"), async (res)=>{
-            //     if (res)
-            //     {
-            //         this.deleteFromParamList(selectedData.rows,selectedData.selectionType);
-            //     }
-            // });
+
+            // Find the index of the item to be removed
+            const indexToRemove = this.items.findIndex(item => item.Resource === this.currentConfiguration.Resource);
+
+            // If the item exists, remove it from the list
+            if (indexToRemove !== -1) {
+              this.items.splice(indexToRemove, 1);
+              this.reload();
+            }
           },
         });
       }
@@ -203,26 +207,26 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
     this.listDataSource = this.getDataSource();
   }
 
+  addResourceCB = async (data) => {
+    console.log(
+      "callback will called from SearchData component with updated data, upon done button clicked",
+      data
+    );
+    if (data) {
+      // set the data to currentConfiguration it wil pushed into list items
+      this._currentConfiguration = data;
+      this.reload();
+    }
+  };
+
   addResource() {
-    let callback = async (data) => {
-      // callback will called from SearchData component with updated data
-      console.log(
-        "callback called from searchData component upon done button clicked",
-        data
-      );
-      if (data) {
-        // set the data to currentConfiguration it wil pushed into list items
-        this._currentConfiguration = data;
-        this.reload();
-      }
-    };
     this.hostObject.Configuration = this.currentConfiguration;
     this.dialogService.openDialog(
       this.translate.instant("SEARCH_DATA.TITLE"),
       SearchDataLogicBlockComponent,
       [],
       { ...this.hostObject, isAddClicked: true },
-      callback
+      this.addResourceCB
     );
   }
 }
