@@ -1,0 +1,10 @@
+<ng-container #logicBlockHeader></ng-container>
+<ng-container pep-main-area>
+  <pep-generic-list [dataSource]="listDataSource" [actions]="listActions" [inline]="false" [showTopBar]="true" [emptyState]="listEmptyState" [uuidMapping]="'Key'"
+    (fieldClick)="onListClicked($event)">
+    <ng-container right-buttons>
+      <pep-button class="pep-spacing-element" [sizeType]="'md'" [value]="'SEARCH_DATA.ADD_RESOURCE_BUTTON' | translate"
+        [styleType]="'strong'" (buttonClick)="addResource()"></pep-button>
+    </ng-container>
+  </pep-generic-list>
+</ng-container>

@@ -136,6 +136,7 @@
         "SAVE":"Save result in"
     },
     "SEARCH_DATA": {
+        "ADD_RESOURCE_BUTTON": "Add", 
         "TITLE": "Search Data",
         "SELECT_RESOURCE_HEADER": "Select a resource",
         "SELECT_RESOURCE_TITLE": "Select Resource",
@@ -148,6 +149,7 @@
         "DESC": "Descending",
         "PAGE_SIZE_HEADER": "Select the number of objects to return",
         "PAGE_SIZE_TITLE": "Page Size",
-        "SAVE_RESULT_IN_TITLE": "Save result in"
+        "SAVE_RESULT_IN_TITLE": "Save result in",
+        "SEARCH_DATA_MULTIPLE_RESOURCES_EMPTY_LIST_MSG": "No Resource List Found, First Add A Resource."
     }
 }

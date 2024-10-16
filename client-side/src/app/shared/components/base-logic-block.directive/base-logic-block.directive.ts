@@ -45,7 +45,9 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         this.actionsContainerRef = this.viewContainerRef.createComponent(DialogActionsComponent);
         this.actionsContainerRef.instance.doneIsDisabled = this.doneIsDisabled;
         this.actionsContainerRef.instance.currentConfiguration = this._currentConfiguration;
-        this.actionsContainerRef.instance.hostEvents.subscribe((event) => this.hostEvents.emit(event));
+        this.actionsContainerRef.instance.hostEvents.subscribe((event) =>{
+            return this.hostEvents.emit(event);
+        } );
         this.viewContainerRef.insert(this.actionsContainerRef.hostView);
     }
 
@@ -165,14 +167,15 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         // debugger;
         this.logicBlockService.initFlowParameters(this.hostObject?.EventData);
         this._currentConfiguration = JSON.parse(JSON.stringify(this.hostObject?.Configuration));
+        console.log('from base-logic-block-directive --> this._currentConfiguration ', this._currentConfiguration)
         const defaultConfiguration = this.createDefaultConfiguration();
-
         if (!this._currentConfiguration || Object.keys(this._currentConfiguration).length === 0 || this._currentConfiguration.toString() === '{}') {
+            console.log('from base-logic-block-directive --> defaultConfiguration : ', defaultConfiguration);
             this._currentConfiguration = defaultConfiguration;
         }
 
         this.loadDataOnInit();
-        
+
         this.loadAccountHostObject();
         this.createHeaderComponent();
         this.createActionsComponent();
@@ -188,6 +191,10 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         this.hostEvents.emit({
             type: 'close-dialog'
         });
+        // 
+        // this.hostEvents.emit({
+        //     type: 'afterClosed'
+        // });
     }
     
     onDoneClick() {
