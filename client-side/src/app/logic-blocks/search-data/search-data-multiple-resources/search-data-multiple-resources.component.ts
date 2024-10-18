@@ -57,7 +57,7 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
     return config;
   }
 
-  items = [];
+  searchDataListItems: SearchDataConifuration[] = [];
   isLoaded: boolean = false;
   listDataSource: IPepGenericListDataSource;
   constructor(
@@ -70,24 +70,13 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
     super(viewContainerRef, translate, logicBlockService);
     console.log(
       "constructore loaded from SearchDataMultipleResourcesLogicBlockComponent!!!!",
-      this.items
+      this.searchDataListItems
     );
   }
 
   async run() {
     this.listDataSource = this.getDataSource();
     this.isLoaded = true;
-  }
-  async onListClicked($event: IPepFormFieldClickEvent) {
-    console.log("field clicked", $event.id);
-    // const obj = await this.scriptsService.getScriptByKey($event.id);
-    // let callback = async (data) => {
-    //     if (data) {
-    //         // instead of reload
-    //         this.GenericList.dataSource = this.listDataSource;
-    //     }
-    // }
-    // this.dialogService.openDialog(this.translate.instant("Edit Script"), ScriptEditorFormComponent, [], { data: obj }, callback);
   }
   isEqual(obj1: any, obj2: any): boolean {
     return JSON.stringify(obj1) === JSON.stringify(obj2);
@@ -96,16 +85,6 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
   getDataSource(): IPepGenericListDataSource {
     return {
       init: async (parameters: IPepGenericListParams) => {
-        console.log("this.currentConfiguration", this.currentConfiguration);
-        if (
-          this.currentConfiguration &&
-          Object.values(this.currentConfiguration).length && 
-          !this.isEqual(this.currentConfiguration, this.createDefaultConfiguration())
-        ) {
-          console.log("this.items", this.items, this.currentConfiguration);
-          this.items.push(this.currentConfiguration);
-        }
-
         return Promise.resolve({
           dataView: {
             Context: {
@@ -152,8 +131,8 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
             FrozenColumnsCount: 0,
             MinimumColumnWidth: 0,
           },
-          items: this.items,
-          totalCount: this.items.length,
+          items: this.searchDataListItems,
+          totalCount: this.searchDataListItems.length,
         });
       },
       inputs: {
@@ -173,7 +152,14 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
           title: this.translate.instant("Edit"),
           handler: async (selectedData) => {
             console.log("Edit selected called with item key", selectedData);
-            this.hostObject.Configuration = this.currentConfiguration;
+            // Get the selected row ID
+            const selectedRowID = selectedData.rows[0];
+            const selectedItem = this.searchDataListItems.find(
+              (item) => item.Resource === selectedRowID
+            );
+            // Set the selected item as the Configuration
+            this.hostObject.Configuration = selectedItem;
+            // Open the dialog with the selected item as the configuration
             this.dialogService.openDialog(
               this.translate.instant("SEARCH_DATA.TITLE"),
               SearchDataLogicBlockComponent,
@@ -183,18 +169,26 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
             );
           },
         });
+
         actions.push({
           title: this.translate.instant("Delete"),
           handler: async (selectedData) => {
+            // this handler should do two things..
+            //1. delete the selected item from searchDataListItems
+            //2. delete the selected item from currentConfiguration too.
             console.log("Delete selected called with item key", selectedData);
-
-            // Find the index of the item to be removed
-            const indexToRemove = this.items.findIndex(item => item.Resource === this.currentConfiguration.Resource);
+            const selectedRowID = selectedData.rows[0];
+            const indexToRemove = this.searchDataListItems.findIndex(
+              (item) => item.Resource === selectedRowID
+            );
 
             // If the item exists, remove it from the list
             if (indexToRemove !== -1) {
-              this.items.splice(indexToRemove, 1);
+              this.searchDataListItems.splice(indexToRemove, 1);
               this.reload();
+              this.hostObject.Configuration = this.searchDataListItems;
+              // handle this gracefully
+              this._currentConfiguration = this.searchDataListItems;
             }
           },
         });
@@ -213,9 +207,11 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
       data
     );
     if (data) {
-      // set the data to currentConfiguration it wil pushed into list items
-      this._currentConfiguration = data;
+      this.searchDataListItems.push(data);
       this.reload();
+      //handle this gracfully here.
+      this._currentConfiguration.Configuration = data;
+      this.hostObject.Configuration = this.searchDataListItems;
     }
   };
 
