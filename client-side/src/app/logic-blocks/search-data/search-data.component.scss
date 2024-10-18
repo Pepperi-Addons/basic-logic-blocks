@@ -34,3 +34,13 @@
         margin-bottom: variables.$form-spacing;
     }
 }
+.flex-container {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+  }
+  
+  .flex-buttons {
+    display: flex;
+    justify-content: space-between; /* Equal spacing between buttons */
+    gap: 10px;
+  }
