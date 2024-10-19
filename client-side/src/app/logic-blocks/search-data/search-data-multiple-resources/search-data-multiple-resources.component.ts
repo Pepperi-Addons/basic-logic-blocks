@@ -46,7 +46,7 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
   protected calculateDoneIsDisabled(): boolean {
     return false;
   }
-  protected createDefaultConfiguration(): SearchDataConifuration | undefined {
+  protected createDefaultConfiguration(): SearchDataConifuration[] {
     const config: SearchDataConifuration = {
       Resource: "",
       ResourceFields: [],
@@ -54,7 +54,7 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
       PageSize: 10,
       SaveResultIn: "",
     };
-    return config;
+    return [config];
   }
 
   searchDataListItems: SearchDataConifuration[] = [];
@@ -75,6 +75,9 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
   }
 
   async run() {
+    if(this._currentConfiguration.length) {
+      this.searchDataListItems.push(...this._currentConfiguration); 
+    }
     this.listDataSource = this.getDataSource();
     this.isLoaded = true;
   }
@@ -169,29 +172,46 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
             );
           },
         });
-
         actions.push({
           title: this.translate.instant("Delete"),
           handler: async (selectedData) => {
-            // this handler should do two things..
-            //1. delete the selected item from searchDataListItems
-            //2. delete the selected item from currentConfiguration too.
             console.log("Delete selected called with item key", selectedData);
             const selectedRowID = selectedData.rows[0];
+
+            // Find the index of the selected item in the list
             const indexToRemove = this.searchDataListItems.findIndex(
               (item) => item.Resource === selectedRowID
             );
 
-            // If the item exists, remove it from the list
+            // Remove the selected item from searchDataListItems
             if (indexToRemove !== -1) {
               this.searchDataListItems.splice(indexToRemove, 1);
               this.reload();
-              this.hostObject.Configuration = this.searchDataListItems;
-              // handle this gracefully
-              this._currentConfiguration = this.searchDataListItems;
             }
+
+            // Remove the selected item from _currentConfiguration
+            if (this._currentConfiguration && this._currentConfiguration.length) {
+              this._currentConfiguration.splice(indexToRemove, 1);
+            }
+
+            // Now remove the default configuration object from _currentConfiguration if it exists
+            const defaultConfigIndex = this._currentConfiguration.findIndex(
+              (config) =>
+                config.Resource === "" &&
+                config.ResourceFields.length === 0 &&
+                config.IsAsc === true &&
+                config.PageSize === 10 &&
+                config.SaveResultIn === ""
+            );
+
+            if (defaultConfigIndex !== -1) {
+              this._currentConfiguration.splice(defaultConfigIndex, 1);
+            }
+            // Update hostObject.Configuration with the modified currentConfiguration
+            this.hostObject.Configuration = this.currentConfiguration;
           },
         });
+        
       }
       return actions;
     },
@@ -209,14 +229,14 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
     if (data) {
       this.searchDataListItems.push(data);
       this.reload();
-      //handle this gracfully here.
-      this._currentConfiguration.Configuration = data;
-      this.hostObject.Configuration = this.searchDataListItems;
+      this._currentConfiguration.push(data)
+      this.hostObject.Configuration = this._currentConfiguration;
     }
   };
 
   addResource() {
     this.hostObject.Configuration = this.currentConfiguration;
+    console.log('before add/edit this.currentConfiiguration ', this.currentConfiguration);
     this.dialogService.openDialog(
       this.translate.instant("SEARCH_DATA.TITLE"),
       SearchDataLogicBlockComponent,
