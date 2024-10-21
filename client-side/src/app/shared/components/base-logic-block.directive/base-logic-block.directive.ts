@@ -189,10 +189,6 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         this.hostEvents.emit({
             type: 'close-dialog'
         });
-        // 
-        // this.hostEvents.emit({
-        //     type: 'afterClosed'
-        // });
     }
     
     onDoneClick() {

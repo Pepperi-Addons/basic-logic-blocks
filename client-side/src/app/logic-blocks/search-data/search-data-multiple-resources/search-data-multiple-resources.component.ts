@@ -5,7 +5,6 @@ import {
   IPepGenericListDataSource,
   IPepGenericListParams,
 } from "@pepperi-addons/ngx-composite-lib/generic-list";
-import { IPepFormFieldClickEvent } from "@pepperi-addons/ngx-lib/form";
 import { PepSelectionData } from "@pepperi-addons/ngx-lib/list";
 import { SearchDataLogicBlockComponent } from "../search-data.component";
 import { SearchDataLogicBlockService } from "../search-data.service";
@@ -19,33 +18,86 @@ import { DialogService } from "src/app/services/dialog.service";
   styleUrls: ["./search-data-multiple-resources.component.scss"],
   providers: [SearchDataLogicBlockService],
 })
-
-// here component name should be in following structure <componentName+LogicBlockComponent>
-// <SearchDataMultipleResources+LogicBlockComponent> = SearchDataMultipleResourcesLogicBlockComponent
-// Also here we are extending SearchDataLogicBlockComponent to get the flow configuration from the logic blocks
 export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlockDirective {
+  // Class Properties
   listEmptyState = {
     show: true,
   };
+  resourceSet: Set<string> = new Set();
+  isLoaded: boolean = false;
+  listDataSource: IPepGenericListDataSource;
+  listActions: IPepGenericListActions = this.getListActions();
+
+  // Constructor
+  constructor(
+    private dialogService: DialogService,
+    viewContainerRef: ViewContainerRef,
+    protected logicBlockService: SearchDataLogicBlockService,
+    public addonBlockService: PepAddonBlockLoaderService,
+    public translate: TranslateService
+  ) {
+    super(viewContainerRef, translate, logicBlockService);
+    console.log("Constructor initialized in SearchDataMultipleResourcesLogicBlockComponent!");
+  }
+
+  // Getter/Setter
   get currentConfiguration(): SearchDataConifuration {
     return this._currentConfiguration as SearchDataConifuration;
   }
+
+  // Public Methods
+
+  addResourceCB = async (data: SearchDataConifuration) => {
+    if (data && !this.resourceSet.has(data.Resource)) {
+      this.resourceSet.add(data.Resource);
+      this._currentConfiguration.push(data);
+      console.log(`Added new resource: ${data.Resource}`);
+    } else {
+      const existingIndex = this._currentConfiguration.findIndex(config => config.Resource === data.Resource);
+      if (existingIndex !== -1) {
+        this._currentConfiguration[existingIndex] = data;
+        console.log(`Replaced existing resource: ${data.Resource}`);
+      }
+    }
+
+    this.reload();
+    this.hostObject.Configuration = this._currentConfiguration;
+  };
+
+  addResource() {
+    this.hostObject.Configuration = this._currentConfiguration;
+    console.log("Before add/edit, currentConfiguration:", this._currentConfiguration);
+    this.dialogService.openDialog(
+      this.translate.instant("SEARCH_DATA.TITLE"),
+      SearchDataLogicBlockComponent,
+      [],
+      { ...this.hostObject, isAddClicked: true },
+      this.addResourceCB
+    );
+  }
+
+  reload() {
+    const filteredConfig = this._currentConfiguration.filter(config => config.Resource !== "");
+    this.listDataSource = this.getDataSource(filteredConfig);
+  }
+
+  // Protected Methods
+
+  // Lifecycle Hooks Overridden method will come below
+  protected loadDataOnInit(): void {
+    this.run();
+  }
+
+  // Overridden
   protected getTitleResourceKey(): string {
     return "SEARCH_DATA.TITLE";
   }
 
-  protected loadDataOnInit(): void {
-    console.log(
-      "loadDataOnInit() overrided method call",
-      this.hostObject,
-      "\n ..... ",
-      this.currentConfiguration
-    );
-    this.run();
-  }
+  // Overridden
   protected calculateDoneIsDisabled(): boolean {
     return false;
   }
+  // Overridden
   protected createDefaultConfiguration(): SearchDataConifuration[] {
     const config: SearchDataConifuration = {
       Resource: "",
@@ -57,35 +109,60 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
     return [config];
   }
 
-  searchDataListItems: SearchDataConifuration[] = [];
-  isLoaded: boolean = false;
-  listDataSource: IPepGenericListDataSource;
-  constructor(
-    private dialogService: DialogService,
-    viewContainerRef: ViewContainerRef,
-    protected logicBlockService: SearchDataLogicBlockService,
-    public addonBlockService: PepAddonBlockLoaderService,
-    public translate: TranslateService
-  ) {
-    super(viewContainerRef, translate, logicBlockService);
-    console.log(
-      "constructore loaded from SearchDataMultipleResourcesLogicBlockComponent!!!!",
-      this.searchDataListItems
+  async run() {
+    const filteredConfig = this._currentConfiguration.filter(config => config.Resource !== "");
+    filteredConfig.forEach(config => this.resourceSet.add(config.Resource));
+    this.listDataSource = this.getDataSource(filteredConfig); 
+    this.isLoaded = true;
+  }
+
+  // Private Methods
+
+  private getListActions(): IPepGenericListActions {
+    return {
+      get: async (selectedData: PepSelectionData) => {
+        let actions = [];
+        if (selectedData.rows.length === 1) {
+          actions.push({
+            title: this.translate.instant("Edit"),
+            handler: async (selectedData) => this.handleEditAction(selectedData),
+          });
+          actions.push({
+            title: this.translate.instant("Delete"),
+            handler: async (selectedData) => this.handleDeleteAction(selectedData),
+          });
+        }
+        return actions;
+      },
+    };
+  }
+
+  private async handleEditAction(selectedData: PepSelectionData) {
+    const selectedRowID = selectedData.rows[0];
+    const selectedItem = this._currentConfiguration.find(item => item.Resource === selectedRowID);
+    this.hostObject.Configuration = selectedItem;
+    this.dialogService.openDialog(
+      this.translate.instant("SEARCH_DATA.TITLE"),
+      SearchDataLogicBlockComponent,
+      [],
+      this.hostObject,
+      this.addResourceCB
     );
   }
 
-  async run() {
-    if(this._currentConfiguration.length) {
-      this.searchDataListItems.push(...this._currentConfiguration); 
+  private async handleDeleteAction(selectedData: PepSelectionData) {
+    const selectedRowID = selectedData.rows[0];
+    const indexToRemove = this._currentConfiguration.findIndex(item => item.Resource === selectedRowID);
+    if (indexToRemove !== -1) {
+      this._currentConfiguration.splice(indexToRemove, 1);
+      this.resourceSet.delete(selectedRowID);
+      this.reload();
+      this.hostObject.Configuration = this._currentConfiguration;
     }
-    this.listDataSource = this.getDataSource();
-    this.isLoaded = true;
-  }
-  isEqual(obj1: any, obj2: any): boolean {
-    return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
 
-  getDataSource(): IPepGenericListDataSource {
+  // Separated method to generate data source
+  private getDataSource(filteredConfig: SearchDataConifuration[]): IPepGenericListDataSource {
     return {
       init: async (parameters: IPepGenericListParams) => {
         return Promise.resolve({
@@ -98,151 +175,22 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
             Type: "Grid",
             Title: "Resource list",
             Fields: [
-              {
-                FieldID: "Resource",
-                Type: "TextBox",
-                Title: "Resource",
-                Mandatory: false,
-                ReadOnly: true,
-              },
-              {
-                FieldID: "ResourceFields",
-                Type: "TextBox",
-                Title: "Fields",
-                Mandatory: false,
-                ReadOnly: true,
-              },
-              {
-                FieldID: "SaveResultIn",
-                Type: "TextBox",
-                Title: "Destination",
-                Mandatory: false,
-                ReadOnly: true,
-              },
+              { FieldID: "Resource", Type: "TextBox", Title: "Resource", Mandatory: false, ReadOnly: true },
+              { FieldID: "ResourceFields", Type: "TextBox", Title: "Fields", Mandatory: false, ReadOnly: true },
+              { FieldID: "SaveResultIn", Type: "TextBox", Title: "Destination", Mandatory: false, ReadOnly: true },
             ],
-            Columns: [
-              {
-                Width: 10,
-              },
-              {
-                Width: 10,
-              },
-              {
-                Width: 10,
-              },
-            ],
+            Columns: [{ Width: 10 }, { Width: 10 }, { Width: 10 }],
             FrozenColumnsCount: 0,
             MinimumColumnWidth: 0,
           },
-          items: this.searchDataListItems,
-          totalCount: this.searchDataListItems.length,
+          items: filteredConfig,
+          totalCount: filteredConfig.length,
         });
       },
       inputs: {
-        pager: {
-          type: "scroll",
-        },
+        pager: { type: "scroll" },
         selectionType: "single",
       },
     };
-  }
-
-  listActions: IPepGenericListActions = {
-    get: async (selectedData: PepSelectionData) => {
-      let actions = [];
-      if (selectedData.rows.length === 1) {
-        actions.push({
-          title: this.translate.instant("Edit"),
-          handler: async (selectedData) => {
-            console.log("Edit selected called with item key", selectedData);
-            // Get the selected row ID
-            const selectedRowID = selectedData.rows[0];
-            const selectedItem = this.searchDataListItems.find(
-              (item) => item.Resource === selectedRowID
-            );
-            // Set the selected item as the Configuration
-            this.hostObject.Configuration = selectedItem;
-            // Open the dialog with the selected item as the configuration
-            this.dialogService.openDialog(
-              this.translate.instant("SEARCH_DATA.TITLE"),
-              SearchDataLogicBlockComponent,
-              [],
-              this.hostObject,
-              this.addResourceCB
-            );
-          },
-        });
-        actions.push({
-          title: this.translate.instant("Delete"),
-          handler: async (selectedData) => {
-            console.log("Delete selected called with item key", selectedData);
-            const selectedRowID = selectedData.rows[0];
-
-            // Find the index of the selected item in the list
-            const indexToRemove = this.searchDataListItems.findIndex(
-              (item) => item.Resource === selectedRowID
-            );
-
-            // Remove the selected item from searchDataListItems
-            if (indexToRemove !== -1) {
-              this.searchDataListItems.splice(indexToRemove, 1);
-              this.reload();
-            }
-
-            // Remove the selected item from _currentConfiguration
-            if (this._currentConfiguration && this._currentConfiguration.length) {
-              this._currentConfiguration.splice(indexToRemove, 1);
-            }
-
-            // Now remove the default configuration object from _currentConfiguration if it exists
-            const defaultConfigIndex = this._currentConfiguration.findIndex(
-              (config) =>
-                config.Resource === "" &&
-                config.ResourceFields.length === 0 &&
-                config.IsAsc === true &&
-                config.PageSize === 10 &&
-                config.SaveResultIn === ""
-            );
-
-            if (defaultConfigIndex !== -1) {
-              this._currentConfiguration.splice(defaultConfigIndex, 1);
-            }
-            // Update hostObject.Configuration with the modified currentConfiguration
-            this.hostObject.Configuration = this.currentConfiguration;
-          },
-        });
-        
-      }
-      return actions;
-    },
-  };
-
-  reload() {
-    this.listDataSource = this.getDataSource();
-  }
-
-  addResourceCB = async (data) => {
-    console.log(
-      "callback will called from SearchData component with updated data, upon done button clicked",
-      data
-    );
-    if (data) {
-      this.searchDataListItems.push(data);
-      this.reload();
-      this._currentConfiguration.push(data)
-      this.hostObject.Configuration = this._currentConfiguration;
-    }
-  };
-
-  addResource() {
-    this.hostObject.Configuration = this.currentConfiguration;
-    console.log('before add/edit this.currentConfiiguration ', this.currentConfiguration);
-    this.dialogService.openDialog(
-      this.translate.instant("SEARCH_DATA.TITLE"),
-      SearchDataLogicBlockComponent,
-      [],
-      { ...this.hostObject, isAddClicked: true },
-      this.addResourceCB
-    );
   }
 }
