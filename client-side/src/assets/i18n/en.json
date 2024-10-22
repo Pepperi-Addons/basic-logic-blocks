@@ -142,6 +142,8 @@
         "SELECT_RESOURCE_TITLE": "Select Resource",
         "SELECT_RESOURCE_FIELDS_HEADER": "Select the resource fields to be return",
         "SELECT_RESOURCE_FIELDS_TITLE": "Select fields",
+        "SELECT_SEARCH_TYPE_TITLE": "Search Type",
+        "SELECT_SEARCH_TYPE": "Select the search type",
         "RESOURCE_QUERY_HEADER": "Define the search criteria",
         "SORT_BY_HEADER": "Select the fields to sort by",
         "SORT_BY_TITLE": "Sort By",

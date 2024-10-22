@@ -15,35 +15,45 @@
     [value]="resourceFields" (valueChange)="onResourceFieldsChange($event)"></pep-select>
     <div class="pep-border-bottom"></div>
 
-    <label class="body-sm">{{'SEARCH_DATA.RESOURCE_QUERY_HEADER' | translate}}</label>
-    <pep-query-builder #resourceQueryBuilder class="resource-query" [query]="qbResourceQuery" [fields]="qbFields" [variableFields]="qbVariableFields" 
-        (queryChange)="onResourceQueryChange($event)" (formValidationChange)="onResourceQueryValidationChanged($event)">
-    </pep-query-builder>
-    <!-- <div class="pep-border-bottom"></div> -->
-
-    <!-- Sort -->
-    <label class="body-sm">{{'SEARCH_DATA.SORT_BY_HEADER' | translate}}</label>
-    <pep-select class="max-width" [options]="resourceFieldsOptions" [label]="'SEARCH_DATA.SORT_BY_TITLE' | translate"
-        [value]="currentConfiguration.SortBy" (valueChange)="onSortByChange($event)"></pep-select>
-    
-    <!-- Asc -->
-    <mat-radio-group class="radio-group ">
-        <mat-radio-button class="pep-radio-button md no-default-background" value="true"
-            [checked]="currentConfiguration.IsAsc" (click)="onIsAscChanged(true)">
-            <span class="body-sm ellipsis">{{ 'SEARCH_DATA.ASC' | translate }}</span>
-        </mat-radio-button>
-        <mat-radio-button class="pep-radio-button md no-default-background" value="false"
-            [checked]="!currentConfiguration.IsAsc" (click)="onIsAscChanged(false)">
-            <span class="body-sm ellipsis">{{ 'SEARCH_DATA.DESC' | translate }}</span>
-        </mat-radio-button>
-    </mat-radio-group>
+    <label class="body-sm">{{'SEARCH_DATA.SELECT_SEARCH_TYPE' | translate}}</label>
+    <pep-select class="max-width" [options]="searchTypeOptions" [label]="'SEARCH_DATA.SELECT_SEARCH_TYPE_TITLE' | translate"
+        [value]="currentConfiguration.SearchType" (valueChange)="onSearchTypeChange($event)"></pep-select>
     <div class="pep-border-bottom"></div>
 
-    <!-- Page size -->
-    <label class="body-sm">{{'SEARCH_DATA.PAGE_SIZE_HEADER' | translate}}</label>
-    <pep-textbox class="max-width" [label]="'SEARCH_DATA.PAGE_SIZE_TITLE' | translate" type="int" [minValue]="1" [maxValue]="100" 
-        [value]="currentConfiguration.PageSize" (valueChange)="onPageSizeChange($event)"></pep-textbox>
-    <div class="pep-border-bottom"></div>
+    <!-- Conditionally Display Fields If Search Type is "Multiple Records with Filter" -->
+    <ng-container *ngIf="currentConfiguration.SearchType === 'multiple'">
+        <!-- Query Builder -->
+        <label class="body-sm">{{'SEARCH_DATA.RESOURCE_QUERY_HEADER' | translate}}</label>
+        <pep-query-builder #resourceQueryBuilder class="resource-query" [query]="qbResourceQuery" [fields]="qbFields" [variableFields]="qbVariableFields" 
+            (queryChange)="onResourceQueryChange($event)" (formValidationChange)="onResourceQueryValidationChanged($event)">
+        </pep-query-builder>
+        <div class="pep-border-bottom"></div>
+
+        <!-- Sort -->
+        <label class="body-sm">{{'SEARCH_DATA.SORT_BY_HEADER' | translate}}</label>
+        <pep-select class="max-width" [options]="resourceFieldsOptions" [label]="'SEARCH_DATA.SORT_BY_TITLE' | translate"
+            [value]="currentConfiguration.SortBy" (valueChange)="onSortByChange($event)"></pep-select>
+
+        <!-- Asc -->
+        <mat-radio-group class="radio-group ">
+            <mat-radio-button class="pep-radio-button md no-default-background" value="true"
+                [checked]="currentConfiguration.IsAsc" (click)="onIsAscChanged(true)">
+                <span class="body-sm ellipsis">{{ 'SEARCH_DATA.ASC' | translate }}</span>
+            </mat-radio-button>
+            <mat-radio-button class="pep-radio-button md no-default-background" value="false"
+                [checked]="!currentConfiguration.IsAsc" (click)="onIsAscChanged(false)">
+                <span class="body-sm ellipsis">{{ 'SEARCH_DATA.DESC' | translate }}</span>
+            </mat-radio-button>
+        </mat-radio-group>
+        <div class="pep-border-bottom"></div>
+
+        <!-- Page Size -->
+        <label class="body-sm">{{'SEARCH_DATA.PAGE_SIZE_HEADER' | translate}}</label>
+        <pep-textbox class="max-width" [label]="'SEARCH_DATA.PAGE_SIZE_TITLE' | translate" type="int" [minValue]="1" [maxValue]="100" 
+            [value]="currentConfiguration.PageSize" (valueChange)="onPageSizeChange($event)"></pep-textbox>
+        <div class="pep-border-bottom"></div>
+    </ng-container>
+
 
     <!-- Save result in -->
     <pep-select class="max-width" [options]="flowObjectTypeParams" [mandatory]="true" [label]="'SEARCH_DATA.SAVE_RESULT_IN_TITLE' | translate"

@@ -7,4 +7,5 @@ export interface SearchDataConifuration {
     IsAsc?: boolean;
     PageSize?: number;
     SaveResultIn: string;
+    SearchType?: string;
 }

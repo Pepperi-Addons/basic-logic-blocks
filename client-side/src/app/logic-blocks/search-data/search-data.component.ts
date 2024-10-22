@@ -23,6 +23,10 @@ export class SearchDataLogicBlockComponent implements OnInit {
     @Input() hostObject: any;
     protected resourceOptions: IPepOption[] = [];
     protected resourceFieldsOptions: IPepOption[] = [];
+    protected searchTypeOptions: IPepOption[] = [
+        { key: 'single', value: 'Single Record by Key' },
+        { key: 'multiple', value: 'Single or Multiple Records by Filter' }
+    ];
     protected resourceFields: string = '';
     private _currentConfiguration: SearchDataConifuration;
     doneIsDisabled: boolean = true;
@@ -64,6 +68,7 @@ export class SearchDataLogicBlockComponent implements OnInit {
 
     private loadResourceFieldsOptions() {
         this.resourceFieldsOptions = this.logicBlockService.getResourceFieldsOptions(this.currentConfiguration.Resource);
+        this.logicBlockService.getResourceUDCByKey(this.currentConfiguration.Resource);
     }
 
     private loadFilterFieldsByResource() {
@@ -130,6 +135,11 @@ export class SearchDataLogicBlockComponent implements OnInit {
     onResourceFieldsChange(value: string) {
         this.resourceFields = value;
         this.currentConfiguration.ResourceFields = value.length > 0 ? value.split(';') : [];
+        this.validateData();
+    }
+
+    onSearchTypeChange(value: string) {
+        this.currentConfiguration.SearchType = value;
         this.validateData();
     }
 
