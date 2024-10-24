@@ -15,6 +15,9 @@ export class DialogActionsComponent {
         this.hostEvents.emit({
             type: 'close-dialog'
         });
+        this.hostEvents.emit({
+            type: 'afterClosed'
+        });
     }
     
     onDoneClick(event) {

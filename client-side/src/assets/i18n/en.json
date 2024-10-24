@@ -136,11 +136,15 @@
         "SAVE":"Save result in"
     },
     "SEARCH_DATA": {
+        "ADD_RESOURCE_BUTTON": "Add", 
         "TITLE": "Search Data",
         "SELECT_RESOURCE_HEADER": "Select a resource",
-        "SELECT_RESOURCE_TITLE": "Select Resource",
+        "SELECT_RESOURCE_TITLE": "Resource",
         "SELECT_RESOURCE_FIELDS_HEADER": "Select the resource fields to be return",
-        "SELECT_RESOURCE_FIELDS_TITLE": "Select fields",
+        "SELECT_RESOURCE_FIELDS_TITLE": "Fields",
+        "SELECT_SEARCH_TYPE_TITLE": "Search Type",
+        "SELECT_SEARCH_TYPE": "Select the search type",
+        "SELECT_SEARCH_DATA_SUB_TITLE": "Return data from resources",
         "RESOURCE_QUERY_HEADER": "Define the search criteria",
         "SORT_BY_HEADER": "Select the fields to sort by",
         "SORT_BY_TITLE": "Sort By",
@@ -148,6 +152,7 @@
         "DESC": "Descending",
         "PAGE_SIZE_HEADER": "Select the number of objects to return",
         "PAGE_SIZE_TITLE": "Page Size",
-        "SAVE_RESULT_IN_TITLE": "Save result in"
+        "SAVE_RESULT_IN_TITLE": "Save result in",
+        "SEARCH_DATA_MULTIPLE_RESOURCES_EMPTY_LIST_MSG": "No Resource List Found, First Add A Resource."
     }
 }

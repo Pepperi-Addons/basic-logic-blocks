@@ -7,4 +7,8 @@ export interface SearchDataConifuration {
     IsAsc?: boolean;
     PageSize?: number;
     SaveResultIn: string;
+    SearchType?: string;
+    KeyStringFlowParam?: string;
+    KeyFields?: any;
+    KeyType?: string;
 }

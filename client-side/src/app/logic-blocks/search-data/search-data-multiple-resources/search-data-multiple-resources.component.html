@@ -1,0 +1,14 @@
+<ng-container #logicBlockHeader></ng-container>
+<ng-container>
+  <div class="pep-border-bottom mat-dialog-title">
+      <label class="dialog-title" >{{ 'SEARCH_DATA.SELECT_SEARCH_DATA_SUB_TITLE' | translate }}</label>
+  </div>
+</ng-container>
+<div class="configuration-content">
+  <pep-generic-list [dataSource]="listDataSource" [actions]="listActions" [inline]="false" [showTopBar]="true" [emptyState]="listEmptyState" [uuidMapping]="'Resource'">
+    <ng-container right-buttons>
+      <pep-button class="pep-spacing-element" [sizeType]="'md'" [value]="'SEARCH_DATA.ADD_RESOURCE_BUTTON' | translate"
+        [styleType]="'strong'" (buttonClick)="addResource()"></pep-button>
+    </ng-container>
+  </pep-generic-list>
+</div>

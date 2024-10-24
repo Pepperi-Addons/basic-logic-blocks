@@ -45,7 +45,9 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
         this.actionsContainerRef = this.viewContainerRef.createComponent(DialogActionsComponent);
         this.actionsContainerRef.instance.doneIsDisabled = this.doneIsDisabled;
         this.actionsContainerRef.instance.currentConfiguration = this._currentConfiguration;
-        this.actionsContainerRef.instance.hostEvents.subscribe((event) => this.hostEvents.emit(event));
+        this.actionsContainerRef.instance.hostEvents.subscribe((event) =>{
+            return this.hostEvents.emit(event);
+        } );
         this.viewContainerRef.insert(this.actionsContainerRef.hostView);
     }
 
@@ -162,17 +164,16 @@ export abstract class BaseLogicBlockDirective implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // debugger;
         this.logicBlockService.initFlowParameters(this.hostObject?.EventData);
+        // @Input() hostObject is passed from flow addon
         this._currentConfiguration = JSON.parse(JSON.stringify(this.hostObject?.Configuration));
         const defaultConfiguration = this.createDefaultConfiguration();
-
         if (!this._currentConfiguration || Object.keys(this._currentConfiguration).length === 0 || this._currentConfiguration.toString() === '{}') {
             this._currentConfiguration = defaultConfiguration;
         }
 
         this.loadDataOnInit();
-        
+
         this.loadAccountHostObject();
         this.createHeaderComponent();
         this.createActionsComponent();
