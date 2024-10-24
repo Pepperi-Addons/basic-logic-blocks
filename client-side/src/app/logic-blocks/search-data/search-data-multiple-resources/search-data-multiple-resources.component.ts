@@ -105,6 +105,7 @@ export class SearchDataMultipleResourcesLogicBlockComponent extends BaseLogicBlo
       IsAsc: true,
       PageSize: 10,
       SaveResultIn: "",
+      KeyFields: {}
     };
     return [config];
   }

@@ -8,4 +8,7 @@ export interface SearchDataConifuration {
     PageSize?: number;
     SaveResultIn: string;
     SearchType?: string;
+    KeyStringFlowParam?: string;
+    KeyFields?: any;
+    KeyType?: string;
 }
